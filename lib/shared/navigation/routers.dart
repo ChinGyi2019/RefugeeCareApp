@@ -1,7 +1,10 @@
 import 'package:go_router/go_router.dart';
+import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
+import 'package:refugee_care_mobile/feature/cards/details/card_details_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/my_cards_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/save/save_card_screen.dart';
+import 'package:refugee_care_mobile/feature/emergency/setup/emergency_setup_screen.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
-import 'package:refugee_care_mobile/feature/home/home_screen.dart';
 
 final routerConfig = GoRouter(
   initialLocation: '/',
@@ -15,10 +18,23 @@ final routerConfig = GoRouter(
       builder: (context, state) => const MyCardsPage(title: ''),
     ),
 
-    // GoRoute(
-    //   path: '/entry-point',
-    //   builder: (context, state) => const EntryPoint(),
-    // ),
+    GoRoute(
+        path: SaveCardScreen.routeName,
+        builder: (context, state) => const SaveCardScreen(
+              title: '',
+            )),
+    GoRoute(
+        path: CardDetailsScreen.routeName,
+        builder: (context, state) {
+          final CommunityCard card = state.extra as CommunityCard;
+          return CardDetailsScreen(title: '', card: card);
+        }),
+    GoRoute(
+        path: EmergencySetupScreen.routeName,
+        builder: (context, state) {
+          // final CommunityCard card = state.extra as CommunityCard;
+          return EmergencySetupScreen(title: '');
+        }),
 
     // GoRoute(
     //   path: '/forgot-password',

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/feature/cards/my_cards_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/save/save_card_screen.dart';
+import 'package:refugee_care_mobile/feature/emergency/emergency_screen.dart';
 import 'package:refugee_care_mobile/feature/home/home_screen.dart';
-import 'package:refugee_care_mobile/responsive.dart';
-import 'package:refugee_care_mobile/shared/constants/Default.dart';
-import 'package:refugee_care_mobile/theme/app_color.dart';
+import 'package:refugee_care_mobile/main.dart';
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key, required this.title});
@@ -18,9 +18,10 @@ class EntryPoint extends StatefulWidget {
 class _EntryPointState extends State<EntryPoint> {
   int _counter = 0;
   int _selectedIndex = 0;
-  void _incrementCounter() {
+  void _goToSaveScreen() {
     setState(() {
-      context.push("/my-cards");
+      MyApp.setLocale(context, Locale('zu'));
+      context.push(SaveCardScreen.routeName);
     });
   }
 
@@ -33,19 +34,19 @@ class _EntryPointState extends State<EntryPoint> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Expanded(
-        flex: 1,
-        child: Column(children: [
-          if (_selectedIndex == 0)
-            const MyHomePage(title: '')
-          else if (_selectedIndex == 2)
-            const MyCardsPage(title: '')
-          // else if (_selectedIndex == 1)
-          //   const MyCardsPage(title: '')
-          // else
-          //   const MyHomePage(title: '')
-        ]),
-      ),
+      body: Stack(children: [
+        if (_selectedIndex == 0)
+          const MyHomePage(title: '')
+        else if (_selectedIndex == 2)
+          const MyCardsPage(title: '')
+        else if (_selectedIndex == 1)
+          EmergencyScreen(title: '')
+        // else if (_selectedIndex == 1)
+        //   const MyCardsPage(title: '')
+        // else
+        //   const MyHomePage(title: '')
+      ]),
+
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -70,7 +71,7 @@ class _EntryPointState extends State<EntryPoint> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _goToSaveScreen,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

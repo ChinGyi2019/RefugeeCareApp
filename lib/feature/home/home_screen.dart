@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refugee_care_mobile/feature/cards/details/card_details_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/list/card_list.dart';
+import 'package:refugee_care_mobile/feature/cards/community_card.dart';
+import 'package:refugee_care_mobile/feature/cards/save/save_card_screen.dart';
+import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -12,14 +17,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      context.go("/my-cards");
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -65,13 +62,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 )),
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'We are here\nforyou',
+                        AppLocalizations.of(context)!.translate('title'),
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall!
@@ -80,10 +77,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 24),
                       ),
-                      Text(
-                        '$_counter',
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
+                      CommunityCardItem(
+                        card: communityCards.first,
+                        onTap: (card) {
+                          context.push(CardDetailsScreen.routeName,
+                              extra: card);
+                        },
+                      )
                     ]))
           ],
         ),

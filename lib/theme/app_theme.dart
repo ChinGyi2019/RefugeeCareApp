@@ -19,9 +19,18 @@ class AppTheme {
               bodyColor: AppColors.titleLight,
               displayColor: AppColors.titleLight)
           .copyWith(
-            bodyLarge: const TextStyle(color: AppColors.textLight),
-            bodyMedium: const TextStyle(color: AppColors.textLight),
-            bodySmall: const TextStyle(color: AppColors.textLight),
+            bodyLarge: const TextStyle(
+              color: AppColors.iconBlack,
+              fontWeight: FontWeight.w500,
+            ),
+            bodyMedium: const TextStyle(
+              color: AppColors.iconBlack,
+              fontWeight: FontWeight.w500,
+            ),
+            bodySmall: const TextStyle(
+              color: AppColors.textLight,
+              fontWeight: FontWeight.w500,
+            ),
           ),
       iconTheme: const IconThemeData(color: AppColors.iconLight),
       dividerColor: AppColors.highlightLight,
@@ -52,29 +61,31 @@ class AppTheme {
             fontSize: 12,
             color: AppColors.primary,
             fontWeight: FontWeight.w700),
-        unselectedLabelStyle:
-            TextStyle(fontSize: 10, color: AppColors.iconBlack),
+        unselectedLabelStyle: TextStyle(
+            fontSize: 10,
+            color: AppColors.iconBlack,
+            fontWeight: FontWeight.w700),
         // selectedIconTheme: IconThemeData(color: AppColors.primary)
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: AppColors.primary, foregroundColor: AppColors.white),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.titleLight,
+          foregroundColor: AppColors.primary,
           minimumSize: const Size(100, 56),
           padding: const EdgeInsets.symmetric(
               horizontal: AppDefaults.padding, vertical: AppDefaults.padding),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppDefaults.borderRadius),
           ),
-          side: BorderSide(color: AppColors.highlightLight, width: 2),
+          side: const BorderSide(color: AppColors.primary, width: 2),
         ),
       ),
       inputDecorationTheme: AppTextFormFieldTheme.lightInputDecorationTheme,
       expansionTileTheme:
-          const ExpansionTileThemeData(shape: const RoundedRectangleBorder()),
+          const ExpansionTileThemeData(shape: RoundedRectangleBorder()),
       badgeTheme:
-          BadgeThemeData(backgroundColor: AppColors.error, smallSize: 8),
+          const BadgeThemeData(backgroundColor: AppColors.error, smallSize: 8),
     );
   }
 }
