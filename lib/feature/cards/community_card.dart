@@ -24,7 +24,7 @@ class CommunityCardItem extends StatelessWidget {
                     flex: 1,
                     child: Transform.rotate(
                         angle: -0.785398, // -45 degrees in radians
-                        child: Text("CRC",
+                        child: Text("ACR",
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme

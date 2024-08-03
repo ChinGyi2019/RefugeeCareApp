@@ -12,13 +12,13 @@ class HiveHelper {
   static String PERSONAL_KEY = "personal-key";
   // boxes
   late Box<Contact> contactBox;
-  late Box<String> personalBox;
+  // late Box<String> personalBox;
 
   Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(ContactAdapter());
+    // personalBox = await Hive.openBox(PERSONAL_KEY);
     contactBox = await Hive.openBox<Contact>(CONTACT_KEY);
-    personalBox = await Hive.openBox(PERSONAL_KEY);
   }
 
   // Listenable getContacts() {
@@ -26,16 +26,16 @@ class HiveHelper {
   // }
 
   List<Contact> getContactList() {
-    return contactBox.listenable(keys: [CONTACT_KEY]).value.values.toList();
-    // contactBox.values.toList();
+    // return contactBox.listenable(keys: [CONTACT_KEY]).value.values.toList();
+    return contactBox.values.toList();
   }
 
   String? getMessage() {
-    return personalBox.get(MESSAGE_KEY);
+    return ""; //  personalBox.get(MESSAGE_KEY);
   }
 
   Future<void> saveMessage(String message) async {
-    await personalBox.put(MESSAGE_KEY, message);
+    // await personalBox.put(MESSAGE_KEY, message);
   }
 
   Future<void> addContact(List<Contact> contacts) async {

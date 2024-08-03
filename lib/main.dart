@@ -17,6 +17,7 @@ import 'package:refugee_care_mobile/theme/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  await setupLocator();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: AppColors.primaryLight,
     statusBarIconBrightness:
@@ -24,7 +25,7 @@ void main() async {
     statusBarBrightness: Brightness.dark, // For dark icons on light status bar
   ));
   // await HiveHelper().init();
-  await setupLocator();
+
   runApp(MyApp());
 }
 

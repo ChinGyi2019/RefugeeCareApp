@@ -1,10 +1,14 @@
 import 'package:go_router/go_router.dart';
+import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dart';
 import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
+import 'package:refugee_care_mobile/feature/advertisement/advertisement_screen.dart';
+import 'package:refugee_care_mobile/feature/advertisement/detail/advertisement_detail_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/details/card_details_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/my_cards_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/save/save_card_screen.dart';
 import 'package:refugee_care_mobile/feature/emergency/setup/emergency_setup_screen.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
+import 'package:refugee_care_mobile/feature/notification/notification_screen.dart';
 
 final routerConfig = GoRouter(
   initialLocation: '/',
@@ -33,7 +37,27 @@ final routerConfig = GoRouter(
         path: EmergencySetupScreen.routeName,
         builder: (context, state) {
           // final CommunityCard card = state.extra as CommunityCard;
-          return EmergencySetupScreen(title: '');
+          return const EmergencySetupScreen(title: '');
+        }),
+    GoRoute(
+        path: NotificationPage.routeName,
+        builder: (context, state) {
+          // final CommunityCard card = state.extra as CommunityCard;
+          return const NotificationPage(title: '');
+        }),
+    GoRoute(
+        path: AdvertisementScreen.routeName,
+        builder: (context, state) {
+          return const AdvertisementScreen(title: '');
+        }),
+    GoRoute(
+        path: AdvertisementDetailScreen.routeName,
+        builder: (context, state) {
+          final Advertisement ads = state.extra as Advertisement;
+          return AdvertisementDetailScreen(
+            title: '',
+            advertisement: ads,
+          );
         }),
 
     // GoRoute(

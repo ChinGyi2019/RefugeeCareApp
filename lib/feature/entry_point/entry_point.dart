@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/feature/cards/my_cards_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/save/save_card_screen.dart';
+import 'package:refugee_care_mobile/feature/directory/directory_screen.dart';
 import 'package:refugee_care_mobile/feature/emergency/emergency_screen.dart';
 import 'package:refugee_care_mobile/feature/home/home_screen.dart';
 import 'package:refugee_care_mobile/main.dart';
@@ -41,8 +42,8 @@ class _EntryPointState extends State<EntryPoint> {
           const MyCardsPage(title: '')
         else if (_selectedIndex == 1)
           EmergencyScreen(title: '')
-        // else if (_selectedIndex == 1)
-        //   const MyCardsPage(title: '')
+        else
+          const DirectoryScreen(title: '')
         // else
         //   const MyHomePage(title: '')
       ]),
@@ -64,17 +65,19 @@ class _EntryPointState extends State<EntryPoint> {
             label: 'Cards',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Updates',
+            icon: Icon(Icons.directions),
+            label: 'Directory',
           ),
         ],
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: _goToSaveScreen,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: _selectedIndex == 2
+          ? FloatingActionButton(
+              onPressed: _goToSaveScreen,
+              tooltip: 'Increment',
+              child: const Icon(Icons.add),
+            )
+          : null, // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

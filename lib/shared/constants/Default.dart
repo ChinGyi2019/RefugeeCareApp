@@ -4,6 +4,7 @@ import 'package:refugee_care_mobile/theme/app_color.dart';
 class AppDefaults {
   static const double padding = 16.0;
   static const double borderRadius = 8.0;
+  static const double largeBorderRadius = 32.0;
   static const double inputFieldRadius = 12.0;
   static const OutlineInputBorder outlineInputBorder = OutlineInputBorder(
       borderRadius: BorderRadius.all(

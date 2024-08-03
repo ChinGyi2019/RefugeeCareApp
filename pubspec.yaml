@@ -63,6 +63,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/lang/
+    - assets/bg/bg_for_promotion.png
 #   - images/a_dot_ham.jpeg
 
 # To add custom fonts to your application, add a fonts section here,
