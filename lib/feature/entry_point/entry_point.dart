@@ -9,7 +9,7 @@ import 'package:refugee_care_mobile/main.dart';
 
 class EntryPoint extends StatefulWidget {
   const EntryPoint({super.key, required this.title});
-
+  static const String routeName = "/home";
   final String title;
 
   @override

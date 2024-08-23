@@ -14,11 +14,13 @@ class RefugeeFormFeild extends StatelessWidget {
       this.keyboardType,
       this.validator,
       this.onSaved,
+      this.obscureText = false,
       this.enabled = true});
   final String error;
   final String title;
   final String value;
   final bool enabled;
+  final bool obscureText;
   final TextInputType? keyboardType;
   final InputDecoration? decoration;
   final ValueChanged<String>? onChanged;
@@ -36,14 +38,14 @@ class RefugeeFormFeild extends StatelessWidget {
       ),
       gapH16,
       TextFormField(
-        initialValue: value,
-        enabled: enabled,
-        validator: validator,
-        keyboardType: keyboardType,
-        decoration: decoration,
-        onChanged: onChanged,
-        onSaved: onSaved,
-      ),
+          obscureText: obscureText,
+          initialValue: value,
+          enabled: enabled,
+          validator: validator,
+          keyboardType: keyboardType,
+          decoration: decoration,
+          onChanged: onChanged,
+          onSaved: onSaved),
       gapH8,
     ]);
   }

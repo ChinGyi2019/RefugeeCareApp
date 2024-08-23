@@ -10,9 +10,9 @@ import 'package:refugee_care_mobile/shared/widgets/refugee_outline_button.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
 class EmergencySetupScreen extends StatefulWidget {
-  const EmergencySetupScreen({super.key, required this.title});
   static const String routeName = '/emergency-setup';
   final String title;
+  const EmergencySetupScreen({super.key, required this.title});
 
   @override
   State<EmergencySetupScreen> createState() => _EmergencySetupScreenState();

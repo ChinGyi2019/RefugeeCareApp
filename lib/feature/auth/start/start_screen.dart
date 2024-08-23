@@ -1,0 +1,79 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:refugee_care_mobile/feature/auth/login/login_screen.dart';
+import 'package:refugee_care_mobile/feature/auth/register/register_screen.dart';
+import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
+import 'package:refugee_care_mobile/theme/app_color.dart';
+
+class StartScreen extends StatefulWidget {
+  const StartScreen({super.key});
+  static const String routeName = "/";
+
+  @override
+  State<StartScreen> createState() => StartScreenState();
+}
+
+class StartScreenState extends State<StartScreen> {
+  @override
+  Widget build(BuildContext context) {
+    double appBarHeight = Theme.of(context).appBarTheme.toolbarHeight ?? 70;
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    return Scaffold(
+        backgroundColor: AppColors.primaryExtraLight,
+        body: Container(
+          decoration: const BoxDecoration(
+            color: AppColors.primaryLight,
+            image: DecorationImage(
+              image: AssetImage(
+                  'assets/bg/start_bg.png'), // Replace with your image asset path
+              fit: BoxFit.cover, // Ensures the image fills the entire screen
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              // Display the title
+              Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 20, vertical: appBarHeight),
+                  child: const Text(
+                    'RefugeeCare App',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
+                    ),
+                  )),
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        context.push(LoginScreen.routeName);
+                      },
+                      child: Text('Login'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(double.infinity, 50),
+                      ),
+                    ),
+                    gapH16,
+                    OutlinedButton(
+                      onPressed: () {
+                        context.push(RegisterScreen.routeName);
+                      },
+                      child: Text('Register'),
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                    ),
+                    gapH32,
+                  ]))
+            ],
+          ),
+        ));
+  }
+}

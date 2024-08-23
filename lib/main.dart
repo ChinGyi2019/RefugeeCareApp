@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:refugee_care_mobile/di/locator.dart';
 import 'package:refugee_care_mobile/domain/model/contacts/contact.dart';
 import 'package:refugee_care_mobile/domain/repositroy/contact_repository.dart';
+import 'package:refugee_care_mobile/feature/auth/login/login_provider.dart';
+import 'package:refugee_care_mobile/feature/auth/register/register_provider.dart';
 import 'package:refugee_care_mobile/feature/cards/save/save_card_provider.dart';
 import 'package:refugee_care_mobile/feature/emergency/setup/emergency_setup_provider.dart';
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
@@ -24,6 +26,18 @@ void main() async {
         Brightness.light, // For light icons on dark status bar
     statusBarBrightness: Brightness.dark, // For dark icons on light status bar
   ));
+  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //   statusBarColor: Colors.transparent, // Set the status bar to transparent
+  //   systemNavigationBarColor:
+  //       Colors.transparent, // Set the navigation bar to transparent
+  //   statusBarIconBrightness: Brightness.light, // Light icons for the status bar
+  //   systemNavigationBarIconBrightness:
+  //       Brightness.light, // Light icons for the navigation bar
+  // ));
+
+  // Hides the status bar and navigation bar
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   // await HiveHelper().init();
 
   runApp(MyApp());
@@ -52,6 +66,16 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) {
+            final provider = RegisterProvider();
+            provider.init();
+            return provider;
+          }),
+          ChangeNotifierProvider(create: (_) {
+            final provider = LoginProvider();
+            provider.init();
+            return provider;
+          }),
           ChangeNotifierProvider(create: (_) {
             final provider = SaveCardProvider();
             provider.init();

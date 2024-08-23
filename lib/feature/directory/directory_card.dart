@@ -83,7 +83,7 @@ class DirectoryCard extends StatelessWidget {
                               onPressed: () {},
                               child: Row(
                                 children: [
-                                  Icon(Icons.email_outlined),
+                                  const Icon(Icons.email_outlined),
                                   gapW8,
                                   Text("Email",
                                       textAlign: TextAlign.start,
@@ -93,7 +93,7 @@ class DirectoryCard extends StatelessWidget {
                                           ?.copyWith(
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.primary,
-                                              fontSize: 16))
+                                              fontSize: 14))
                                 ],
                               )),
                           gapW16,
@@ -116,7 +116,7 @@ class DirectoryCard extends StatelessWidget {
                                           ?.copyWith(
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.primary,
-                                              fontSize: 16))
+                                              fontSize: 14))
                                 ],
                               )),
                         ],

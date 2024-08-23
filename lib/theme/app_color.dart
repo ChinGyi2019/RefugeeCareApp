@@ -16,6 +16,7 @@ class AppColors {
   static const primary = Color(0xFF4397F7);
   static const primaryMedium = Color(0xB34397F7);
   static const primaryLight = Color(0x4Da0deff);
+  static const primaryExtraLight = Color.fromARGB(255, 197, 222, 235);
   static const primaryPurple = Color(0xFF8E59FF);
   static const success = Color(0xFF83BF6E);
   static const error = Color(0xFFFF6A55);

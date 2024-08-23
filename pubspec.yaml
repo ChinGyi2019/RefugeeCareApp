@@ -48,6 +48,7 @@ dependencies:
   permission_handler: ^10.2.0
   url_launcher: ^6.0.20
   geolocator: ^9.0.2
+  flutter_otp_text_field: ^1.1.0+2
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ flutter:
     - assets/icons/
     - assets/lang/
     - assets/bg/bg_for_promotion.png
+    - assets/bg/start_bg.png
 #   - images/a_dot_ham.jpeg
 
 # To add custom fonts to your application, add a fonts section here,

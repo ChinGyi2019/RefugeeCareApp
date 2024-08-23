@@ -9,6 +9,7 @@ import 'package:refugee_care_mobile/feature/cards/community_card.dart';
 import 'package:refugee_care_mobile/feature/notification/notification_item.dart';
 import 'package:refugee_care_mobile/feature/notification/notification_list_content.dart';
 import 'package:refugee_care_mobile/feature/notification/notification_screen.dart';
+import 'package:refugee_care_mobile/feature/profile/profile_screen.dart';
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
@@ -49,7 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context.push(ProfileScreen.routeName);
+                              },
                               color: Theme.of(context).primaryColor,
                               icon: const Icon(
                                 Icons.person,
