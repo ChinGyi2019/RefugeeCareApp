@@ -7,7 +7,7 @@ final locator = GetIt.instance;
 
 Future<void> setupLocator() async {
   HiveHelper hiveHelper = HiveHelper();
-  hiveHelper.init();
+  await hiveHelper.init();
 
   locator.registerSingleton<HiveHelper>(hiveHelper);
 

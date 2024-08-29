@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
-import 'package:refugee_care_mobile/domain/model/community/community.dart';
-import 'package:refugee_care_mobile/domain/model/profile/profile.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+// part 'register_provider.g.dart';
 
 class RegisterScreenState {
   final bool loading;
@@ -13,11 +12,81 @@ class RegisterScreenState {
   bool obscureConfirmPasswod = true;
   String email = "";
   String phoneNo = "";
-
+  // factory RegisterScreenState.fromJson(Map<String, Object?> json) =>
+  //     _$RegisterScreenState(json);
   final formKey = GlobalKey<FormState>();
   bool enabledNextButton;
   RegisterScreenState({this.loading = false, this.enabledNextButton = true});
 }
+
+// class RegisterProvider with ChangeNotifier {
+// @riverpod
+// class RegisterViewModel extends _$RegisterViewModel {
+//   // var _state = RegisterScreenState();
+//   // RegisterScreenState get state => _state;
+//   @override
+//   Future<RegisterScreenState> build() async {
+//     // ref.watch(otherProvider); // Good!
+//     // ref.onDispose(() => ref.watch(otherProvider)); // Bad!
+
+//     return Future.value(
+//         RegisterScreenState(enabledNextButton: true, loading: false));
+//   }
+
+//   void init() {}
+
+//   void updateFullName(String value) {
+//     state.value?.name = value;
+
+//     //notifyListeners();
+//   }
+
+//   void updatePhoneNo(String value) {
+//     state.value?.phoneNo = value;
+//     // notifyListeners();
+//   }
+
+//   void updateEmail(String value) {
+//     state.value?.email = value;
+//     // notifyListeners();
+//   }
+
+//   void updatePassword(String value) {
+//     state.value?.password = value;
+//     // notifyListeners();
+//   }
+
+//   void updateObsurePassword(bool value) {
+//     state.value?.obscurePasswod = value;
+//     // notifyListeners();
+//   }
+
+//   void updateObsureConfirmPassword(bool value) {
+//     state.value?.obscureConfirmPasswod = value;
+//     // notifyListeners();
+//   }
+
+//   void updateConfiremdPassword(String value) {
+//     state.value?.confirmedPassword = value;
+//     // notifyListeners();
+//   }
+
+//   bool validate() {
+//     return state.value?.formKey.currentState?.validate() ?? false;
+//   }
+
+//   void sumbit(Function() onSuccess) {
+//     if (validate()) {
+//       state.value?.formKey.currentState?.save();
+//       onSuccess();
+//     }
+//   }
+
+//   void clear() {
+//     // state = RegisterScreenState();
+//     // notifyListeners();
+//   }
+// }
 
 class RegisterProvider with ChangeNotifier {
   var _state = RegisterScreenState();
@@ -26,7 +95,7 @@ class RegisterProvider with ChangeNotifier {
 
   void updateFullName(String value) {
     _state.name = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   void updatePhoneNo(String value) {
@@ -58,46 +127,6 @@ class RegisterProvider with ChangeNotifier {
     _state.confirmedPassword = value;
     notifyListeners();
   }
-
-  // void updateNationality(String value) {
-  //   _state.card.nationality = value;
-  //   notifyListeners();
-  // }
-
-  // void updateCardType(String value) {
-  //   _state.card.type = value;
-  //   notifyListeners();
-  // }
-
-  // void updateGender(String value) {
-  //   _state.card.gender = value;
-  //   notifyListeners();
-  // }
-
-  // void updateFontCard(String value) {
-  //   _state.card.frontSidePhoto = value;
-  //   notifyListeners();
-  // }
-
-  // void updatePasspord(String value) {
-  //   _state.card.passportPhoto = value;
-  //   notifyListeners();
-  // }
-
-  // void updateBackCard(String value) {
-  //   _state.card.backSidePhoto = value;
-  //   notifyListeners();
-  // }
-
-  // void updateStudentNumber(String value) {
-  //   _state.card.studentNumber = value;
-  //   notifyListeners();
-  // }
-
-  // void updateCurrentScreen(int value) {
-  //   _state.currentScreen = value;
-  //   notifyListeners();
-  // }
 
   bool validate() {
     return _state.formKey.currentState?.validate() ?? false;
