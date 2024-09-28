@@ -14,7 +14,7 @@ class RefugeeTextButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
               border: Border.all(
                 color: isSelected ? AppColors.primary : AppColors.textGrey,
                 width: isSelected ? 1.5 : 1.0,

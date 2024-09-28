@@ -101,7 +101,7 @@ class OtpScreenState extends State<OtpScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('OTP is verified')),
+                          const SnackBar(content: Text('OTP is verified')),
                         );
                         context.go(EntryPoint.routeName);
                       },

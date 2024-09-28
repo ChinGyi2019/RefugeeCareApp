@@ -55,20 +55,20 @@ class StartScreenState extends State<StartScreen> {
                       onPressed: () {
                         context.push(LoginScreen.routeName);
                       },
-                      child: Text('Login'),
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 50),
+                        minimumSize: const Size(double.infinity, 50),
                       ),
+                      child: Text('Login'),
                     ),
                     gapH16,
                     OutlinedButton(
                       onPressed: () {
                         context.push(RegisterScreen.routeName);
                       },
-                      child: Text('Register'),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
                       ),
+                      child: Text('Register'),
                     ),
                     gapH32,
                   ]))

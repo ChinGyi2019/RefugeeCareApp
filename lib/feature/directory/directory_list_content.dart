@@ -112,6 +112,8 @@ List<Directory> getDummyDirectories() {
 }
 
 class DirectoryListContent extends StatelessWidget {
+  const DirectoryListContent({super.key});
+
   // Sample data for the refugee cards
 
   @override

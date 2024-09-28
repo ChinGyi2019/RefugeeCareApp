@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dart';
-import 'package:refugee_care_mobile/feature/advertisement/advertisement_list_content.dart';
-import 'package:refugee_care_mobile/feature/directory/directory_list_content.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 

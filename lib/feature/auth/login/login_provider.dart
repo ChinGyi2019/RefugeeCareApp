@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
-import 'package:refugee_care_mobile/domain/model/community/community.dart';
-import 'package:refugee_care_mobile/domain/model/profile/profile.dart';
 
 class LoginScreenState {
   final bool loading;

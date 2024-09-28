@@ -137,10 +137,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () {
                         context.go(StartScreen.routeName);
                       },
-                      child: const Text('Logout'),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
                       ),
+                      child: const Text('Logout'),
                     ),
                     gapH32,
                     gapH24

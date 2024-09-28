@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/feature/cards/list/card_list.dart';
-import 'package:refugee_care_mobile/feature/cards/community_card.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
 class MyCardsPage extends StatefulWidget {

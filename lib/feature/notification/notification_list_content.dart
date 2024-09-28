@@ -101,6 +101,8 @@ List<RefugeeNotification> getDummyRefugeeNotifications() {
 }
 
 class NotificationListContent extends StatelessWidget {
+  const NotificationListContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

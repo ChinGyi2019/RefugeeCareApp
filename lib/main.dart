@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:refugee_care_mobile/di/locator.dart';
 import 'package:refugee_care_mobile/domain/model/contacts/contact.dart';
@@ -39,10 +40,37 @@ void main() async {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   // await HiveHelper().init();
 
-  runApp(MyApp());
+  runApp(ProviderScope(
+      child:
+//      MultiProvider(providers: [
+          // ChangeNotifierProvider(create: (_) {
+          //   final provider = RegisterProvider();
+          //   provider.init();
+          //   return provider;
+          // }),
+          // ChangeNotifierProvider(create: (_) {
+          //   final provider = LoginProvider();
+          //   provider.init();
+          //   return provider;
+          // }),
+          // ChangeNotifierProvider(create: (_) {
+          //   final provider = SaveCardProvider();
+          //   provider.init();
+          //   return provider;
+          // }),
+          // ChangeNotifierProvider(create: (_) {
+          //   final provider = EmergencySetupProvider(
+          //       contactRepository: locator<ContactRepository>());
+          //   provider.init();
+          //   return provider;
+          // }),
+//  ],
+          MyApp()));
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   static void setLocale(BuildContext context, Locale newLocale) {
     _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
     state?.setLocale(newLocale);
@@ -54,7 +82,7 @@ class MyApp extends StatefulWidget {
 
 // This widget is the root of your application.
 class _MyAppState extends State<MyApp> {
-  Locale _locale = Locale('en');
+  Locale _locale = const Locale('en');
   void setLocale(Locale locale) {
     setState(() {
       _locale = locale;
@@ -63,46 +91,24 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) {
-            final provider = RegisterProvider();
-            provider.init();
-            return provider;
-          }),
-          ChangeNotifierProvider(create: (_) {
-            final provider = LoginProvider();
-            provider.init();
-            return provider;
-          }),
-          ChangeNotifierProvider(create: (_) {
-            final provider = SaveCardProvider();
-            provider.init();
-            return provider;
-          }),
-          ChangeNotifierProvider(create: (_) {
-            final provider = EmergencySetupProvider(
-                contactRepository: locator<ContactRepository>());
-            provider.init();
-            return provider;
-          }),
-        ],
-        child: MaterialApp.router(
-          title: 'Flutter Demo',
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: [
-            Locale('en', ''), // English
-            Locale('es', ''), // Spanish
-            Locale('zu', ''), // Hakha Chinpanish
-          ],
-          locale: _locale,
-          theme: AppTheme.light(context),
-          routerConfig: routerConfig,
-        ));
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      debugShowMaterialGrid: false,
+      title: 'Flutter Demo',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''), // English
+        Locale('es', ''), // Spanish
+        Locale('zu', ''), // Hakha Chinpanish
+      ],
+      locale: _locale,
+      theme: AppTheme.light(context),
+      routerConfig: routerConfig,
+    );
   }
 }

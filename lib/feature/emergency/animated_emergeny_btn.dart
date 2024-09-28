@@ -58,7 +58,7 @@ class _InfiniteAnimatedButtonState extends State<AnimatedEmergenyBtn>
             builder: (context, child) {
               return CustomPaint(
                 painter: CirclePainter(_animation!.value, widget.enabled),
-                size: Size(200, 200),
+                size: const Size(200, 200),
               );
             },
           ),

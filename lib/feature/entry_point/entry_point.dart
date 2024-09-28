@@ -17,11 +17,11 @@ class EntryPoint extends StatefulWidget {
 }
 
 class _EntryPointState extends State<EntryPoint> {
-  int _counter = 0;
+  final int _counter = 0;
   int _selectedIndex = 0;
   void _goToSaveScreen() {
     setState(() {
-      MyApp.setLocale(context, Locale('zu'));
+      MyApp.setLocale(context, const Locale('zu'));
       context.push(SaveCardScreen.routeName);
     });
   }
@@ -41,7 +41,7 @@ class _EntryPointState extends State<EntryPoint> {
         else if (_selectedIndex == 2)
           const MyCardsPage(title: '')
         else if (_selectedIndex == 1)
-          EmergencyScreen(title: '')
+          const EmergencyScreen(title: '')
         else
           const DirectoryScreen(title: '')
         // else

@@ -90,7 +90,7 @@ class CountryItem extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
         child: Container(
-            margin: EdgeInsets.symmetric(vertical: 4),
+            margin: const EdgeInsets.symmetric(vertical: 4),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               border: Border.all(
@@ -102,7 +102,7 @@ class CountryItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Text(name))));
   }
 }

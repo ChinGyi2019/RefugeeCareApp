@@ -188,6 +188,8 @@ List<CommunityCard> communityCards = [
 ];
 
 class RefugeeCardList extends StatelessWidget {
+  const RefugeeCardList({super.key});
+
   // Sample data for the refugee cards
 
   @override

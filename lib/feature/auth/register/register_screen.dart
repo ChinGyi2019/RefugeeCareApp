@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:refugee_care_mobile/domain/model/auth/auth_state.dart';
 // import 'package:riverpod/src/provider.dart' hide Provider;
-import 'package:provider/provider.dart';
 import 'package:refugee_care_mobile/feature/auth/otp/otp_screen.dart';
 import 'package:refugee_care_mobile/feature/auth/register/register_provider.dart';
+import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
+import 'package:refugee_care_mobile/feature/home/home_screen.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_form_feild.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
-class RegisterScreen extends StatefulWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   static const String routeName = '/register';
   final String title;
   const RegisterScreen({super.key, required this.title});
   @override
-  State<RegisterScreen> createState() => RegisterScreenState();
+  ConsumerState<RegisterScreen> createState() => RegisterScreenState();
 }
 
-class RegisterScreenState extends State<RegisterScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   // Set full-screen mode when entering this screen
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  // }
+class RegisterScreenState extends ConsumerState<RegisterScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   // @override
   // void dispose() {
@@ -34,12 +34,23 @@ class RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<RegisterProvider>(context);
-    // final provider = legacyProvider.of<RegisterProvider>(context);
-    // ref.watch(registerViewModelProvider).requireValue;
-    // Provider.of<RegisterProvider>(context);
+    final uiState = ref.watch(registerNotifierProvider);
+    final provider = ref.read(registerNotifierProvider.notifier);
+    final formKey = GlobalKey<FormState>();
+
     double appBarHeight = Theme.of(context).appBarTheme.toolbarHeight ?? 70;
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    ref.listen(
+      registerNotifierProvider.select((value) => value.authState),
+      ((previous, next) {
+        if (next is Failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text((next.exception.toString()))));
+        } else if (next is Success) {
+          context.go(EntryPoint.routeName);
+        }
+      }),
+    );
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -72,10 +83,12 @@ class RegisterScreenState extends State<RegisterScreen> {
                 width: double.infinity,
                 height: double.infinity,
                 child: Form(
-                  key: provider.state.formKey,
+                  key: formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      if (uiState.authState is Failure)
+                        Text("${(uiState.authState as Failure).exception}"),
                       gapH16,
                       RefugeeFormFeild(
                         title: 'Full name',
@@ -87,7 +100,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                           }
                           return null;
                         },
-                        value: provider.state.name,
+                        value: uiState.name,
                         onChanged: (values) {
                           provider.updateFullName(values);
                           // provider.name = value;
@@ -114,7 +127,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                         onChanged: (value) {
                           provider.updatePhoneNo(value);
                         },
-                        value: provider.state.phoneNo,
+                        value: uiState.phoneNo,
                         onSaved: (value) {
                           provider.updatePhoneNo(value!);
                         },
@@ -124,7 +137,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                         title: "Email",
                         decoration:
                             const InputDecoration(hintText: 'Enter your email'),
-                        value: provider.state.email,
+                        value: uiState.email,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your valid email';
@@ -144,15 +157,15 @@ class RegisterScreenState extends State<RegisterScreen> {
                       gapH16,
                       RefugeeFormFeild(
                         title: "Password",
-                        obscureText: provider.state.obscurePasswod,
-                        value: provider.state.password,
+                        obscureText: uiState.obscurePassword,
+                        value: uiState.password,
                         decoration: InputDecoration(
                             hintText: 'Enter your password',
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.visibility),
                               onPressed: () {
                                 provider.updateObsurePassword(
-                                    !provider.state.obscurePasswod);
+                                    !uiState.obscurePassword);
                               },
                             )),
                         validator: (value) {
@@ -176,23 +189,22 @@ class RegisterScreenState extends State<RegisterScreen> {
                       gapH16,
                       RefugeeFormFeild(
                         title: "Confirm password",
-                        obscureText: provider.state.obscureConfirmPasswod,
-                        value: provider.state.confirmedPassword,
+                        obscureText: uiState.obscureConfirmPassword,
+                        value: uiState.confirmedPassword,
                         decoration: InputDecoration(
                             hintText: 'Enter your confirmed password',
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.visibility),
                               onPressed: () {
                                 provider.updateObsureConfirmPassword(
-                                    !provider.state.obscureConfirmPasswod);
+                                    !uiState.obscureConfirmPassword);
                               },
                             )),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password again';
                           }
-                          if (provider.state.password !=
-                              provider.state.confirmedPassword) {
+                          if (uiState.password != uiState.confirmedPassword) {
                             return 'Please re-enter password again';
                           }
                           // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
@@ -215,11 +227,12 @@ class RegisterScreenState extends State<RegisterScreen> {
                         child: SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: provider.state.enabledNextButton
+                            onPressed: uiState.enabledNextButton
                                 ? () {
-                                    provider.sumbit(() {
-                                      context.push(OtpScreen.routeName);
-                                    });
+                                    if (formKey.currentState?.validate() ==
+                                        true) {
+                                      provider.register();
+                                    }
                                   }
                                 : null,
                             child: Text('Register',

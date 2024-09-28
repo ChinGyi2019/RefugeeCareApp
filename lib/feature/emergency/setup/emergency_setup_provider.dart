@@ -1,9 +1,7 @@
 import 'dart:core';
-import 'dart:ffi';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:refugee_care_mobile/domain/model/contacts/contact.dart';
 import 'package:refugee_care_mobile/domain/repositroy/contact_repository.dart';
 import 'package:url_launcher/url_launcher_string.dart';

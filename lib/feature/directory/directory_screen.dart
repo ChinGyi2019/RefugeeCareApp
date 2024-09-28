@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/feature/directory/directory_list_content.dart';
-import 'package:refugee_care_mobile/feature/notification/notification_list_content.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
 class DirectoryScreen extends StatefulWidget {

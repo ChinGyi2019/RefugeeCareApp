@@ -118,6 +118,8 @@ List<Advertisement> getDummyAdvertisements() {
 }
 
 class AdvertisementListContent extends StatelessWidget {
+  const AdvertisementListContent({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

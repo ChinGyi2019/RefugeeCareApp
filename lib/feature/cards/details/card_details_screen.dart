@@ -86,13 +86,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                       fontSize: 16)),
                           gapH8,
                           Text(
-                              "Pemegang Kad ini adalah seorang etnik Chin dari Myanmar." +
-                                  "Beliau adalah seorang percari suaka yang berdaftar dengan" +
-                                  "Jawatankuasa Pelarian Chin Malaysia. Beliau sedang menunggu " +
-                                  "proses pendaftaran dengan UNHCR untuk permohonan status pelarian dibawah" +
-                                  "Mandat UNHCR (Konvensi Pelarian, 1951).Segala pertolongan yang boleh di beri " +
-                                  "kepadanya amat dihargai. Bagi sebarang pertanyaan berhubung pencari suaka ini," +
-                                  "sila hubungi pejabat CRC atau UNHCR:\nUNHCR main office\nTel: 03-2118 4800Fax: 03-2141 1780\nEmail: mislu@unhcr.org",
+                              "Pemegang Kad ini adalah seorang etnik Chin dari Myanmar.Beliau adalah seorang percari suaka yang berdaftar denganJawatankuasa Pelarian Chin Malaysia. Beliau sedang menunggu proses pendaftaran dengan UNHCR untuk permohonan status pelarian dibawahMandat UNHCR (Konvensi Pelarian, 1951).Segala pertolongan yang boleh di beri kepadanya amat dihargai. Bagi sebarang pertanyaan berhubung pencari suaka ini,sila hubungi pejabat CRC atau UNHCR:\nUNHCR main office\nTel: 03-2118 4800Fax: 03-2141 1780\nEmail: mislu@unhcr.org",
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
@@ -172,8 +166,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                       fontSize: 16)),
                           gapH8,
                           Text(
-                              "If there is any urgent case, you can directly reach out to us." +
-                                  "\n\nCRC main officeTel: 03-21184800\nEmail: crcmalaysia2011@yahoo.com",
+                              "If there is any urgent case, you can directly reach out to us." "\n\nCRC main officeTel: 03-21184800\nEmail: crcmalaysia2011@yahoo.com",
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
@@ -188,7 +181,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                   onPressed: () {},
                                   child: Row(
                                     children: [
-                                      Icon(Icons.phone),
+                                      const Icon(Icons.phone),
                                       gapW8,
                                       Text("Call",
                                           textAlign: TextAlign.start,
@@ -206,7 +199,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                                   onPressed: () {},
                                   child: Row(
                                     children: [
-                                      Icon(Icons.email_outlined),
+                                      const Icon(Icons.email_outlined),
                                       gapW8,
                                       Text("Email",
                                           textAlign: TextAlign.start,

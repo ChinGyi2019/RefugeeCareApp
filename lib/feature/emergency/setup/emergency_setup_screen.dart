@@ -194,7 +194,7 @@ class _EmergencySetupScreenState extends State<EmergencySetupScreen> {
                                       return null;
                                     },
                                     onChanged: (value) {
-                                      provider.updatePhoneNumber(i, value!);
+                                      provider.updatePhoneNumber(i, value);
                                     },
                                     value:
                                         provider.state.contacts[i].phoneNumber,

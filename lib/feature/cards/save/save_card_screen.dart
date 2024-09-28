@@ -64,7 +64,7 @@ class _SaveCardScreenState extends State<SaveCardScreen> {
               if (provider.state.currentScreen == 1)
                 const SaveCardStep1Screen()
               else if (provider.state.currentScreen == 2)
-                SaveCardStep2Screen()
+                const SaveCardStep2Screen()
             ])));
   }
 }
@@ -291,12 +291,12 @@ class SaveCardStep1Screen extends StatelessWidget {
                                   provider.save();
                                   if (provider.validateSetp1()) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('Form is valid!')),
+                                      const SnackBar(content: Text('Form is valid!')),
                                     );
                                   }
                                 }
                               : null,
-                          child: Text('Next'),
+                          child: const Text('Next'),
                         ),
                       ),
                     ),
@@ -313,7 +313,7 @@ class SaveCardStep2Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SaveCardProvider>(context);
-    Future<void> _pickImage(Function(XFile) onDone) async {
+    Future<void> pickImage(Function(XFile) onDone) async {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
@@ -324,7 +324,7 @@ class SaveCardStep2Screen extends StatelessWidget {
 
     return SingleChildScrollView(
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -344,7 +344,7 @@ class SaveCardStep2Screen extends StatelessWidget {
                         title: "Upload Photo",
                         imageURL: provider.state.card.passportPhoto,
                         onTap: () {
-                          _pickImage((file) {
+                          pickImage((file) {
                             provider.updatePasspord(file.path);
                           });
                         },
@@ -368,7 +368,7 @@ class SaveCardStep2Screen extends StatelessWidget {
                                   title: "Upload Photo\n(Back)",
                                   imageURL: provider.state.card.frontSidePhoto,
                                   onTap: () {
-                                    _pickImage((file) {
+                                    pickImage((file) {
                                       provider.updateFontCard(file.path);
                                     });
                                   }),
@@ -377,7 +377,7 @@ class SaveCardStep2Screen extends StatelessWidget {
                                 title: "Upload Photo\n(Back)",
                                 imageURL: provider.state.card.backSidePhoto,
                                 onTap: () {
-                                  _pickImage((file) {
+                                  pickImage((file) {
                                     provider.updateBackCard(file.path);
                                   });
                                 },
@@ -435,7 +435,7 @@ class SaveCardStep2Screen extends StatelessWidget {
                           ? () {
                               provider.sumbit(() {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Submitted')),
+                                  const SnackBar(content: Text('Submitted')),
                                 );
                                 context.pop();
                               });

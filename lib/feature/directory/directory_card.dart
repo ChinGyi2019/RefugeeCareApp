@@ -106,7 +106,7 @@ class DirectoryCard extends StatelessWidget {
                               onPressed: () {},
                               child: Row(
                                 children: [
-                                  Icon(Icons.phone),
+                                  const Icon(Icons.phone),
                                   gapW8,
                                   Text("Call",
                                       textAlign: TextAlign.start,

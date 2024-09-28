@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
-import 'package:refugee_care_mobile/feature/cards/save/save_card_provider.dart';
 import 'package:refugee_care_mobile/feature/emergency/animated_emergeny_btn.dart';
 import 'package:refugee_care_mobile/feature/emergency/setup/emergency_setup_provider.dart';
 import 'package:refugee_care_mobile/feature/emergency/setup/emergency_setup_screen.dart';

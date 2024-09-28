@@ -1,23 +1,33 @@
-import 'package:flutter/material.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-// part 'register_provider.g.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:refugee_care_mobile/data/provider/auth_repository_provider.dart';
+import 'package:refugee_care_mobile/domain/repositroy/auth_repository.dart';
+import 'package:refugee_care_mobile/feature/auth/register/register_notifier.dart';
+import 'package:refugee_care_mobile/feature/auth/register/register_screen_state.dart';
 
-class RegisterScreenState {
-  final bool loading;
+final registerNotifierProvider =
+    StateNotifierProvider<RegisterNotifier, RegisterScreenState>((ref) {
+  final AuthenticationRepository authRepository =
+      ref.watch(authRepositoryProvider);
+  return RegisterNotifier(authRepository: authRepository);
+});
 
-  String name = "";
-  String password = "";
-  bool obscurePasswod = true;
-  String confirmedPassword = "";
-  bool obscureConfirmPasswod = true;
-  String email = "";
-  String phoneNo = "";
-  // factory RegisterScreenState.fromJson(Map<String, Object?> json) =>
-  //     _$RegisterScreenState(json);
-  final formKey = GlobalKey<FormState>();
-  bool enabledNextButton;
-  RegisterScreenState({this.loading = false, this.enabledNextButton = true});
-}
+// class RegisterScreenState {
+//   final bool loading;
+
+//   String name = "";
+//   String password = "";
+//   bool obscurePasswod = true;
+//   String confirmedPassword = "";
+//   bool obscureConfirmPasswod = true;
+//   String email = "";
+//   String phoneNo = "";
+
+//   // factory RegisterScreenState.fromJson(Map<String, Object?> json) =>
+//   //     _$RegisterScreenState(json);
+//   final formKey = GlobalKey<FormState>();
+//   bool enabledNextButton;
+//   RegisterScreenState({this.loading = false, this.enabledNextButton = true});
+// }
 
 // class RegisterProvider with ChangeNotifier {
 // @riverpod
@@ -88,59 +98,59 @@ class RegisterScreenState {
 //   }
 // }
 
-class RegisterProvider with ChangeNotifier {
-  var _state = RegisterScreenState();
-  RegisterScreenState get state => _state;
-  void init() {}
+// class RegisterProvider with ChangeNotifier {
+//   var _state = RegisterScreenState();
+//   RegisterScreenState get state => _state;
+//   void init() {}
 
-  void updateFullName(String value) {
-    _state.name = value;
-    //notifyListeners();
-  }
+//   void updateFullName(String value) {
+//     _state.name = value;
+//     //notifyListeners();
+//   }
 
-  void updatePhoneNo(String value) {
-    _state.phoneNo = value;
-    notifyListeners();
-  }
+//   void updatePhoneNo(String value) {
+//     _state.phoneNo = value;
+//     notifyListeners();
+//   }
 
-  void updateEmail(String value) {
-    _state.email = value;
-    notifyListeners();
-  }
+//   void updateEmail(String value) {
+//     _state.email = value;
+//     notifyListeners();
+//   }
 
-  void updatePassword(String value) {
-    _state.password = value;
-    notifyListeners();
-  }
+//   void updatePassword(String value) {
+//     _state.password = value;
+//     notifyListeners();
+//   }
 
-  void updateObsurePassword(bool value) {
-    _state.obscurePasswod = value;
-    notifyListeners();
-  }
+//   void updateObsurePassword(bool value) {
+//     _state.obscurePasswod = value;
+//     notifyListeners();
+//   }
 
-  void updateObsureConfirmPassword(bool value) {
-    _state.obscureConfirmPasswod = value;
-    notifyListeners();
-  }
+//   void updateObsureConfirmPassword(bool value) {
+//     _state.obscureConfirmPasswod = value;
+//     notifyListeners();
+//   }
 
-  void updateConfiremdPassword(String value) {
-    _state.confirmedPassword = value;
-    notifyListeners();
-  }
+//   void updateConfiremdPassword(String value) {
+//     _state.confirmedPassword = value;
+//     notifyListeners();
+//   }
 
-  bool validate() {
-    return _state.formKey.currentState?.validate() ?? false;
-  }
+//   bool validate() {
+//     return _state.formKey.currentState?.validate() ?? false;
+//   }
 
-  void sumbit(Function() onSuccess) {
-    if (validate()) {
-      _state.formKey.currentState?.save();
-      onSuccess();
-    }
-  }
+//   void sumbit(Function() onSuccess) {
+//     if (validate()) {
+//       _state.formKey.currentState?.save();
+//       onSuccess();
+//     }
+//   }
 
-  void clear() {
-    _state = RegisterScreenState();
-    notifyListeners();
-  }
-}
+//   void clear() {
+//     _state = RegisterScreenState();
+//     notifyListeners();
+//   }
+// }
