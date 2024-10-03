@@ -7,6 +7,16 @@ sealed class Either<L, R> {
         Left(:final value) => left(value),
         Right(:final value) => right(value),
       };
+  Future<T> asyncFold<T>(
+    Future<T> Function(L) left,
+    Future<T> Function(R) right,
+  ) async {
+    return switch (this) {
+      Left(:final value) => await left(value),
+      Right(:final value) => await right(value),
+    };
+  }
+
   bool isLeft() => switch (this) {
         Left() => true,
         Right() => false,

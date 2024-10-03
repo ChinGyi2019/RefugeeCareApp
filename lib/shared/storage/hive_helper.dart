@@ -1,4 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:refugee_care_mobile/feature/auth/domain/model/user/user.dart';
 import 'package:refugee_care_mobile/domain/model/contacts/contact.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,16 +8,20 @@ class HiveHelper {
   static String CONTACT_KEY = "contact-key";
   static String MESSAGE_KEY = "message-key";
   static String MAIN_TOKEN_KEY = "main-token-key";
+  static String USER_BOX = "user-box";
   static String PERSONAL_KEY = "personal-key";
   // boxes
   late Box<Contact> contactBox;
+  late Box<User> userBox;
   late Box<String> personalBox;
 
   Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(ContactAdapter());
+    Hive.registerAdapter(UserAdapter());
     personalBox = await Hive.openBox(PERSONAL_KEY);
     contactBox = await Hive.openBox<Contact>(CONTACT_KEY);
+    userBox = await Hive.openBox<User>(USER_BOX);
   }
 
   // Listenable getContacts() {
@@ -36,12 +41,12 @@ class HiveHelper {
     await personalBox.put(MESSAGE_KEY, message);
   }
 
-  String? getMainToken() {
-    return personalBox.get(MAIN_TOKEN_KEY);
+  User? getMainToken() {
+    return userBox.get(MAIN_TOKEN_KEY);
   }
 
-  Future<void> saveMainToken(String? token) async {
-    await personalBox.put(MAIN_TOKEN_KEY, token ?? "");
+  Future<void> saveMainToken(User user) async {
+    await userBox.put(MAIN_TOKEN_KEY, user);
   }
 
   Future<void> addContact(List<Contact> contacts) async {

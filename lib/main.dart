@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:refugee_care_mobile/di/locator.dart';
-import 'package:refugee_care_mobile/domain/model/contacts/contact.dart';
-import 'package:refugee_care_mobile/domain/repositroy/contact_repository.dart';
-import 'package:refugee_care_mobile/feature/auth/login/login_provider.dart';
-import 'package:refugee_care_mobile/feature/auth/register/register_provider.dart';
-import 'package:refugee_care_mobile/feature/cards/save/save_card_provider.dart';
-import 'package:refugee_care_mobile/feature/emergency/setup/emergency_setup_provider.dart';
+import 'package:refugee_care_mobile/feature/emergency/domain/repository/contact_repository.dart';
+import 'package:refugee_care_mobile/feature/auth/presenter/login/login_provider.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/save_card_provider.dart';
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/navigation/routers.dart';
-import 'package:refugee_care_mobile/shared/storage/hive_helper.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 import 'package:refugee_care_mobile/theme/app_theme.dart';
 
@@ -42,29 +37,29 @@ void main() async {
 
   runApp(ProviderScope(
       child:
-//      MultiProvider(providers: [
-          // ChangeNotifierProvider(create: (_) {
-          //   final provider = RegisterProvider();
-          //   provider.init();
-          //   return provider;
-          // }),
-          // ChangeNotifierProvider(create: (_) {
-          //   final provider = LoginProvider();
-          //   provider.init();
-          //   return provider;
-          // }),
-          // ChangeNotifierProvider(create: (_) {
-          //   final provider = SaveCardProvider();
-          //   provider.init();
-          //   return provider;
-          // }),
-          // ChangeNotifierProvider(create: (_) {
-          //   final provider = EmergencySetupProvider(
-          //       contactRepository: locator<ContactRepository>());
-          //   provider.init();
-          //   return provider;
-          // }),
-//  ],
+          //     child: MultiProvider(providers: [
+          //   ChangeNotifierProvider(create: (_) {
+          //     final provider = RegisterProvider();
+          //     provider.init();
+          //     return provider;
+          //   }),
+          //   ChangeNotifierProvider(create: (_) {
+          //     final provider = LoginProvider();
+          //     provider.init();
+          //     return provider;
+          //   }),
+          //   ChangeNotifierProvider(create: (_) {
+          //     final provider = SaveCardProvider();
+          //     provider.init();
+          //     return provider;
+          //   }),
+          //   ChangeNotifierProvider(create: (_) {
+          //     final provider = EmergencySetupProvider(
+          //         contactRepository: locator<ContactRepository>());
+          //     provider.init();
+          //     return provider;
+          //   }),
+          // ], child:
           MyApp()));
 }
 

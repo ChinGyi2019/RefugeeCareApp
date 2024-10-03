@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:refugee_care_mobile/feature/cards/my_cards_screen.dart';
-import 'package:refugee_care_mobile/feature/cards/save/save_card_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/list/my_cards_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/save/save_card_screen.dart';
 import 'package:refugee_care_mobile/feature/directory/directory_screen.dart';
-import 'package:refugee_care_mobile/feature/emergency/emergency_screen.dart';
+import 'package:refugee_care_mobile/feature/emergency/presenter/emergency_screen.dart';
 import 'package:refugee_care_mobile/feature/home/home_screen.dart';
 import 'package:refugee_care_mobile/main.dart';
 
@@ -17,7 +17,6 @@ class EntryPoint extends StatefulWidget {
 }
 
 class _EntryPointState extends State<EntryPoint> {
-  final int _counter = 0;
   int _selectedIndex = 0;
   void _goToSaveScreen() {
     setState(() {

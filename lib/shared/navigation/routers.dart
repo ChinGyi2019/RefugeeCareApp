@@ -3,21 +3,27 @@ import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dar
 import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
 import 'package:refugee_care_mobile/feature/advertisement/advertisement_screen.dart';
 import 'package:refugee_care_mobile/feature/advertisement/detail/advertisement_detail_screen.dart';
-import 'package:refugee_care_mobile/feature/auth/login/login_screen.dart';
-import 'package:refugee_care_mobile/feature/auth/otp/otp_screen.dart';
-import 'package:refugee_care_mobile/feature/auth/register/register_screen.dart';
-import 'package:refugee_care_mobile/feature/auth/start/start_screen.dart';
-import 'package:refugee_care_mobile/feature/cards/details/card_details_screen.dart';
-import 'package:refugee_care_mobile/feature/cards/my_cards_screen.dart';
-import 'package:refugee_care_mobile/feature/cards/save/save_card_screen.dart';
-import 'package:refugee_care_mobile/feature/emergency/setup/emergency_setup_screen.dart';
+import 'package:refugee_care_mobile/feature/auth/presenter/login/login_screen.dart';
+import 'package:refugee_care_mobile/feature/auth/presenter/otp/otp_screen.dart';
+import 'package:refugee_care_mobile/feature/auth/presenter/register/register_screen.dart';
+import 'package:refugee_care_mobile/feature/splash/splash_screen.dart';
+import 'package:refugee_care_mobile/feature/start/start_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/details/card_details_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/list/my_cards_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/save/save_card_screen.dart';
+import 'package:refugee_care_mobile/feature/emergency/presenter/setup/emergency_setup_screen.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
 import 'package:refugee_care_mobile/feature/notification/notification_screen.dart';
 import 'package:refugee_care_mobile/feature/profile/profile_screen.dart';
 
 final routerConfig = GoRouter(
-  initialLocation: '/',
+  initialLocation: SplashScreen.routeName,
   routes: [
+    GoRoute(
+        path: SplashScreen.routeName,
+        builder: (context, state) =>
+            const SplashScreen() // EntryPoint(title: ''),
+        ),
     GoRoute(
         path: StartScreen.routeName,
         builder: (context, state) =>
