@@ -9,24 +9,28 @@ class Community {
   final String id;
   final String logo;
   final String description;
+  final List<String>? email;
+  final List<String>? phoneNumber;
   Community(
       {required this.name,
       required this.id,
       required this.shortName,
       required this.logo,
-      required this.description});
+      required this.description,
+      this.email,
+      this.phoneNumber});
 
   static List<Community> dummyCommunities = [
     Community(
       name: 'Chin Refugee Community',
-      id: '001',
+      id: '66c592c46bdc2f167fc34ea5',
       shortName: 'CRC',
       logo: 'assets/images/tech_innovators_logo.png',
       description: 'A community of technology enthusiasts and innovators.',
     ),
     Community(
       name: 'Aliance of Chin Refugees',
-      id: '002',
+      id: '66c592c46bdc2f167fc34ea5',
       shortName: 'ACR',
       logo: 'assets/images/green_earth_logo.png',
       description:
@@ -35,7 +39,7 @@ class Community {
     Community(
       name: 'UN',
       shortName: 'UN',
-      id: '003',
+      id: '66c592c46bdc2f167fc34ea5',
       logo: 'assets/images/health_wellness_logo.png',
       description: 'A group focused on promoting physical and mental health.',
     ),

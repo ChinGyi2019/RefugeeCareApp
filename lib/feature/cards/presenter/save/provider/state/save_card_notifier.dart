@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/domain/model/community/community.dart';
+import 'package:refugee_care_mobile/feature/cards/data/repository/card_repository_impl.dart';
+import 'package:refugee_care_mobile/feature/cards/domain/repository/card_repository.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/state/save_card_state.dart';
 
 class SaveCardNotifier with ChangeNotifier {
+  CardRepository repository;
+  SaveCardNotifier({required this.repository});
   var _state = SaveCardScreenState();
   SaveCardScreenState get state => _state;
-  void init() {
-    updateCommunity(Community.dummyCommunities.first);
+  Future<void> init() async {
+    // updateCommunity(Community.dummyCommunities.first);
     updateGender('Male');
+    await loadCommuniy();
+  }
+
+  Future<void> loadCommuniy() async {
+    final result = await repository.getCommunities();
+    result.fold((error) {
+      debugPrint(error.message);
+    }, (data) {
+      _state.communities = data;
+    });
   }
 
   void updateFullName(String value) {
@@ -17,6 +31,7 @@ class SaveCardNotifier with ChangeNotifier {
 
   void updateCommunity(Community value) {
     _state.selectedCommunity = value;
+    _state.card.communityId = value.id;
     notifyListeners();
   }
 
@@ -85,11 +100,16 @@ class SaveCardNotifier with ChangeNotifier {
         _state.card.backSidePhoto.isNotEmpty;
   }
 
-  void sumbit(Function() onSuccess) {
-    onSuccess();
-    clear();
-    updateCommunity(Community.dummyCommunities.first);
-    updateGender('Male');
+  void sumbit(Function() onSuccess) async {
+    final result = await repository.submitCard(card: _state.card);
+    result.fold((failure) {
+      debugPrint(failure.identifier.toString());
+    }, (data) {
+      clear();
+      onSuccess();
+      updateGender('Male');
+      updateCommunity(Community.dummyCommunities.first);
+    });
   }
 
   void clear() {

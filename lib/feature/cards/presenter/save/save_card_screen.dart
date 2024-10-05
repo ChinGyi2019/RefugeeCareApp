@@ -26,6 +26,16 @@ class SaveCardScreen extends ConsumerStatefulWidget {
 
 class _SaveCardScreenState extends ConsumerState<SaveCardScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final provider = ref.watch(saveCardProvider.notifier);
+      await provider.init();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final provider = ref.watch(saveCardProvider);
     return Scaffold(
@@ -94,13 +104,13 @@ class SaveCardStep1Screen extends ConsumerWidget {
           SizedBox(
               height: 60,
               child: ListView.builder(
-                itemCount: Community.dummyCommunities.length,
+                itemCount: provider.state.communities.length,
                 shrinkWrap: false,
                 scrollDirection: Axis.horizontal,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 itemBuilder: (context, index) {
-                  final data = Community.dummyCommunities[index];
+                  final data = provider.state.communities[index];
                   return Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: RefugeeTextButton(

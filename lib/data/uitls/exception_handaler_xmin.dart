@@ -21,6 +21,8 @@ mixin ExceptionHandlerMixin on NetworkService {
       switch (decodedResponse.statusCode) {
         case 0:
           return Right(decodedResponse);
+        case 200:
+          return Right(decodedResponse);
         default:
           return Left(
             AppException(

@@ -9,11 +9,12 @@ class CommunityCard {
   String nationality;
   String dateOfIssue;
   String dateOfExpiry;
+  String communityId;
   String passportPhoto;
   String frontSidePhoto;
   String backSidePhoto;
-  String uNHCRNumber;
-  String studentNumber;
+  String? uNHCRNumber;
+  String? studentNumber;
   bool isVerified;
 
   // Constructor with all required fields
@@ -29,6 +30,7 @@ class CommunityCard {
     required this.dateOfIssue,
     required this.dateOfExpiry,
     required this.passportPhoto,
+    required this.communityId,
     required this.frontSidePhoto,
     required this.backSidePhoto,
     required this.uNHCRNumber,
@@ -47,6 +49,7 @@ class CommunityCard {
       nationality: '',
       dateOfIssue: '',
       dateOfExpiry: '',
+      communityId: '',
       passportPhoto: '',
       frontSidePhoto: '',
       backSidePhoto: '',
@@ -66,6 +69,7 @@ class CommunityCard {
       type: json['type'],
       dateOfBirth: json['dateOfBirth'],
       gender: json['gender'],
+      communityId: json['communityId'],
       nationality: json['nationality'],
       dateOfIssue: json['dateOfIssue'],
       dateOfExpiry: json['dateOfExpiry'],

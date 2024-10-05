@@ -6,6 +6,7 @@ class SaveCardScreenState {
   final bool loading;
   var currentScreen = 1;
   var card = CommunityCard.empty();
+  var communities = List<Community>.empty();
   var selectedCommunity =
       Community(name: '', id: '', shortName: '', logo: '', description: '');
   final formKey = GlobalKey<FormState>();

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
@@ -45,4 +47,9 @@ class LoggingClient extends http.BaseClient {
   void close() {
     _client.close();
   }
+}
+
+Future<void> logResponseBody(String body) async {
+  final file = File('response_log.txt'); // Specify your desired file path
+  await file.writeAsString(body);
 }

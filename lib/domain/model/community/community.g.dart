@@ -12,6 +12,11 @@ Community _$CommunityFromJson(Map<String, dynamic> json) => Community(
       shortName: json['shortName'] as String,
       logo: json['logo'] as String,
       description: json['description'] as String,
+      email:
+          (json['email'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      phoneNumber: (json['phoneNumber'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$CommunityToJson(Community instance) => <String, dynamic>{
@@ -20,4 +25,6 @@ Map<String, dynamic> _$CommunityToJson(Community instance) => <String, dynamic>{
       'id': instance.id,
       'logo': instance.logo,
       'description': instance.description,
+      'email': instance.email,
+      'phoneNumber': instance.phoneNumber,
     };
