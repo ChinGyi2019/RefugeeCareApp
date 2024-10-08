@@ -31,7 +31,7 @@ class _DirectoryScreenState extends State<DirectoryScreen> {
                   fontSize: 18),
             ),
           ),
-          Expanded(child: DirectoryListContent())
+          const Expanded(child: DirectoryListContent())
         ]));
   }
 }

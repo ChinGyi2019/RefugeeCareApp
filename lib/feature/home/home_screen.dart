@@ -109,13 +109,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                     fontSize: 18, fontWeight: FontWeight.w700),
                           )),
                       gapH16,
-                      CommunityCardItem(
-                        card: communityCards.first,
-                        onTap: (card) {
-                          context.push(CardDetailsScreen.routeName,
-                              extra: card);
-                        },
-                      ),
+                      // Todo call api
+                      // CommunityCardItem(
+                      //   card: communityCards.first,
+                      //   onTap: (card) {
+                      //     context.push(CardDetailsScreen.routeName,
+                      //         extra: card);
+                      //   },
+                      // ),
                       gapH16,
                       NotificationItem(
                         notification: getDummyRefugeeNotifications().first,

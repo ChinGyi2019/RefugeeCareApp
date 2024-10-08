@@ -6,7 +6,6 @@ import 'package:refugee_care_mobile/data/services/network_services.dart';
 import 'package:refugee_care_mobile/di/locator.dart';
 import 'package:refugee_care_mobile/feature/auth/domain/repository/auth_repository.dart';
 import 'package:refugee_care_mobile/shared/storage/hive_helper.dart';
-import 'package:refugee_care_mobile/shared/storage/hive_provider.dart';
 
 // ignore: prefer_function_declarations_over_variables
 final authDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {

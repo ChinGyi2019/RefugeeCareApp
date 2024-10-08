@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
 const List<String> dummyCountry = [
@@ -102,7 +101,8 @@ class CountryItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Text(name))));
   }
 }

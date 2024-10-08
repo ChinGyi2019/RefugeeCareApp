@@ -42,7 +42,7 @@ class _AdvertisementScreenState extends State<AdvertisementScreen> {
                   )
                 : null,
           ),
-          Expanded(child: AdvertisementListContent())
+          const Expanded(child: AdvertisementListContent())
         ]));
   }
 }

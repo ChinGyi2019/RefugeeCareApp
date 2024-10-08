@@ -37,7 +37,7 @@ void main() async {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   // await HiveHelper().init();
 
-  runApp(ProviderScope(
+  runApp(const ProviderScope(
       child:
           //     child: MultiProvider(providers: [
           //   ChangeNotifierProvider(create: (_) {

@@ -1,6 +1,6 @@
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
-import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
+import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
 import 'package:refugee_care_mobile/domain/model/community/community.dart';
 import 'package:refugee_care_mobile/feature/cards/data/datasource/card_remote_datasource.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/repository/card_repository.dart';
@@ -27,9 +27,8 @@ class CardRepositoryImpl implements CardRepository {
   }
 
   @override
-  Future<List<CommunityCard>> getContactList() {
-    // TODO: implement getContactList
-    throw UnimplementedError();
+  Future<Either<AppException, List<CommunityCard>>> getCards() {
+    return remote.getCards();
   }
 
   @override

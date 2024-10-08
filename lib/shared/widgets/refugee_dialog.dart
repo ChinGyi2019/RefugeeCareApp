@@ -13,7 +13,7 @@ class RefugeeDialog extends StatelessWidget {
   final VoidCallback? singleBtnCallback;
 
   const RefugeeDialog({
-    Key? key,
+    super.key,
     required this.title,
     required this.message,
     this.positiveBtnTitle,
@@ -22,7 +22,7 @@ class RefugeeDialog extends StatelessWidget {
     this.negativeBtnCallback,
     this.singleBtnTitle,
     this.singleBtnCallback,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

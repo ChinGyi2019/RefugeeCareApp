@@ -14,3 +14,16 @@ String formatDate(String dateStr) {
     return dateStr;
   }
 }
+
+String changeFormatDate(String dateStr, String oldPattern, String newPattern) {
+  try {
+    final DateFormat inputFormat = DateFormat(oldPattern);
+    final DateFormat outputFormat = DateFormat(newPattern); // Adjust if needed
+
+    DateTime dateTime = inputFormat.parse(dateStr);
+    return outputFormat.format(dateTime);
+  } catch (exception) {
+    debugPrint(exception.toString());
+    return dateStr;
+  }
+}

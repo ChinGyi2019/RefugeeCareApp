@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
+import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/save_card_provider.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';

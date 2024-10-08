@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/list/card_list.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/save_card_provider.dart';
+import 'package:refugee_care_mobile/shared/widgets/refugee_loading.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
-class MyCardsPage extends StatefulWidget {
+class MyCardsPage extends ConsumerStatefulWidget {
   const MyCardsPage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyCardsPage> createState() => _MyCardsScreenState();
+  ConsumerState<MyCardsPage> createState() => _MyCardsScreenState();
 }
 
-class _MyCardsScreenState extends State<MyCardsPage> {
+class _MyCardsScreenState extends ConsumerState<MyCardsPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final provider = ref.watch(saveCardProvider.notifier);
+      await provider.init();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final provider = ref.watch(saveCardProvider);
     return Container(
         color: AppColors.bgLight,
         child: Column(children: [
@@ -31,7 +45,17 @@ class _MyCardsScreenState extends State<MyCardsPage> {
                   fontSize: 18),
             ),
           ),
-          Expanded(child: RefugeeCardList())
+          Expanded(
+              child: Stack(
+            children: [
+              RefugeeCardList(cards: provider.state.cards),
+              if (provider.state.loading)
+                const Align(
+                  alignment: Alignment.center,
+                  child: RefugeeLoading(),
+                )
+            ],
+          ))
         ]));
   }
 }

@@ -43,7 +43,7 @@ class NotificationPageState extends State<NotificationPage> {
                   )
                 : null,
           ),
-          Expanded(child: NotificationListContent())
+          const Expanded(child: NotificationListContent())
         ]));
   }
 }

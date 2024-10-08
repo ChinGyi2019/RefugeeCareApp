@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:refugee_care_mobile/domain/model/community/community.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/save/country_bottomsheet_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/save_card_provider.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
@@ -27,10 +25,9 @@ class SaveCardScreen extends ConsumerStatefulWidget {
 class _SaveCardScreenState extends ConsumerState<SaveCardScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final provider = ref.watch(saveCardProvider.notifier);
+      final provider = ref.watch(saveCardProvider);
       await provider.init();
     });
   }
@@ -444,8 +441,8 @@ class SaveCardStep2Screen extends ConsumerWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: provider.validateSetp2()
-                          ? () {
-                              provider.sumbit(() {
+                          ? () async {
+                              await provider.sumbit(() {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text('Submitted')),
                                 );

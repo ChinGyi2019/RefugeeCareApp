@@ -1,10 +1,10 @@
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
-import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
+import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
 import 'package:refugee_care_mobile/domain/model/community/community.dart';
 
 abstract class CardRepository {
-  Future<List<CommunityCard>> getContactList();
+  Future<Either<AppException, List<CommunityCard>>> getCards();
   Future<CommunityCard> getCardById(String id);
   Future<Either<AppException, List<CommunityCard>>> submitCard({
     required CommunityCard card,

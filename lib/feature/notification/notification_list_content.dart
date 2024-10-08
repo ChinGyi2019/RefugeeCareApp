@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/domain/model/notification/refugee_notification.dart';
-import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/list/card_list.dart';
 import 'package:refugee_care_mobile/feature/notification/notification_item.dart';
 
@@ -106,7 +105,7 @@ class NotificationListContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: communityCards.length,
+      itemCount: getDummyRefugeeNotifications().length,
       shrinkWrap: false,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       itemBuilder: (context, index) {

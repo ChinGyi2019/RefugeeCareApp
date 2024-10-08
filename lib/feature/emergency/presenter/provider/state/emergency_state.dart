@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/domain/model/contacts/contact.dart';
-import 'package:refugee_care_mobile/feature/emergency/presenter/provider/emergency_setup_provider.dart';
 
 final emptyContacts = [
   Contact(name: "", id: "1", phoneNumber: "", logo: "", description: ""),

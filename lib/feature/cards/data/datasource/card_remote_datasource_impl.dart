@@ -1,22 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:refugee_care_mobile/data/response/refugee_response.dart';
 import 'package:refugee_care_mobile/data/services/network_services.dart';
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
-import 'package:refugee_care_mobile/data/uitls/response.dart';
 import 'package:refugee_care_mobile/data/uitls/url.dart';
-import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
+import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
 import 'package:refugee_care_mobile/domain/model/community/community.dart';
 import 'package:refugee_care_mobile/feature/cards/data/datasource/card_remote_datasource.dart';
 import 'package:refugee_care_mobile/feature/cards/data/mapper/card_mapper.dart';
-import 'package:refugee_care_mobile/feature/cards/data/response/community_data.dart';
-import 'package:refugee_care_mobile/shared/constants/app_constant.dart';
+import 'package:refugee_care_mobile/feature/cards/data/response/card/community_card_data.dart';
+import 'package:refugee_care_mobile/feature/cards/data/response/community/community_data.dart';
 import 'package:refugee_care_mobile/shared/extensions/data_formatter.dart';
 import 'package:refugee_care_mobile/shared/storage/hive_helper.dart';
-import 'package:http/http.dart' as http;
 
 class CardRemoteDatasourceImpl implements CardRemoteDatasource {
   final NetworkService networkService;
@@ -42,9 +37,19 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
   }
 
   @override
-  Future<List<CommunityCard>> getContactList() {
-    // TODO: implement getContactList
-    throw UnimplementedError();
+  Future<Either<AppException, List<CommunityCard>>> getCards() async {
+    final eitherResponse = await networkService.get(RefugeeURL.CARD_API);
+    return eitherResponse.fold((exception) => Left(exception),
+        (response) async {
+      final data = response.data as List<dynamic>;
+      final list = data.map((json) {
+        return CommunityCardData.fromJson(json);
+      }).toList();
+
+      final cards = list.map((data) => mapToCommunityCard(data)).toList();
+
+      return Either.right(cards);
+    });
   }
 
   @override
@@ -87,31 +92,17 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
       );
 
       // Check the result of the network request
-      return eitherResponse.fold(
-        (exception) => Left(exception),
-        (response) async {
-          if (response.statusCode == 200) {
-            final data = jsonDecode(response.data);
-            // final decodedResponse = Response.fromJson(responseData);
-            // final data = decodedResponse.data;
+      return eitherResponse.fold((exception) => Left(exception),
+          (response) async {
+        final data = response.data as List<dynamic>;
+        final list = data.map((json) {
+          return CommunityCardData.fromJson(json);
+        }).toList();
 
-            // Map the response data to a list of CommunityCard objects
-            final cardList = (data as List)
-                .map((json) => CommunityCard.fromJson(json))
-                .toList();
+        final cards = list.map((data) => mapToCommunityCard(data)).toList();
 
-            return Right(cardList);
-          } else {
-            return Left(AppException(
-              message:
-                  'Failed to create card. Status code: ${response.statusCode}',
-              statusCode: response.statusCode,
-              title: "Card Creation Error",
-              identifier: 'cardCreate',
-            ));
-          }
-        },
-      );
+        return Either.right(cards);
+      });
     } catch (e) {
       return Left(AppException(
         message: 'Unknown error occurred while creating card',

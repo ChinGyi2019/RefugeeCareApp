@@ -24,7 +24,7 @@ mixin _$Response {
   String? get message => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get identifier => throw _privateConstructorUsedError;
-  dynamic? get data => throw _privateConstructorUsedError;
+  dynamic get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +42,7 @@ abstract class $ResponseCopyWith<$Res> {
       String? message,
       String? title,
       String? identifier,
-      dynamic? data});
+      dynamic data});
 }
 
 /// @nodoc
@@ -84,7 +84,7 @@ class _$ResponseCopyWithImpl<$Res, $Val extends Response>
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
     ) as $Val);
   }
 }
@@ -102,7 +102,7 @@ abstract class _$$ResponseImplCopyWith<$Res>
       String? message,
       String? title,
       String? identifier,
-      dynamic? data});
+      dynamic data});
 }
 
 /// @nodoc
@@ -142,7 +142,7 @@ class __$$ResponseImplCopyWithImpl<$Res>
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as dynamic?,
+              as dynamic,
     ));
   }
 }
@@ -169,7 +169,7 @@ class _$ResponseImpl implements _Response {
   @override
   final String? identifier;
   @override
-  final dynamic? data;
+  final dynamic data;
 
   @override
   String toString() {
@@ -215,7 +215,7 @@ abstract class _Response implements Response {
       final String? message,
       final String? title,
       final String? identifier,
-      final dynamic? data}) = _$ResponseImpl;
+      final dynamic data}) = _$ResponseImpl;
 
   factory _Response.fromJson(Map<String, dynamic> json) =
       _$ResponseImpl.fromJson;
@@ -229,7 +229,7 @@ abstract class _Response implements Response {
   @override
   String? get identifier;
   @override
-  dynamic? get data;
+  dynamic get data;
   @override
   @JsonKey(ignore: true)
   _$$ResponseImplCopyWith<_$ResponseImpl> get copyWith =>

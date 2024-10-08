@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:refugee_care_mobile/feature/advertisement/advertisement_item.dart';
-import 'package:refugee_care_mobile/feature/advertisement/advertisement_list_content.dart';
-import 'package:refugee_care_mobile/feature/advertisement/detail/advertisement_detail_screen.dart';
 import 'package:refugee_care_mobile/feature/start/start_screen.dart';
-import 'package:refugee_care_mobile/feature/cards/presenter/details/card_details_screen.dart';
-import 'package:refugee_care_mobile/feature/cards/presenter/list/card_list.dart';
-import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
-import 'package:refugee_care_mobile/feature/notification/notification_item.dart';
-import 'package:refugee_care_mobile/feature/notification/notification_list_content.dart';
-import 'package:refugee_care_mobile/feature/notification/notification_screen.dart';
-import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 

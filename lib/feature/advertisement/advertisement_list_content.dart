@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dart';
-import 'package:refugee_care_mobile/domain/model/directory/directory.dart';
 import 'package:refugee_care_mobile/feature/advertisement/advertisement_item.dart';
 import 'package:refugee_care_mobile/feature/advertisement/detail/advertisement_detail_screen.dart';
-import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
-import 'package:refugee_care_mobile/feature/directory/directory_card.dart';
 
 List<Advertisement> getDummyAdvertisements() {
   return [

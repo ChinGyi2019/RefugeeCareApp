@@ -61,7 +61,7 @@ class StartScreenState extends ConsumerState<StartScreen> {
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
                       ),
-                      child: Text('Login'),
+                      child: const Text('Login'),
                     ),
                     gapH16,
                     OutlinedButton(
@@ -71,7 +71,7 @@ class StartScreenState extends ConsumerState<StartScreen> {
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
                       ),
-                      child: Text('Register'),
+                      child: const Text('Register'),
                     ),
                     gapH32,
                   ]))

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:refugee_care_mobile/domain/model/cards/community_cart.dart';
+import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
@@ -24,7 +24,7 @@ class CommunityCardItem extends StatelessWidget {
                     flex: 1,
                     child: Transform.rotate(
                         angle: -0.785398, // -45 degrees in radians
-                        child: Text("ACR",
+                        child: Text(card.community.shortName,
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
@@ -44,14 +44,14 @@ class CommunityCardItem extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 28,
-                            backgroundImage: AssetImage(card.type),
+                            backgroundImage: AssetImage(card.community.logo),
                           ),
                           gapW8,
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                card.type,
+                                card.community.name,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -60,12 +60,12 @@ class CommunityCardItem extends StatelessWidget {
                                         fontWeight: FontWeight.w700),
                               ),
                               Text(
-                                'verified',
+                                card.isVerified ? 'verified' : 'processing',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(
-                                        fontSize: 14,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w700),
                               )
                             ],
@@ -83,10 +83,9 @@ class CommunityCardItem extends StatelessWidget {
                             color: AppColors.bgLight,
                             borderRadius: BorderRadius.circular(
                                 8), // Optional: for rounded corners
-                            image: const DecorationImage(
+                            image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  "https://cdn.create.vista.com/api/media/small/339818716/stock-photo-doubtful-hispanic-man-looking-with-disbelief-expression"),
+                              image: NetworkImage(card.passportPhoto),
                             ),
                           ),
                         ),
@@ -124,7 +123,7 @@ class CommunityCardItem extends StatelessWidget {
                                   Expanded(
                                       flex: 3,
                                       child: Text(
-                                        card.id,
+                                        card.cardNumber,
                                         textAlign: TextAlign.start,
                                         style: Theme.of(context)
                                             .textTheme
@@ -337,46 +336,47 @@ class CommunityCardItem extends StatelessWidget {
                                       )),
                                 ],
                               ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                      flex: 2,
-                                      child: Text(
-                                        'Date of Expiry',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                      )),
-                                  Text(
-                                    ':',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700),
-                                  ),
-                                  gapW4,
-                                  Expanded(
-                                      flex: 3,
-                                      child: Text(
-                                        card.dateOfExpiry,
-                                        textAlign: TextAlign.start,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                      )),
-                                ],
-                              ),
+                              if (card.dateOfExpiry.isNotEmpty)
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                        flex: 2,
+                                        child: Text(
+                                          'Date of Expiry',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                        )),
+                                    Text(
+                                      ':',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium!
+                                          .copyWith(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700),
+                                    ),
+                                    gapW4,
+                                    Expanded(
+                                        flex: 3,
+                                        child: Text(
+                                          card.dateOfExpiry,
+                                          textAlign: TextAlign.start,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                        )),
+                                  ],
+                                ),
                             ],
                           ),
                         )

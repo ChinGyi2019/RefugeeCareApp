@@ -19,6 +19,10 @@ class Community {
       required this.description,
       this.email,
       this.phoneNumber});
+  static Community empty() {
+    return Community(
+        name: "", id: "", shortName: "", logo: "", description: "");
+  }
 
   static List<Community> dummyCommunities = [
     Community(

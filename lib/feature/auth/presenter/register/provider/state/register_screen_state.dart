@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:refugee_care_mobile/domain/model/auth/auth_state.dart';
 
 class RegisterScreenState extends Equatable {

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:refugee_care_mobile/feature/auth/domain/model/user/user.dart';
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';

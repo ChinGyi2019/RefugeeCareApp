@@ -6,7 +6,7 @@ class SplashScreenState extends Equatable {
   final String name;
   final AuthState authState;
 
-  SplashScreenState({
+  const SplashScreenState({
     this.loading = false,
     this.name = "",
     this.authState = const AuthState.initial(),

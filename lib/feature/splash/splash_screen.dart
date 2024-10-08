@@ -53,6 +53,6 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
                         .cover, // Ensures the image fills the entire screen
                   ),
                 ),
-                child: Text("Refugee Care "))));
+                child: const Text("Refugee Care "))));
   }
 }

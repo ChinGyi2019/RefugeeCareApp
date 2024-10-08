@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/domain/model/community/community.dart';
-import 'package:refugee_care_mobile/feature/cards/data/repository/card_repository_impl.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/repository/card_repository.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/state/save_card_state.dart';
 
@@ -13,14 +12,24 @@ class SaveCardNotifier with ChangeNotifier {
     // updateCommunity(Community.dummyCommunities.first);
     updateGender('Male');
     await loadCommuniy();
+    await getCards();
+  }
+
+  void updateLoading(bool loading) {
+    _state.loading = loading;
+    notifyListeners();
   }
 
   Future<void> loadCommuniy() async {
+    updateLoading(true);
     final result = await repository.getCommunities();
     result.fold((error) {
       debugPrint(error.message);
+      updateLoading(false);
     }, (data) {
       _state.communities = data;
+      updateLoading(false);
+      notifyListeners();
     });
   }
 
@@ -100,20 +109,35 @@ class SaveCardNotifier with ChangeNotifier {
         _state.card.backSidePhoto.isNotEmpty;
   }
 
-  void sumbit(Function() onSuccess) async {
-    final result = await repository.submitCard(card: _state.card);
-    result.fold((failure) {
-      debugPrint(failure.identifier.toString());
+  Future<void> getCards() async {
+    updateLoading(true);
+    final result = await repository.getCards();
+    result.fold((error) {
+      debugPrint(error.message);
+      updateLoading(false);
     }, (data) {
-      clear();
-      onSuccess();
-      updateGender('Male');
-      updateCommunity(Community.dummyCommunities.first);
+      _state.cards = data;
+      updateLoading(false);
+      notifyListeners();
     });
   }
 
+  Future<void> sumbit(Function() onSuccess) async {
+    updateLoading(true);
+    final result = await repository.submitCard(card: _state.card);
+    result.fold((failure) {
+      debugPrint(failure.identifier.toString());
+      updateLoading(false);
+    }, (data) {
+      updateLoading(false);
+      state.cards = data;
+      onSuccess();
+      clear();
+    });
+    notifyListeners();
+  }
+
   void clear() {
-    _state = SaveCardScreenState();
     notifyListeners();
   }
 

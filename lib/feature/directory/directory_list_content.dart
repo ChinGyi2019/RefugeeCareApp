@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/domain/model/directory/directory.dart';
-import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
 import 'package:refugee_care_mobile/feature/directory/directory_card.dart';
 
 List<Directory> getDummyDirectories() {

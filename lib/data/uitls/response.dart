@@ -11,7 +11,7 @@ class Response with _$Response {
     String? message,
     String? title,
     String? identifier,
-    dynamic? data,
+    dynamic data,
   }) = _Response;
   factory Response.fromJson(Map<String, dynamic> json) =>
       _$ResponseFromJson(json);
