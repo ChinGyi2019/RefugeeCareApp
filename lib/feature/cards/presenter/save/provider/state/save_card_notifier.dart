@@ -6,7 +6,7 @@ import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/state/
 class SaveCardNotifier with ChangeNotifier {
   CardRepository repository;
   SaveCardNotifier({required this.repository});
-  var _state = SaveCardScreenState();
+  final _state = SaveCardScreenState();
   SaveCardScreenState get state => _state;
   Future<void> init() async {
     // updateCommunity(Community.dummyCommunities.first);

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/feature/auth/presenter/login/login_screen.dart';
 import 'package:refugee_care_mobile/feature/auth/presenter/register/register_screen.dart';
-import 'package:refugee_care_mobile/feature/splash/provider/splah_screen_provider.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 

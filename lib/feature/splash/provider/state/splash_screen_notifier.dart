@@ -8,7 +8,7 @@ import 'package:refugee_care_mobile/feature/splash/provider/state/splash_scrren_
 class SplashScreenNotifier extends StateNotifier<SplashScreenState> {
   final AuthenticationRepository authRepository;
   SplashScreenNotifier({required this.authRepository})
-      : super(SplashScreenState());
+      : super(const SplashScreenState());
 
   void initAuthState() async {
     state = state.copyWith(authState: const AuthState.loading());

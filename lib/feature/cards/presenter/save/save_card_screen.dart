@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +7,8 @@ import 'package:refugee_care_mobile/feature/cards/presenter/save/country_bottoms
 import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/save_card_provider.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/shared/extensions/color_extensions.dart';
+import 'package:refugee_care_mobile/shared/extensions/date_input_formatter.dart';
+import 'package:refugee_care_mobile/shared/extensions/date_validator.dart';
 import 'package:refugee_care_mobile/shared/widgets/Refugee_text_dropdown_field.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_form_feild.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_outline_button.dart';
@@ -177,15 +180,15 @@ class SaveCardStep1Screen extends ConsumerWidget {
                           hintText: 'Enter your date of birth'),
                       value: provider.state.card.dateOfBirth,
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your date of birth';
-                        }
-                        // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                        //     .hasMatch(value)) {
-                        //   return 'Please enter a valid email';
-                        // }
-                        return null;
+                        return validateDate(value ?? '');
                       },
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(
+                            10), // Limit length to 10 (MM/DD/YYYY)
+                        DateInputFormatter(),
+                      ],
                       onChanged: (value) {
                         provider.updateDob(value);
                       },
@@ -272,15 +275,19 @@ class SaveCardStep1Screen extends ConsumerWidget {
                       decoration: const InputDecoration(
                           hintText: 'Enter your date of issue'),
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your date of issue';
-                        }
+                        return validateDate(value ?? '');
                         // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
                         //     .hasMatch(value)) {
                         //   return 'Please enter a valid email';
                         // }
-                        return null;
                       },
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(
+                            10), // Limit length to 10 (MM/DD/YYYY)
+                        DateInputFormatter(),
+                      ],
                       onChanged: (value) {
                         provider.updateDateOfIssue(value);
                       },
@@ -297,12 +304,7 @@ class SaveCardStep1Screen extends ConsumerWidget {
                           onPressed: provider.state.enabledNextButton
                               ? () {
                                   provider.save();
-                                  if (provider.validateSetp1()) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Form is valid!')),
-                                    );
-                                  }
+                                  if (provider.validateSetp1()) {}
                                 }
                               : null,
                           child: const Text('Next'),

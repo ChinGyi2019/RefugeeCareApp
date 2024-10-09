@@ -8,15 +8,20 @@ class Community {
   final String shortName;
   final String id;
   final String logo;
-  final String description;
+
   final List<String>? email;
   final List<String>? phoneNumber;
+  final String description;
+  final String? description2;
+  final String? description3;
   Community(
       {required this.name,
       required this.id,
       required this.shortName,
       required this.logo,
       required this.description,
+      this.description2,
+      this.description3,
       this.email,
       this.phoneNumber});
   static Community empty() {

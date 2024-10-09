@@ -6,14 +6,15 @@ import 'package:refugee_care_mobile/shared/extensions/data_formatter.dart';
 
 Community mapToCommunity(CommunityData? communityData) {
   return Community(
-    name: communityData?.name ?? '',
-    shortName: communityData?.shortName ?? '',
-    id: communityData?.id ?? '',
-    logo: communityData?.logoImage ?? '',
-    description: communityData?.description ?? '',
-    email: communityData?.email,
-    phoneNumber: communityData?.phoneNumber,
-  );
+      name: communityData?.name ?? '',
+      shortName: communityData?.shortName ?? '',
+      id: communityData?.id ?? '',
+      logo: communityData?.logoImage ?? '',
+      description: communityData?.description ?? '',
+      email: communityData?.email,
+      phoneNumber: communityData?.phoneNumber,
+      description2: communityData?.description2,
+      description3: communityData?.description3);
 }
 
 CommunityCard mapToCommunityCard(CommunityCardData data) {

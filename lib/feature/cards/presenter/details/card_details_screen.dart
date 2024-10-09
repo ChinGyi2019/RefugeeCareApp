@@ -21,6 +21,8 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = ref.watch(saveCardProvider);
+    final email = widget.card.community.email?.firstOrNull ?? '';
+    final phone = widget.card.community.phoneNumber?.firstOrNull ?? '';
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -83,8 +85,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                                       fontWeight: FontWeight.w700,
                                       fontSize: 16)),
                           gapH8,
-                          Text(
-                              "Pemegang Kad ini adalah seorang etnik Chin dari Myanmar.Beliau adalah seorang percari suaka yang berdaftar denganJawatankuasa Pelarian Chin Malaysia. Beliau sedang menunggu proses pendaftaran dengan UNHCR untuk permohonan status pelarian dibawahMandat UNHCR (Konvensi Pelarian, 1951).Segala pertolongan yang boleh di beri kepadanya amat dihargai. Bagi sebarang pertanyaan berhubung pencari suaka ini,sila hubungi pejabat CRC atau UNHCR:\nUNHCR main office\nTel: 03-2118 4800Fax: 03-2141 1780\nEmail: mislu@unhcr.org",
+                          Text(widget.card.community.description,
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
@@ -114,7 +115,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Verified by ${widget.card.type}",
+                          Text("Verified by ${widget.card.community.name}",
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
@@ -123,8 +124,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                                       fontWeight: FontWeight.w700,
                                       fontSize: 16)),
                           gapH8,
-                          Text(
-                              "${widget.card.type} is community-based volunteer organization working to provide social services to promote the protection of Chin Refugees in Malaysia who have escaped human right violations and religious persecution from Myanmar. ${widget.card.type} works to assist and facilitate the work of the United Nations High Commissioner for Refugee(UNHCR) office in Kuala Lumpur.",
+                          Text(widget.card.community.description2 ?? '',
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
@@ -163,9 +163,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                                       fontWeight: FontWeight.w700,
                                       fontSize: 16)),
                           gapH8,
-                          Text(
-                              "If there is any urgent case, you can directly reach out to us."
-                              "\n\nCRC main officeTel: 03-21184800\nEmail: crcmalaysia2011@yahoo.com",
+                          Text(widget.card.community.description3 ?? '',
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme

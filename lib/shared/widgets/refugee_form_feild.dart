@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 
 class RefugeeFormFeild extends StatelessWidget {
-  const RefugeeFormFeild(
+  RefugeeFormFeild(
       {super.key,
       required this.title,
       this.value = '',
@@ -12,6 +13,7 @@ class RefugeeFormFeild extends StatelessWidget {
       this.keyboardType,
       this.validator,
       this.onSaved,
+      this.inputFormatters,
       this.obscureText = false,
       this.enabled = true});
   final String error;
@@ -23,6 +25,7 @@ class RefugeeFormFeild extends StatelessWidget {
   final InputDecoration? decoration;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String?>? onSaved;
+  List<TextInputFormatter>? inputFormatters;
   final FormFieldValidator<String>? validator;
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,7 @@ class RefugeeFormFeild extends StatelessWidget {
           initialValue: value,
           enabled: enabled,
           validator: validator,
+          inputFormatters: inputFormatters,
           keyboardType: keyboardType,
           decoration: decoration,
           onChanged: onChanged,

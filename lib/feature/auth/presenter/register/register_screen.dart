@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -5,6 +6,7 @@ import 'package:refugee_care_mobile/domain/model/auth/auth_state.dart';
 import 'package:refugee_care_mobile/feature/auth/presenter/register/provider/register_provider.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
+import 'package:refugee_care_mobile/shared/extensions/phone_number_validator.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_dialog.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_form_feild.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_loading.dart';
@@ -117,17 +119,25 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
                                 ),
                                 RefugeeFormFeild(
                                   title: "Phone number",
-                                  decoration: const InputDecoration(
-                                      hintText: 'Enter your phone number'),
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter your phone number',
+                                    // prefix: Text('+60 '),
+                                    labelText: null,
+                                    prefixIcon: Padding(
+                                        padding: const EdgeInsets.all(16),
+                                        child: Text(
+                                          '+60',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall
+                                              ?.copyWith(
+                                                  fontSize: 16,
+                                                  color: AppColors.textGrey,
+                                                  fontWeight: FontWeight.w500),
+                                        )),
+                                  ),
                                   validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your phone number';
-                                    }
-                                    // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                                    //     .hasMatch(value)) {
-                                    //   return 'Please enter a valid email';
-                                    // }
-                                    return null;
+                                    return validatePhoneNumber(value ?? '');
                                   },
                                   onChanged: (value) {
                                     provider.updatePhoneNo(value);

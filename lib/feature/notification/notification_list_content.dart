@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/domain/model/notification/refugee_notification.dart';
-import 'package:refugee_care_mobile/feature/cards/presenter/list/card_list.dart';
 import 'package:refugee_care_mobile/feature/notification/notification_item.dart';
 
 List<RefugeeNotification> getDummyRefugeeNotifications() {

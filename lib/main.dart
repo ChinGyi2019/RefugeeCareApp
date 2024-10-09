@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:refugee_care_mobile/di/locator.dart';
-import 'package:refugee_care_mobile/feature/emergency/domain/repository/contact_repository.dart';
-import 'package:refugee_care_mobile/feature/auth/presenter/login/login_provider.dart';
-import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/save_card_provider.dart';
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/navigation/routers.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
