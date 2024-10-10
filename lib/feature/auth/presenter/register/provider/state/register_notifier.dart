@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:refugee_care_mobile/feature/auth/presenter/register/provider/state/register_screen_state.dart';
 
 class RegisterNotifier extends StateNotifier<RegisterScreenState> {
-  final AuthenticationRepository authRepository;
+  final AuthRepository authRepository;
   RegisterNotifier({required this.authRepository})
       : super(RegisterScreenState());
 

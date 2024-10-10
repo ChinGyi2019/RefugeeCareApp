@@ -5,7 +5,7 @@ import 'package:refugee_care_mobile/data/uitls/exception.dart';
 import 'package:refugee_care_mobile/feature/auth/domain/repository/auth_repository.dart';
 import 'package:refugee_care_mobile/shared/storage/hive_helper.dart';
 
-class AuthRepositoryImpl implements AuthenticationRepository {
+class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource dataSource;
   final HiveHelper hiveHelper;
   AuthRepositoryImpl(this.dataSource, this.hiveHelper);
@@ -23,5 +23,11 @@ class AuthRepositoryImpl implements AuthenticationRepository {
   @override
   User? getUser() {
     return hiveHelper.getMainToken();
+  }
+
+  @override
+  Future<Either<AppException, User>> login(
+      {required String phoneNumber, required password}) {
+    return dataSource.login(phoneNumber: phoneNumber, password: password);
   }
 }

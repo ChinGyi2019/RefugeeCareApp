@@ -6,7 +6,7 @@ import 'package:refugee_care_mobile/feature/auth/domain/repository/auth_reposito
 import 'package:refugee_care_mobile/feature/splash/provider/state/splash_scrren_state.dart';
 
 class SplashScreenNotifier extends StateNotifier<SplashScreenState> {
-  final AuthenticationRepository authRepository;
+  final AuthRepository authRepository;
   SplashScreenNotifier({required this.authRepository})
       : super(const SplashScreenState());
 

@@ -13,6 +13,7 @@ class RefugeeFormFeild extends StatelessWidget {
       this.keyboardType,
       this.validator,
       this.onSaved,
+      this.controller,
       this.inputFormatters,
       this.obscureText = false,
       this.enabled = true});
@@ -21,6 +22,7 @@ class RefugeeFormFeild extends StatelessWidget {
   final String value;
   final bool enabled;
   final bool obscureText;
+  final TextEditingController? controller;
   final TextInputType? keyboardType;
   final InputDecoration? decoration;
   final ValueChanged<String>? onChanged;
@@ -38,16 +40,28 @@ class RefugeeFormFeild extends StatelessWidget {
             ?.copyWith(fontWeight: FontWeight.w500),
       ),
       gapH16,
-      TextFormField(
-          obscureText: obscureText,
-          initialValue: value,
-          enabled: enabled,
-          validator: validator,
-          inputFormatters: inputFormatters,
-          keyboardType: keyboardType,
-          decoration: decoration,
-          onChanged: onChanged,
-          onSaved: onSaved),
+      if (controller != null)
+        TextFormField(
+            obscureText: obscureText,
+            enabled: enabled,
+            validator: validator,
+            controller: controller,
+            inputFormatters: inputFormatters,
+            keyboardType: keyboardType,
+            decoration: decoration,
+            onChanged: onChanged,
+            onSaved: onSaved)
+      else
+        TextFormField(
+            obscureText: obscureText,
+            initialValue: value,
+            enabled: enabled,
+            validator: validator,
+            inputFormatters: inputFormatters,
+            keyboardType: keyboardType,
+            decoration: decoration,
+            onChanged: onChanged,
+            onSaved: onSaved),
       gapH8,
     ]);
   }

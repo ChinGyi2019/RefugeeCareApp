@@ -15,7 +15,7 @@ final authDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
   return AuthRemoteDataSourceImpl(networkService, hiveHelper);
 });
 
-final authRepositoryProvider = Provider<AuthenticationRepository>(
+final authRepositoryProvider = Provider<AuthRepository>(
   (ref) {
     final AuthRemoteDataSource dataSource = ref.watch(authDataSourceProvider);
     final HiveHelper hiveHelper = locator<HiveHelper>();
