@@ -11,7 +11,7 @@ final registerNotifierProvider =
 
 // class RegisterScreenState {
 //   final bool loading;
-
+// Screen -> viewModel (Provider -> Notifier + State)->  Data (Repository)
 //   String name = "";
 //   String password = "";
 //   bool obscurePasswod = true;

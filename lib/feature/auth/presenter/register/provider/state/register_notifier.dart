@@ -51,6 +51,7 @@ class RegisterNotifier extends StateNotifier<RegisterScreenState> {
 
   Future<void> register() async {
     state.loading = true;
+
     final response = await authRepository.register(
         user: User(
             id: "",

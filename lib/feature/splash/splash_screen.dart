@@ -21,7 +21,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Access your provider here
-      ref.watch(splashScreenProvider.notifier).initAuthState();
+      ref.read(splashScreenProvider.notifier).initAuthState();
       // Do something with authState
     });
   }

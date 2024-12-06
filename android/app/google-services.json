@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1016517091354",
+    "project_id": "refugeecare-9a790",
+    "storage_bucket": "refugeecare-9a790.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016517091354:android:9c1387745c647e1cf4f1a3",
+        "android_client_info": {
+          "package_name": "com.refugee.care"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFfIIzcHYjjsgAwzKmT2Z4mkiGuw5Jqis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

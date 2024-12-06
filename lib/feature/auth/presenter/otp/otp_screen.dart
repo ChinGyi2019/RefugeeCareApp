@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:refugee_care_mobile/feature/auth/presenter/login/provider/login_provider.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';

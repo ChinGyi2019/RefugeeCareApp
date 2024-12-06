@@ -30,7 +30,7 @@ class HttpNetworkService extends NetworkService with ExceptionHandlerMixin {
     String? token = hiveHelper.getMainToken()?.token;
     final updatedHeaders = {
       ...headers,
-      if (token != null) 'Authorization': 'Bearer $token',
+      'Authorization': 'Bearer $token',
       ...data,
     };
     return updatedHeaders;
