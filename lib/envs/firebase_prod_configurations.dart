@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options.dart';
+/// import 'firebase_prod_configurations.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -42,47 +42,47 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBI7r2fnU5jtPyKcaIKLscqhUsCilT1B6E',
-    appId: '1:1016517091354:web:72ca8c19d181db43f4f1a3',
+    appId: '1:1016517091354:web:6b758a828da5f774f4f1a3',
     messagingSenderId: '1016517091354',
     projectId: 'refugeecare-9a790',
     authDomain: 'refugeecare-9a790.firebaseapp.com',
-    storageBucket: 'refugeecare-9a790.appspot.com',
-    measurementId: 'G-SEHYB3G2KQ',
+    storageBucket: 'refugeecare-9a790.firebasestorage.app',
+    measurementId: 'G-28FJ73S620',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBFfIIzcHYjjsgAwzKmT2Z4mkiGuw5Jqis',
-    appId: '1:1016517091354:android:9c1387745c647e1cf4f1a3',
+    appId: '1:1016517091354:android:649f1b2f2b5eda33f4f1a3',
     messagingSenderId: '1016517091354',
     projectId: 'refugeecare-9a790',
-    storageBucket: 'refugeecare-9a790.appspot.com',
+    storageBucket: 'refugeecare-9a790.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBlTsfzNG9zGLpye12kaMx5B_KWdyroYCk',
-    appId: '1:1016517091354:ios:94fc56da103b3b8af4f1a3',
+    appId: '1:1016517091354:ios:d35a149b5a84e01cf4f1a3',
     messagingSenderId: '1016517091354',
     projectId: 'refugeecare-9a790',
-    storageBucket: 'refugeecare-9a790.appspot.com',
-    iosBundleId: 'com.example.refugeeCareMobile',
+    storageBucket: 'refugeecare-9a790.firebasestorage.app',
+    iosBundleId: 'com.vanzar.refugeeCare',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBlTsfzNG9zGLpye12kaMx5B_KWdyroYCk',
-    appId: '1:1016517091354:ios:94fc56da103b3b8af4f1a3',
+    appId: '1:1016517091354:ios:e85aaca4ddb67c8af4f1a3',
     messagingSenderId: '1016517091354',
     projectId: 'refugeecare-9a790',
-    storageBucket: 'refugeecare-9a790.appspot.com',
+    storageBucket: 'refugeecare-9a790.firebasestorage.app',
     iosBundleId: 'com.example.refugeeCareMobile',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyBI7r2fnU5jtPyKcaIKLscqhUsCilT1B6E',
-    appId: '1:1016517091354:web:82b202b0e60d4b0cf4f1a3',
+    appId: '1:1016517091354:web:e30dccc19ee3a835f4f1a3',
     messagingSenderId: '1016517091354',
     projectId: 'refugeecare-9a790',
     authDomain: 'refugeecare-9a790.firebaseapp.com',
-    storageBucket: 'refugeecare-9a790.appspot.com',
-    measurementId: 'G-272H08S1QM',
+    storageBucket: 'refugeecare-9a790.firebasestorage.app',
+    measurementId: 'G-SM7HKTC46B',
   );
 }

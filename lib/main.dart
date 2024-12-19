@@ -7,7 +7,11 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/di/locator.dart';
 import 'package:refugee_care_mobile/feature/notification/notification_screen.dart';
-import 'package:refugee_care_mobile/firebase_options.dart';
+import 'package:refugee_care_mobile/envs/firebase_dev_configurations.dart'
+    as dev;
+import 'package:refugee_care_mobile/envs/firebase_prod_configurations.dart'
+    as prod;
+
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/navigation/routers.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
@@ -17,15 +21,23 @@ import 'package:refugee_care_mobile/theme/app_theme.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-  await Firebase.initializeApp();
+  final firebaseDev = dev.DefaultFirebaseOptions.currentPlatform;
+  final firebaseProd = prod.DefaultFirebaseOptions.currentPlatform;
+
+  await Firebase.initializeApp(
+    options: firebaseDev,
+  );
 
   debugPrint("Handling a background message: ${message.messageId}");
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+  final firebaseDev = dev.DefaultFirebaseOptions.currentPlatform;
+  final firebaseProd = prod.DefaultFirebaseOptions.currentPlatform;
+
+  final result = await Firebase.initializeApp(
+    options: firebaseDev,
   );
   await setupLocator();
   // await dotenv.load(fileName: ".env");
@@ -35,22 +47,22 @@ void main() async {
         Brightness.light, // For light icons on dark status bar
     statusBarBrightness: Brightness.dark, // For dark icons on light status bar
   ));
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  // FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  NotificationSettings settings = await messaging.requestPermission(
-    alert: true,
-    announcement: false,
-    badge: true,
-    carPlay: false,
-    criticalAlert: false,
-    provisional: false,
-    sound: true,
-  );
+  // NotificationSettings settings = await messaging.requestPermission(
+  //   alert: true,
+  //   announcement: false,
+  //   badge: true,
+  //   carPlay: false,
+  //   criticalAlert: false,
+  //   provisional: false,
+  //   sound: true,
+  // );
 
-  String? token = await FirebaseMessaging.instance.getToken();
-  debugPrint("FCM token :$token");
-  String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
-  debugPrint("APNs token: $apnsToken");
+  // String? token = await FirebaseMessaging.instance.getToken();
+  // debugPrint("FCM token :$token");
+  // String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
+  // debugPrint("APNs token: $apnsToken");
 
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   // print('User granted permission: ${settings.authorizationStatus}');
@@ -121,18 +133,18 @@ class _MyAppState extends State<MyApp> {
   Future<void> setupInteractedMessage() async {
     // Get any messages which caused the application to open from
     // a terminated state.
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+    // RemoteMessage? initialMessage =
+    //     await FirebaseMessaging.instance.getInitialMessage();
 
     // If the message also contains a data property with a "type" of "chat",
     // navigate to a chat screen
-    if (initialMessage != null) {
-      _handleMessage(initialMessage);
-    }
+    // if (initialMessage != null) {
+    //   _handleMessage(initialMessage);
+    // }
 
     // Also handle any interaction when the app is in the background via a
     // Stream listener
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+    //  FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
 
   void _handleMessage(RemoteMessage message) {

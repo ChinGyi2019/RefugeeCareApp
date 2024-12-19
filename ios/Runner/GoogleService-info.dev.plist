@@ -3,28 +3,28 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBlTsfzNG9zGLpye12kaMx5B_KWdyroYCk</string>
+	<string>AIzaSyCy39qm08-7mcpSMAZTIAhHy93dYmNcVDc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1016517091354</string>
+	<string>553924792954</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
-	<key>IS_ADS_ENABLED</key>
-	<false/>
 	<key>BUNDLE_ID</key>
-	<string>com.vanzar.refugeeCare</string>
+	<string>com.vanzar.refugeeCare.dev</string>
 	<key>PROJECT_ID</key>
-	<string>refugeecare-9a790</string>
+	<string>refugee-care-staging</string>
 	<key>STORAGE_BUCKET</key>
-	<string>refugeecare-9a790.firebasestorage.app</string>
+	<string>refugee-care-staging.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1016517091354:ios:d35a149b5a84e01cf4f1a3</string>
+	<string>1:553924792954:ios:852de5decebb594d4761c3</string>
 </dict>
 </plist>

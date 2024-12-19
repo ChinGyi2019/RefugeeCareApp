@@ -242,31 +242,35 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
                                   keyboardType: TextInputType.visiblePassword,
                                 ),
                                 gapH20,
-                                Padding(
-                                  padding: const EdgeInsets.all(0.0),
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: ElevatedButton(
-                                      onPressed: uiState.enabledNextButton
-                                          ? () {
-                                              if (formKey.currentState
-                                                      ?.validate() ==
-                                                  true) {
-                                                provider.register();
-                                              }
-                                            }
-                                          : null,
-                                      child: Text('Register',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 16,
-                                                  color: AppColors.white)),
-                                    ),
-                                  ),
-                                ),
+                                uiState.loading
+                                    ? const Center(child: RefugeeLoading())
+                                    : Padding(
+                                        padding: const EdgeInsets.all(0.0),
+                                        child: SizedBox(
+                                          width: double.infinity,
+                                          child: ElevatedButton(
+                                            onPressed: uiState.enabledNextButton
+                                                ? () {
+                                                    if (formKey.currentState
+                                                            ?.validate() ==
+                                                        true) {
+                                                      provider.register();
+                                                    }
+                                                  }
+                                                : null,
+                                            child: Text('Register',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headlineSmall!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 16,
+                                                        color:
+                                                            AppColors.white)),
+                                          ),
+                                        ),
+                                      ),
                               ],
                             ),
                             if (uiState.loading)

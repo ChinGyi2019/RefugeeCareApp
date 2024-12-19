@@ -5,6 +5,62 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "App Dev",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "dev",
+                "-t",
+                "lib/main.dart",
+                // "-d",
+                // "android"
+            ]
+        },
+        {
+            "name": "App Prod",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "-t",
+                "lib/main.dart",
+                // "-d",
+                // "android"
+            ]
+        },
+        {
+            "name": "iOS Dev",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "dev",
+                "-t",
+                "lib/main.dart",
+                // "-d",
+                // "ios"
+            ]
+        },
+        {
+            "name": "iOS Prod",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "--flavor",
+                "prod",
+                "-t",
+                "lib/main.dart",
+                // "-d",
+                // "ios"
+            ]
+        },
+        {
             "name": "Flutter for web",
             "type": "dart",
             "request": "launch",
