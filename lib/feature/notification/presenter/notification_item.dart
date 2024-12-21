@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/domain/model/notification/refugee_notification.dart';
-import 'package:refugee_care_mobile/feature/notification/notification_screen.dart';
+import 'package:refugee_care_mobile/feature/notification/domain/model/notification/refugee_notification.dart';
+import 'package:refugee_care_mobile/feature/notification/presenter/notification_screen.dart';
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
@@ -41,7 +42,7 @@ class NotificationItem extends StatelessWidget {
                       gapH8,
                       Row(
                         children: [
-                          Text(notification.date,
+                          Text(notification.createdAt,
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
@@ -50,7 +51,7 @@ class NotificationItem extends StatelessWidget {
                                       fontWeight: FontWeight.w400,
                                       fontSize: 12)),
                           gapW8,
-                          Text("posed by ${notification.owner}",
+                          Text("posed by ${notification.communityShortName}",
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme

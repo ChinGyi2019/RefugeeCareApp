@@ -6,7 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/di/locator.dart';
-import 'package:refugee_care_mobile/feature/notification/notification_screen.dart';
+import 'package:refugee_care_mobile/feature/notification/presenter/notification_screen.dart';
 import 'package:refugee_care_mobile/envs/firebase_dev_configurations.dart'
     as dev;
 import 'package:refugee_care_mobile/envs/firebase_prod_configurations.dart'

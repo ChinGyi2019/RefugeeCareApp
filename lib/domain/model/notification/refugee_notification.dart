@@ -1,57 +1,22 @@
-class RefugeeNotification {
-  String id;
-  String title;
-  String type;
-  String date;
-  String dateOfExpiry;
-  String description;
-  String owner;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  // Constructor with all required fields
-  RefugeeNotification({
-    required this.date,
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.type,
-    required this.dateOfExpiry,
-    required this.owner,
-  });
-  static RefugeeNotification empty() {
-    return RefugeeNotification(
-      date: '',
-      id: '',
-      title: '',
-      type: '',
-      description: '',
-      owner: '',
-      dateOfExpiry: '',
-    );
-  }
+part 'refugee_notification.freezed.dart';
+part 'refugee_notification.g.dart';
 
-  // Method to convert JSON to CommunityCard object
-  factory RefugeeNotification.fromJson(Map<String, dynamic> json) {
-    return RefugeeNotification(
-      date: json['date'],
-      description: json['description'],
-      id: json['id'],
-      owner: json['owner'],
-      title: json['title'],
-      type: json['type'],
-      dateOfExpiry: json['dateOfExpiry'],
-    );
-  }
+@freezed
+class RefugeeNotification with _$RefugeeNotification {
+  const factory RefugeeNotification({
+    required String id,
+    required String title,
+    required String description,
+    required String communityId,
+    required bool active,
+    required String expiredDate,
+    required String createdAt,
+    required String communityName,
+    required String communityShortName,
+  }) = _RefugeeNotification;
 
-  // Method to convert CommunityCard object to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'type': type,
-      'owner': owner,
-      'date': date,
-      'description': description,
-      'dateOfExpiry': dateOfExpiry,
-    };
-  }
+  factory RefugeeNotification.fromJson(Map<String, dynamic> json) =>
+      _$RefugeeNotificationFromJson(json);
 }

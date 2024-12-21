@@ -13,7 +13,7 @@ import 'package:refugee_care_mobile/feature/cards/presenter/list/my_cards_screen
 import 'package:refugee_care_mobile/feature/cards/presenter/save/save_card_screen.dart';
 import 'package:refugee_care_mobile/feature/emergency/presenter/setup/emergency_setup_screen.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
-import 'package:refugee_care_mobile/feature/notification/notification_screen.dart';
+import 'package:refugee_care_mobile/feature/notification/presenter/notification_screen.dart';
 import 'package:refugee_care_mobile/feature/profile/profile_screen.dart';
 
 final routerConfig = GoRouter(
