@@ -1,5 +1,4 @@
 import 'package:refugee_care_mobile/domain/model/notification/refugee_notification.dart';
-import 'package:refugee_care_mobile/feature/notification/domain/model/notification/refugee_notification.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'notification_view_model.g.dart';
@@ -12,12 +11,12 @@ class NotificationViewModel extends _$NotificationViewModel {
   }
 
   Future<List<RefugeeNotification>> fetchNotifications() async {
-    final result = await ref.read(profileRepositoryProvider).getNotifications();
-    return result.fold((error) {
-      throw error;
-    }, (data) {
-      return data;
-    });
+    // final result = await ref.read(profileRepositoryProvider).getNotifications();
+    // return result.fold((error) {
+    //   throw error;
+    // }, (data) {
+    //   return data;
+    // });
     return [];
   }
 

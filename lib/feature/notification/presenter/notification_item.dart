@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/domain/model/notification/refugee_notification.dart';
-import 'package:refugee_care_mobile/feature/notification/domain/model/notification/refugee_notification.dart';
 import 'package:refugee_care_mobile/feature/notification/presenter/notification_screen.dart';
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';

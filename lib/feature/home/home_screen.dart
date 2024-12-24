@@ -115,11 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       //   },
                       // ),
                       gapH16,
-                      NotificationItem(
-                        notification: getDummyRefugeeNotifications().first,
-                        onTap: (notification) {},
-                        showSeeMore: true,
-                      ),
+                      // NotificationItem(
+                      //   notification: getDummyRefugeeNotifications().first,
+                      //   onTap: (notification) {},
+                      //   showSeeMore: true,
+                      // ),
                       gapH16,
                     ]))
           ],

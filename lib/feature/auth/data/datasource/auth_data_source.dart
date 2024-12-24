@@ -1,3 +1,4 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/data/uitls/url.dart';
 import 'package:refugee_care_mobile/feature/auth/domain/model/user/user.dart';
@@ -15,31 +16,54 @@ abstract class AuthRemoteDataSource {
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final NetworkService networkService;
   final HiveHelper hiveHelper;
+  final Account account;
 
-  AuthRemoteDataSourceImpl(this.networkService, this.hiveHelper);
+  AuthRemoteDataSourceImpl(this.networkService, this.hiveHelper, this.account);
 
   @override
   Future<Either<AppException, User>> register({required User user}) async {
     try {
-      final eitherType = await networkService.post(
-        RefugeeURL.REGISTER_API,
-        data: user.toJson(),
+      final result = await account.create(
+        userId: ID.unique(),
+        email: "${user.phoneNumber}@refugeeCare.com",
+        password: user.password ?? "",
+        name: user.name,
       );
-      return eitherType.fold(
-        (exception) {
-          return Left(exception);
-        },
-        (response) {
-          final user = User.fromJson(response.data);
-          // update the token for requests
-          hiveHelper.saveMainToken(user);
-          networkService.updateHeader(
-            {'Authorization': user.token ?? ""},
-          );
 
-          return Right(user);
-        },
+      final newUser = User(
+        id: result.$id,
+        phoneNumber: user.phoneNumber,
+        email: result.email,
+        name: result.name,
+        token: result.$id, // Assuming token is the user ID for now
       );
+
+      // Save the token and update the header
+      hiveHelper.saveMainToken(newUser);
+      networkService.updateHeader(
+        {'Authorization': newUser.token ?? ""},
+      );
+
+      return Right(newUser);
+      // final eitherType = await networkService.post(
+      //   RefugeeURL.REGISTER_API,
+      //   data: user.toJson(),
+      // );
+      // return eitherType.fold(
+      //   (exception) {
+      //     return Left(exception);
+      //   },
+      //   (response) {
+      //     final user = User.fromJson(response.data);
+      //     // update the token for requests
+      //     hiveHelper.saveMainToken(user);
+      //     networkService.updateHeader(
+      //       {'Authorization': user.token ?? ""},
+      //     );
+
+      //     return Right(user);
+      //   },
+      // );
     } catch (e) {
       debugPrint(e.toString());
       return Left(

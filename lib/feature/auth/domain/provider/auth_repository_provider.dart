@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:refugee_care_mobile/data/services/app_write_client_provider.dart';
 import 'package:refugee_care_mobile/feature/auth/data/datasource/auth_data_source.dart';
 import 'package:refugee_care_mobile/feature/auth/data/repository/auth_repository_impl.dart';
 import 'package:refugee_care_mobile/data/services/http_network_service_provider.dart';
@@ -11,8 +12,9 @@ import 'package:refugee_care_mobile/shared/storage/hive_helper.dart';
 final authDataSourceProvider = Provider<AuthRemoteDataSource>((ref) {
   final NetworkService networkService = ref.watch(networkServiceProvider);
   final HiveHelper hiveHelper = locator<HiveHelper>();
+  final account = ref.watch(accountProvider);
   //  ref.watch(hiveHelperProvider.future);
-  return AuthRemoteDataSourceImpl(networkService, hiveHelper);
+  return AuthRemoteDataSourceImpl(networkService, hiveHelper, account);
 });
 
 final authRepositoryProvider = Provider<AuthRepository>(
