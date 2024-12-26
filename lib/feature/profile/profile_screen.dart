@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:refugee_care_mobile/data/services/app_write_client_provider.dart';
 import 'package:refugee_care_mobile/feature/start/start_screen.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatefulHookConsumerWidget {
   const ProfileScreen({super.key, required this.title});
   static const String routeName = "/profile";
 
   final String title;
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +125,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     gapH16,
                     OutlinedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        await ref
+                            .read(accountProvider)
+                            .deleteSession(sessionId: 'current');
                         context.go(StartScreen.routeName);
                       },
                       style: OutlinedButton.styleFrom(

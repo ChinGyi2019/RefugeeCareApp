@@ -23,55 +23,45 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<Either<AppException, User>> register({required User user}) async {
     try {
-      final result = await account.create(
+      final email = "${user.phoneNumber}@refugeeCare.com";
+      final result = await account
+          .create(
         userId: ID.unique(),
-        email: "${user.phoneNumber}@refugeeCare.com",
+        email: email,
         password: user.password ?? "",
         name: user.name,
+      )
+          .onError(
+        (error, stackTrace) {
+          debugPrint("error:$error");
+          debugPrint("trace:$stackTrace");
+          throw Exception("Error occurred during account registration");
+        },
       );
-
+      debugPrint(result.toString());
       final newUser = User(
         id: result.$id,
-        phoneNumber: user.phoneNumber,
+        phoneNumber: "+65${user.phoneNumber ?? ''}",
         email: result.email,
         name: result.name,
-        token: result.$id, // Assuming token is the user ID for now
+        token: result.$id,
       );
+      await account.deleteSession(sessionId: 'current');
+      await account.createEmailPasswordSession(
+          email: email, password: user.password ?? '');
 
       // Save the token and update the header
-      hiveHelper.saveMainToken(newUser);
-      networkService.updateHeader(
-        {'Authorization': newUser.token ?? ""},
-      );
-
+      hiveHelper.saveMainToken(newUser..email = user.email);
       return Right(newUser);
-      // final eitherType = await networkService.post(
-      //   RefugeeURL.REGISTER_API,
-      //   data: user.toJson(),
-      // );
-      // return eitherType.fold(
-      //   (exception) {
-      //     return Left(exception);
-      //   },
-      //   (response) {
-      //     final user = User.fromJson(response.data);
-      //     // update the token for requests
-      //     hiveHelper.saveMainToken(user);
-      //     networkService.updateHeader(
-      //       {'Authorization': user.token ?? ""},
-      //     );
-
-      //     return Right(user);
-      //   },
-      // );
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint("error:$e");
+      debugPrint("trace:$e");
       return Left(
         AppException(
-          message: 'Unknown error occurred',
+          message: e.toString(),
           statusCode: 400,
           title: "Unknow error",
-          identifier: '${e.toString()}\nLoginUserRemoteDataSource.loginUser',
+          identifier: '${e.toString()}\nLoginUserRemoteDataSource.register',
         ),
       );
     }
@@ -81,25 +71,44 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<Either<AppException, User>> login(
       {required String phoneNumber, required password}) async {
     try {
-      final eitherType = await networkService.post(
-        RefugeeURL.LOGIN_API,
-        data: {"phoneNumber": phoneNumber, "password": password},
-      );
-      return eitherType.fold(
-        (exception) {
-          return Left(exception);
-        },
-        (response) {
-          final user = User.fromJson(response.data);
-          // update the token for requests
-          hiveHelper.saveMainToken(user);
-          networkService.updateHeader(
-            {'Authorization': user.token ?? ""},
-          );
-
-          return Right(user);
-        },
-      );
+      // session.$id
+      // debugPrint(session.toString());
+      // if (session.userId == "$phoneNumber@refugeecare.com") {
+      //   return Right(User(
+      //       id: session.userId,
+      //       phoneNumber: session.userId,
+      //       email: session.userId,
+      //       name: session.userId,
+      //       token: session.userId));
+      // }
+      final newSession = await account
+          .createEmailPasswordSession(
+              email: "$phoneNumber@refugeecare.com", password: password)
+          .onError((error, stackTrace) {
+        debugPrint("error:$error");
+        debugPrint("trace:$stackTrace");
+        throw Exception("error:$error");
+      });
+      // if (newSession.current) {
+      //   return Left(
+      //     AppException(
+      //       message: 'Invalid email or password',
+      //       statusCode: 400,
+      //       title: "Invalid email or password",
+      //       identifier:
+      //           'Invalid email or password\nLoginUserRemoteDataSource.loginUser',
+      //     ),
+      //   );
+      // }
+      //final result = await account.get();
+      return Right(
+          User(id: '', phoneNumber: '', email: '', name: '', token: ''));
+      // return Right(User(
+      //     id: result.$id,
+      //     phoneNumber: result.email,
+      //     email: result.email,
+      //     name: result.name,
+      //     token: result.$id));
     } catch (e) {
       debugPrint(e.toString());
       return Left(

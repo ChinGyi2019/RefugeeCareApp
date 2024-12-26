@@ -41,10 +41,9 @@ packages:
   appwrite:
     dependency: "direct main"
     description:
-      name: appwrite
-      sha256: "3e06607c183b92d3ef941427a0233d712b2d1651e37472f659cc40c85a82f962"
-      url: "https://pub.dev"
-    source: hosted
+      path: app-write-sdk
+      relative: true
+    source: path
     version: "13.1.0"
   args:
     dependency: transitive

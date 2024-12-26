@@ -1,28 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'notification_view_model.dart';
+part of 'splah_screen_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$notificationViewModelHash() =>
-    r'68d4289dd67b445dfd3a157f8401b39de1865bad';
+String _$splashScreenViewModelHash() =>
+    r'066b91aa7ff08b20c0571ff9c9c3038597708738';
 
-/// See also [NotificationViewModel].
-@ProviderFor(NotificationViewModel)
-final notificationViewModelProvider = AutoDisposeAsyncNotifierProvider<
-    NotificationViewModel, List<RefugeeNotification>>.internal(
-  NotificationViewModel.new,
-  name: r'notificationViewModelProvider',
+/// See also [SplashScreenViewModel].
+@ProviderFor(SplashScreenViewModel)
+final splashScreenViewModelProvider = AutoDisposeNotifierProvider<
+    SplashScreenViewModel, SplashScreenState>.internal(
+  SplashScreenViewModel.new,
+  name: r'splashScreenViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$notificationViewModelHash,
+      : _$splashScreenViewModelHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$NotificationViewModel
-    = AutoDisposeAsyncNotifier<List<RefugeeNotification>>;
+typedef _$SplashScreenViewModel = AutoDisposeNotifier<SplashScreenState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

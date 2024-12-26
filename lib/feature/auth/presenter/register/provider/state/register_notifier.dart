@@ -50,8 +50,7 @@ class RegisterNotifier extends StateNotifier<RegisterScreenState> {
   }
 
   Future<void> register() async {
-    state.loading = true;
-
+    state = state.copyWith(loading: true);
     final response = await authRepository.register(
         user: User(
             id: "",
@@ -61,15 +60,14 @@ class RegisterNotifier extends StateNotifier<RegisterScreenState> {
             password: state.password,
             token: ""));
 
-    state = state.copyWith(loading: true);
-    // await Future.delayed(Duration(seconds: 2));
     final authState = await response.asyncFold((failure) async {
       debugPrint(failure.identifier);
-      state.loading = false;
+
+      state = state.copyWith(loading: false);
       return AuthState.failure(failure);
     }, (user) async {
-      await authRepository.saveUser(user: user);
-      state.loading = false;
+      // await authRepository.saveUser(user: user);
+      state = state.copyWith(loading: false);
       return const AuthState.success();
     });
 

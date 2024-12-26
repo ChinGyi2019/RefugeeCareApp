@@ -273,11 +273,6 @@ class RegisterScreenState extends ConsumerState<RegisterScreen> {
                                       ),
                               ],
                             ),
-                            if (uiState.loading)
-                              const Align(
-                                alignment: Alignment.center,
-                                child: RefugeeLoading(),
-                              ),
                           ],
                         ))))));
   }

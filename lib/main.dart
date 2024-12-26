@@ -13,32 +13,16 @@ import 'package:refugee_care_mobile/envs/firebase_prod_configurations.dart'
     as prod;
 
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
+import 'package:refugee_care_mobile/main/appConfig/app_env.dart';
 import 'package:refugee_care_mobile/shared/navigation/routers.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 import 'package:refugee_care_mobile/theme/app_theme.dart';
 
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
-  final firebaseDev = dev.DefaultFirebaseOptions.currentPlatform;
-  final firebaseProd = prod.DefaultFirebaseOptions.currentPlatform;
+void main() async => commonMain(AppEnvironment.PROD);
 
-  await Firebase.initializeApp(
-    options: firebaseDev,
-  );
-
-  debugPrint("Handling a background message: ${message.messageId}");
-}
-
-void main() async {
+Future<void> commonMain(AppEnvironment environment) async {
   WidgetsFlutterBinding.ensureInitialized();
-  final firebaseDev = dev.DefaultFirebaseOptions.currentPlatform;
-  final firebaseProd = prod.DefaultFirebaseOptions.currentPlatform;
-
-  final result = await Firebase.initializeApp(
-    options: firebaseDev,
-  );
+  initFirebase(environment);
   await setupLocator();
   // await dotenv.load(fileName: ".env");
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -67,46 +51,17 @@ void main() async {
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   // print('User granted permission: ${settings.authorizationStatus}');
   // await FirebaseMessaging.instance.setAutoInitEnabled(true);
-  // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //   statusBarColor: Colors.transparent, // Set the status bar to transparent
-  //   systemNavigationBarColor:
-  //       Colors.transparent, // Set the navigation bar to transparent
-  //   statusBarIconBrightness: Brightness.light, // Light icons for the status bar
-  //   systemNavigationBarIconBrightness:
-  //       Brightness.light, // Light icons for the navigation bar
-  // ));
 
-  // Hides the status bar and navigation bar
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  // await HiveHelper().init();
+  runApp(const ProviderScope(child: MyApp()));
+}
 
-  runApp(const ProviderScope(
-      child:
-          //     child: MultiProvider(providers: [
-          //   ChangeNotifierProvider(create: (_) {
-          //     final provider = RegisterProvider();
-          //     provider.init();
-          //     return provider;
-          //   }),
-          //   ChangeNotifierProvider(create: (_) {
-          //     final provider = LoginProvider();
-          //     provider.init();
-          //     return provider;
-          //   }),
-          //   ChangeNotifierProvider(create: (_) {
-          //     final provider = SaveCardProvider();
-          //     provider.init();
-          //     return provider;
-          //   }),
-          //   ChangeNotifierProvider(create: (_) {
-          //     final provider = EmergencySetupProvider(
-          //         contactRepository: locator<ContactRepository>());
-          //     provider.init();
-          //     return provider;
-          //   }),
-          // ], child:
-          MyApp()));
+void initFirebase(AppEnvironment appEnvironment) async {
+  final firebaseDev = dev.DefaultFirebaseOptions.currentPlatform;
+  final firebaseProd = prod.DefaultFirebaseOptions.currentPlatform;
+
+  await Firebase.initializeApp(
+    options: appEnvironment == AppEnvironment.PROD ? firebaseProd : firebaseDev,
+  );
 }
 
 class MyApp extends StatefulWidget {

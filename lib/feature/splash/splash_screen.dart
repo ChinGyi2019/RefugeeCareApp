@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/domain/model/auth/auth_state.dart';
+import 'package:refugee_care_mobile/feature/auth/domain/provider/auth_repository_provider.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
 import 'package:refugee_care_mobile/feature/splash/provider/splah_screen_provider.dart';
 import 'package:refugee_care_mobile/feature/start/start_screen.dart';
@@ -21,7 +22,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Access your provider here
-      ref.read(splashScreenProvider.notifier).initAuthState();
+      ref.read(splashScreenViewModelProvider.notifier).initAuthState();
       // Do something with authState
     });
   }
@@ -31,7 +32,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
     // final provider = ref.watch(splashScreenProvider.notifier);
     // final state = ref.watch(splashScreenProvider);
     ref.listen(
-      splashScreenProvider.select((value) => value.authState),
+      splashScreenViewModelProvider.select((value) => value.authState),
       ((previous, next) {
         if (next is Failure) {
           context.go(StartScreen.routeName);

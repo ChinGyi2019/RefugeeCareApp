@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:refugee_care_mobile/data/services/app_write_client_provider.dart';
 import 'package:refugee_care_mobile/feature/advertisement/advertisement_item.dart';
 import 'package:refugee_care_mobile/feature/advertisement/advertisement_list_content.dart';
 import 'package:refugee_care_mobile/feature/advertisement/detail/advertisement_detail_screen.dart';
-import 'package:refugee_care_mobile/feature/notification/presenter/notification_item.dart';
-import 'package:refugee_care_mobile/feature/notification/presenter/notification_list_content.dart';
 import 'package:refugee_care_mobile/feature/notification/presenter/notification_screen.dart';
 import 'package:refugee_care_mobile/feature/profile/profile_screen.dart';
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatefulHookConsumerWidget {
   const MyHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
