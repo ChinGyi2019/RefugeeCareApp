@@ -22,3 +22,9 @@ final accountProvider = Provider<Account>((ref) {
   final account = Account(client);
   return account;
 });
+
+final storageProvider = Provider<Storage>((ref) {
+  final client = ref.watch(clientProvider);
+  final storage = Storage(client);
+  return storage;
+});

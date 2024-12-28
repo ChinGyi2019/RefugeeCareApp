@@ -1,22 +1,24 @@
 import 'dart:io';
+import 'package:appwrite/appwrite.dart';
+import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/data/services/network_services.dart';
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
-import 'package:refugee_care_mobile/data/uitls/url.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
 import 'package:refugee_care_mobile/domain/model/community/community.dart';
 import 'package:refugee_care_mobile/feature/cards/data/datasource/card_remote_datasource.dart';
 import 'package:refugee_care_mobile/feature/cards/data/mapper/card_mapper.dart';
-import 'package:refugee_care_mobile/feature/cards/data/response/card/community_card_data.dart';
 import 'package:refugee_care_mobile/feature/cards/data/response/community/community_data.dart';
+import 'package:refugee_care_mobile/main/appConfig/app_env.dart';
 import 'package:refugee_care_mobile/shared/extensions/data_formatter.dart';
 import 'package:refugee_care_mobile/shared/storage/hive_helper.dart';
 
 class CardRemoteDatasourceImpl implements CardRemoteDatasource {
-  final NetworkService networkService;
+  final Storage storage;
   final HiveHelper hiveHelper;
+  final Databases databases;
 
-  CardRemoteDatasourceImpl(this.networkService, this.hiveHelper);
+  CardRemoteDatasourceImpl(this.storage, this.hiveHelper, this.databases);
   @override
   Future<void> deleteCard(CommunityCard card) {
     // TODO: implement deleteCard
@@ -37,18 +39,37 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
 
   @override
   Future<Either<AppException, List<CommunityCard>>> getCards() async {
-    final eitherResponse = await networkService.get(RefugeeURL.CARD_API);
-    return eitherResponse.fold((exception) => Left(exception),
-        (response) async {
-      final data = response.data as List<dynamic>;
-      final list = data.map((json) {
-        return CommunityCardData.fromJson(json);
-      }).toList();
+    try {
+      return databases
+          .listDocuments(
+              databaseId: EnvInfo.databaseId,
+              collectionId: EnvInfo.cardCollectionId)
+          .then((value) {
+        debugPrint(value.toMap().toString());
+        //   value.documents.map(toElement)
+        return Either.right([]);
+      });
+    } catch (error) {
+      return Left(AppException(
+        message: 'Unknown error occurred while creating card',
+        statusCode: 499,
+        title: "Unknown error",
+        identifier: '${error.toString()}\ncardCreate',
+      ));
+    }
 
-      final cards = list.map((data) => mapToCommunityCard(data)).toList();
+    // final eitherResponse = await networkService.get(RefugeeURL.CARD_API);
+    // return eitherResponse.fold((exception) => Left(exception),
+    //     (response) async {
+    //   final data = response.data as List<dynamic>;
+    //   final list = data.map((json) {
+    //     return CommunityCardData.fromJson(json);
+    //   }).toList();
 
-      return Either.right(cards);
-    });
+    //   final cards = list.map((data) => mapToCommunityCard(data)).toList();
+
+    //   return Either.right(cards);
+    // });
   }
 
   @override
@@ -56,53 +77,122 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
     required CommunityCard card,
   }) async {
     try {
-      // Prepare the data fields
+      final cardID = ID.unique();
+
+      //frontPhoto
+      final frontPhotoFile = File(card.frontSidePhoto);
+      debugPrint(frontPhotoFile.path);
+      final uploadedFrontFile = await storage
+          .createFile(
+        bucketId: EnvInfo.buckedId,
+        fileId: ID.unique(),
+        file: InputFile.fromPath(
+            path: frontPhotoFile.path, filename: 'image.jpg'),
+      )
+          .then((value) {
+        debugPrint(value.toMap().toString());
+        return value;
+      }).onError((error, stackTrace) {
+        debugPrint("error:" + error.toString());
+        debugPrint("strace:" + stackTrace.toString());
+        throw Exception("error:" + error.toString());
+      });
+
+      // final backPhotoFile = File(card.backSidePhoto);
+      // final uploadedBackFile = await storage.createFile(
+      //   bucketId: EnvInfo.buckedId,
+      //   fileId: ID.unique(),
+      //   file: InputFile.fromPath(
+      //       path: backPhotoFile.path,
+      //       filename: frontPhotoFile.path.split('/').last),
+      // );
+
+      // final passportPhotoFile = File(card.passportPhoto);
+      // final uploadedPassportFile = await storage.createFile(
+      //   bucketId: EnvInfo.buckedId,
+      //   fileId: ID.unique(),
+      //   file: InputFile.fromPath(
+      //       path: passportPhotoFile.path,
+      //       filename: passportPhotoFile.path.split('/').last),
+      // );
       final data = {
         'cardNumber': card.cardNumber,
         'fullName': card.name,
         'dateOfBirth': formatDate(card.dateOfBirth),
         'nationality': card.nationality,
         'dateOfIssue': formatDate(card.dateOfIssue),
-        'dateOfexpiry': formatDate(card.dateOfExpiry),
+        'dateOfExpiry': formatDate(card.dateOfExpiry),
         'gender': card.gender,
         'uNCardNumber': card.uNHCRNumber ?? '',
         'studentNumber': card.studentNumber ?? '',
         'status': card.isVerified.toString(),
         'communityId': card.communityId,
+        'passportPhoto': "uploadedPassportFile",
+        'frontPhoto': uploadedFrontFile.$id,
+        'backPhoto': " uploadedBackFile."
       };
-
-      // Prepare the file fields
-      final files = <String, File>{};
-      if (card.passportPhoto.isNotEmpty) {
-        files['passportPhoto'] = File(card.passportPhoto);
-      }
-      if (card.frontSidePhoto.isNotEmpty) {
-        files['frontPhoto'] = File(card.frontSidePhoto);
-      }
-      if (card.backSidePhoto.isNotEmpty) {
-        files['backPhoto'] = File(card.backSidePhoto);
-      }
-
-      // Send the multipart request using the postMultipart method
-      final eitherResponse = await networkService.postMultipart(
-        RefugeeURL.CARD_API,
-        data: data,
-        files: files,
-      );
-
-      // Check the result of the network request
-      return eitherResponse.fold((exception) => Left(exception),
-          (response) async {
-        final data = response.data as List<dynamic>;
-        final list = data.map((json) {
-          return CommunityCardData.fromJson(json);
-        }).toList();
-
-        final cards = list.map((data) => mapToCommunityCard(data)).toList();
-
-        return Either.right(cards);
+      return await databases.createDocument(
+          databaseId: EnvInfo.databaseId,
+          collectionId: EnvInfo.cardCollectionId,
+          documentId: cardID,
+          data: data,
+          permissions: [
+            Permission.read(Role.users()),
+            Permission.update(Role.users()),
+            Permission.delete(Role.users()),
+          ]).then((value) {
+        debugPrint(value.toMap().toString());
+        return Either.right([]);
       });
-    } catch (e) {
+      // Prepare the data fields
+      // final data = {
+      //   'cardNumber': card.cardNumber,
+      //   'fullName': card.name,
+      //   'dateOfBirth': formatDate(card.dateOfBirth),
+      //   'nationality': card.nationality,
+      //   'dateOfIssue': formatDate(card.dateOfIssue),
+      //   'dateOfexpiry': formatDate(card.dateOfExpiry),
+      //   'gender': card.gender,
+      //   'uNCardNumber': card.uNHCRNumber ?? '',
+      //   'studentNumber': card.studentNumber ?? '',
+      //   'status': card.isVerified.toString(),
+      //   'communityId': card.communityId,
+      // };
+
+      // // Prepare the file fields
+      // final files = <String, File>{};
+      // if (card.passportPhoto.isNotEmpty) {
+      //   files['passportPhoto'] = File(card.passportPhoto);
+      // }
+      // if (card.frontSidePhoto.isNotEmpty) {
+      //   files['frontPhoto'] = File(card.frontSidePhoto);
+      // }
+      // if (card.backSidePhoto.isNotEmpty) {
+      //   files['backPhoto'] = File(card.backSidePhoto);
+      // }
+
+      // // Send the multipart request using the postMultipart method
+      // final eitherResponse = await networkService.postMultipart(
+      //   RefugeeURL.CARD_API,
+      //   data: data,
+      //   files: files,
+      // );
+
+      // // Check the result of the network request
+      // return eitherResponse.fold((exception) => Left(exception),
+      //     (response) async {
+      //   final data = response.data as List<dynamic>;
+      //   final list = data.map((json) {
+      //     return CommunityCardData.fromJson(json);
+      //   }).toList();
+
+      //   final cards = list.map((data) => mapToCommunityCard(data)).toList();
+
+      //   return Either.right(cards);
+      // });
+    } catch (e, strace) {
+      debugPrint("error:" + e.toString());
+      debugPrint("strace:" + strace.toString());
       return Left(AppException(
         message: 'Unknown error occurred while creating card',
         statusCode: 400,
@@ -114,19 +204,40 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
 
   @override
   Future<Either<AppException, List<Community>>> getCommunities() async {
-    final eitherResponse = await networkService.get(RefugeeURL.COMMUNITY_API);
-    return eitherResponse.fold((exception) => Left(exception),
-        (response) async {
-      final data = response.data as List<dynamic>;
-      final list = data.map((json) {
-        return CommunityData.fromJson(json);
-      }).toList();
+    try {
+      return databases
+          .listDocuments(
+              databaseId: EnvInfo.databaseId,
+              collectionId: EnvInfo.communityCollectionId)
+          .then((value) {
+        final list = value.documents.map((e) => CommunityData.fromJson(e.data));
+        debugPrint(value.toMap().toString());
+        //   value.documents.map(toElement)
+        final communities =
+            list.map((communityData) => mapToCommunity(communityData)).toList();
+        return Either.right(communities);
+      });
+    } catch (error) {
+      return Left(AppException(
+        message: 'Unknown error occurred while creating card',
+        statusCode: 499,
+        title: "Unknown error",
+        identifier: '${error.toString()}\ncardCreate',
+      ));
+    }
+    // final eitherResponse = await networkService.get(RefugeeURL.COMMUNITY_API);
+    // return eitherResponse.fold((exception) => Left(exception),
+    //     (response) async {
+    //   final data = response.data as List<dynamic>;
+    //   final list = data.map((json) {
+    //     return CommunityData.fromJson(json);
+    //   }).toList();
 
-      final communities =
-          list.map((communityData) => mapToCommunity(communityData)).toList();
+    //   final communities =
+    //       list.map((communityData) => mapToCommunity(communityData)).toList();
 
-      return Either.right(communities);
-    });
+    //   return Either.right(communities);
+    // });
   }
 
   // @override

@@ -10,6 +10,11 @@ abstract class EnvInfo {
   static String get appName => _environment._appTitle;
   static String get envName => _environment._envName;
   static String get baseURL => _environment._baseURL;
+  static String get databaseId => _environment._databaseID;
+  static String get buckedId => _environment._bucketID;
+  static String get cardCollectionId => _environment._cardCollectionID;
+  static String get communityCollectionId =>
+      _environment._communityCollectionID;
 
   static AppEnvironment get environment => _environment;
   static bool get isProduction => _environment == AppEnvironment.PROD;
@@ -28,13 +33,41 @@ extension _EnvProperties on AppEnvironment {
     AppEnvironment.PROD: 'https://dd',
   };
 
+  static const _databaseIDs = {
+    AppEnvironment.DEV: '676a4f1e0029e8b78a68',
+    AppEnvironment.STAGING: '676a4f1e0029e8b78a68',
+    AppEnvironment.PROD: '676a4f1e0029e8b78a68',
+  };
+
+  static const _cardCollectionIDs = {
+    AppEnvironment.DEV: '676a8770001cd5266ac1',
+    AppEnvironment.STAGING: '676a8770001cd5266ac1',
+    AppEnvironment.PROD: '676a8770001cd5266ac1',
+  };
+
+  static const _communityCollectionIDs = {
+    AppEnvironment.DEV: '676a54230037f9fac29a',
+    AppEnvironment.STAGING: '676a54230037f9fac29a',
+    AppEnvironment.PROD: '676a54230037f9fac29a',
+  };
+
+  static const _bucketIDs = {
+    AppEnvironment.DEV: '676adf7a00058a4f41c3',
+    AppEnvironment.STAGING: '676adf7a00058a4f41c3',
+    AppEnvironment.PROD: '676adf7a00058a4f41c3',
+  };
+
   static const _envs = {
     AppEnvironment.DEV: 'dev',
-    AppEnvironment.STAGING: '', // todo add "staging"
+    AppEnvironment.STAGING: 'staging', // todo add "staging"
     AppEnvironment.PROD: '',
   };
 
   String get _appTitle => _appTitles[this]!;
   String get _envName => _envs[this]!;
   String get _baseURL => _baseURLs[this]!;
+  String get _databaseID => _databaseIDs[this]!;
+  String get _cardCollectionID => _cardCollectionIDs[this]!;
+  String get _communityCollectionID => _communityCollectionIDs[this]!;
+  String get _bucketID => _bucketIDs[this]!;
 }

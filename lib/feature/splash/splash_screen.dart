@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/domain/model/auth/auth_state.dart';
-import 'package:refugee_care_mobile/feature/auth/domain/provider/auth_repository_provider.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
 import 'package:refugee_care_mobile/feature/splash/provider/splah_screen_provider.dart';
 import 'package:refugee_care_mobile/feature/start/start_screen.dart';

@@ -86,11 +86,10 @@ class SaveCardStep1Screen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(saveCardProvider);
-    return Expanded(
-        child: ListView(
-            shrinkWrap: false,
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
-            children: [
+    return ListView(
+        shrinkWrap: false,
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+        children: [
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(
@@ -314,7 +313,7 @@ class SaveCardStep1Screen extends ConsumerWidget {
                   ],
                 ),
               )),
-        ]));
+        ]);
   }
 }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:refugee_care_mobile/data/services/app_write_client_provider.dart';
 import 'package:refugee_care_mobile/feature/advertisement/advertisement_item.dart';
 import 'package:refugee_care_mobile/feature/advertisement/advertisement_list_content.dart';
 import 'package:refugee_care_mobile/feature/advertisement/detail/advertisement_detail_screen.dart';

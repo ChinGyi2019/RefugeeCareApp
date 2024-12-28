@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/data/services/app_write_client_provider.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
 import 'package:refugee_care_mobile/domain/model/auth/auth_state.dart';
 import 'package:refugee_care_mobile/feature/auth/domain/provider/auth_repository_provider.dart';
-import 'package:refugee_care_mobile/feature/auth/domain/repository/auth_repository.dart';
-import 'package:refugee_care_mobile/feature/splash/provider/state/splash_screen_notifier.dart';
 import 'package:refugee_care_mobile/feature/splash/provider/state/splash_scrren_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'splah_screen_provider.g.dart';

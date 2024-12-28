@@ -66,6 +66,7 @@ class RegisterNotifier extends StateNotifier<RegisterScreenState> {
       state = state.copyWith(loading: false);
       return AuthState.failure(failure);
     }, (user) async {
+      debugPrint(user.name.toString());
       // await authRepository.saveUser(user: user);
       state = state.copyWith(loading: false);
       return const AuthState.success();

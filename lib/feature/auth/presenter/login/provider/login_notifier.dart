@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/feature/auth/domain/provider/auth_repository_provider.dart';
 
@@ -29,6 +30,7 @@ class LoginNotifier extends Notifier<LoginState> {
     await response.fold((failure) {
       state = LoginState(errorMessage: failure.message, isLoading: false);
     }, (user) async {
+      debugPrint(user.name.toString());
       await authRepository.saveUser(user: user);
       state = LoginState(isLoggedIn: true, isLoading: false);
     });
