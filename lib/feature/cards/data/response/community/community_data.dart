@@ -4,6 +4,7 @@ part 'community_data.g.dart'; // Auto-generated file
 
 @JsonSerializable()
 class CommunityData {
+  @JsonKey(name: '\$id')
   final String? id;
   final String? name;
   final List<String>? email;

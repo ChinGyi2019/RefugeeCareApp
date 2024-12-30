@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/data/services/network_services.dart';
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
+import 'package:refugee_care_mobile/feature/cards/data/response/card/community_card_data.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
 import 'package:refugee_care_mobile/domain/model/community/community.dart';
 import 'package:refugee_care_mobile/feature/cards/data/datasource/card_remote_datasource.dart';
@@ -45,9 +46,12 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
               databaseId: EnvInfo.databaseId,
               collectionId: EnvInfo.cardCollectionId)
           .then((value) {
-        debugPrint(value.toMap().toString());
-        //   value.documents.map(toElement)
-        return Either.right([]);
+        final list =
+            value.documents.map((e) => CommunityCardData.fromJson(e.data));
+
+        final cards = list.map((data) => mapToCommunityCard(data)).toList();
+
+        return Either.right(cards);
       });
     } catch (error) {
       return Left(AppException(
@@ -78,10 +82,22 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
   }) async {
     try {
       final cardID = ID.unique();
+      // Check file sizes (under 2 MB for each file)
 
       //frontPhoto
       final frontPhotoFile = File(card.frontSidePhoto);
-      debugPrint(frontPhotoFile.path);
+      final backPhotoFile = File(card.backSidePhoto);
+      final passportPhotoFile = File(card.passportPhoto);
+      if (frontPhotoFile.lengthSync() > 2 * 1024 * 1024 ||
+          backPhotoFile.lengthSync() > 2 * 1024 * 1024 ||
+          passportPhotoFile.lengthSync() > 2 * 1024 * 1024) {
+        return Left(AppException(
+          message: 'Each File size should be under 2 MB',
+          statusCode: 400,
+          title: "File Size Error",
+          identifier: 'fileSizeCheck',
+        ));
+      }
       final uploadedFrontFile = await storage
           .createFile(
         bucketId: EnvInfo.buckedId,
@@ -93,28 +109,26 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
         debugPrint(value.toMap().toString());
         return value;
       }).onError((error, stackTrace) {
-        debugPrint("error:" + error.toString());
-        debugPrint("strace:" + stackTrace.toString());
-        throw Exception("error:" + error.toString());
+        debugPrint("error:$error");
+        debugPrint("strace:$stackTrace");
+        throw Exception("error:$error");
       });
 
-      // final backPhotoFile = File(card.backSidePhoto);
-      // final uploadedBackFile = await storage.createFile(
-      //   bucketId: EnvInfo.buckedId,
-      //   fileId: ID.unique(),
-      //   file: InputFile.fromPath(
-      //       path: backPhotoFile.path,
-      //       filename: frontPhotoFile.path.split('/').last),
-      // );
+      final uploadedBackFile = await storage.createFile(
+        bucketId: EnvInfo.buckedId,
+        fileId: ID.unique(),
+        file: InputFile.fromPath(
+            path: backPhotoFile.path,
+            filename: frontPhotoFile.path.split('/').last),
+      );
 
-      // final passportPhotoFile = File(card.passportPhoto);
-      // final uploadedPassportFile = await storage.createFile(
-      //   bucketId: EnvInfo.buckedId,
-      //   fileId: ID.unique(),
-      //   file: InputFile.fromPath(
-      //       path: passportPhotoFile.path,
-      //       filename: passportPhotoFile.path.split('/').last),
-      // );
+      final uploadedPassportFile = await storage.createFile(
+        bucketId: EnvInfo.buckedId,
+        fileId: ID.unique(),
+        file: InputFile.fromPath(
+            path: passportPhotoFile.path,
+            filename: passportPhotoFile.path.split('/').last),
+      );
       final data = {
         'cardNumber': card.cardNumber,
         'fullName': card.name,
@@ -126,10 +140,10 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
         'uNCardNumber': card.uNHCRNumber ?? '',
         'studentNumber': card.studentNumber ?? '',
         'status': card.isVerified.toString(),
-        'communityId': card.communityId,
-        'passportPhoto': "uploadedPassportFile",
+        'community': card.communityId,
+        'passportPhoto': uploadedPassportFile.$id,
         'frontPhoto': uploadedFrontFile.$id,
-        'backPhoto': " uploadedBackFile."
+        'backPhoto': uploadedBackFile.$id
       };
       return await databases.createDocument(
           databaseId: EnvInfo.databaseId,
@@ -140,9 +154,18 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
             Permission.read(Role.users()),
             Permission.update(Role.users()),
             Permission.delete(Role.users()),
-          ]).then((value) {
+          ]).then((value) async {
         debugPrint(value.toMap().toString());
-        return Either.right([]);
+        return await databases
+            .listDocuments(
+                databaseId: EnvInfo.databaseId,
+                collectionId: EnvInfo.cardCollectionId)
+            .then((value) {
+          final list =
+              value.documents.map((e) => CommunityCardData.fromJson(e.data));
+          final cards = list.map((data) => mapToCommunityCard(data)).toList();
+          return Either.right(cards);
+        });
       });
       // Prepare the data fields
       // final data = {
@@ -191,8 +214,8 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
       //   return Either.right(cards);
       // });
     } catch (e, strace) {
-      debugPrint("error:" + e.toString());
-      debugPrint("strace:" + strace.toString());
+      debugPrint("error:$e");
+      debugPrint("strace:$strace");
       return Left(AppException(
         message: 'Unknown error occurred while creating card',
         statusCode: 400,
@@ -212,7 +235,7 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
           .then((value) {
         final list = value.documents.map((e) => CommunityData.fromJson(e.data));
         debugPrint(value.toMap().toString());
-        //   value.documents.map(toElement)
+
         final communities =
             list.map((communityData) => mapToCommunity(communityData)).toList();
         return Either.right(communities);

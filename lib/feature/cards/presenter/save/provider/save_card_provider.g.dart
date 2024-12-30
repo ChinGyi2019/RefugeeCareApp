@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'splah_screen_provider.dart';
+part of 'save_card_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$splashScreenViewModelHash() =>
-    r'0ef7a1c3d421ef3c006eb5aa1039d9df8fa2aed4';
+String _$saveCardViewModelHash() => r'bfee14b72e89bb8b3ef66a9c8c6051c78fb9b8d4';
 
-/// See also [SplashScreenViewModel].
-@ProviderFor(SplashScreenViewModel)
-final splashScreenViewModelProvider = AutoDisposeNotifierProvider<
-    SplashScreenViewModel, SplashScreenState>.internal(
-  SplashScreenViewModel.new,
-  name: r'splashScreenViewModelProvider',
+/// See also [SaveCardViewModel].
+@ProviderFor(SaveCardViewModel)
+final saveCardViewModelProvider = AutoDisposeNotifierProvider<SaveCardViewModel,
+    SaveCardScreenState>.internal(
+  SaveCardViewModel.new,
+  name: r'saveCardViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$splashScreenViewModelHash,
+      : _$saveCardViewModelHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SplashScreenViewModel = AutoDisposeNotifier<SplashScreenState>;
+typedef _$SaveCardViewModel = AutoDisposeNotifier<SaveCardScreenState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

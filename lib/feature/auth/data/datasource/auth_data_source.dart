@@ -121,7 +121,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw Exception("error:$error");
       }).then((_) async {
         final result = await account.get();
-        debugPrint("result in " + result.toString());
+        debugPrint("result in $result");
         return Right(User(
             id: result.$id,
             phoneNumber: result.email,

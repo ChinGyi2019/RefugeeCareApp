@@ -28,8 +28,8 @@ class AppTheme {
               fontWeight: FontWeight.w500,
             ),
             bodySmall: const TextStyle(
-              color: AppColors.textLight,
-              fontWeight: FontWeight.w500,
+              color: AppColors.iconBlack,
+              fontWeight: FontWeight.w400,
             ),
           ),
       iconTheme: const IconThemeData(color: AppColors.iconLight),

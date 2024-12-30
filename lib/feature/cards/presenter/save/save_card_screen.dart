@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,13 +11,15 @@ import 'package:refugee_care_mobile/shared/extensions/color_extensions.dart';
 import 'package:refugee_care_mobile/shared/extensions/date_input_formatter.dart';
 import 'package:refugee_care_mobile/shared/extensions/date_validator.dart';
 import 'package:refugee_care_mobile/shared/widgets/Refugee_text_dropdown_field.dart';
+import 'package:refugee_care_mobile/shared/widgets/refugee_dialog.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_form_feild.dart';
+import 'package:refugee_care_mobile/shared/widgets/refugee_loading.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_outline_button.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_upload_btn.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class SaveCardScreen extends ConsumerStatefulWidget {
+class SaveCardScreen extends StatefulHookConsumerWidget {
   const SaveCardScreen({super.key, required this.title});
   static const String routeName = '/save-card';
   final String title;
@@ -30,14 +33,35 @@ class _SaveCardScreenState extends ConsumerState<SaveCardScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final provider = ref.watch(saveCardProvider);
+      final provider = ref.watch(saveCardViewModelProvider.notifier);
       await provider.init();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = ref.watch(saveCardProvider);
+    final state = ref.watch(saveCardViewModelProvider);
+    final viewModel = ref.watch(saveCardViewModelProvider.notifier);
+    ref.listen(
+      saveCardViewModelProvider.select((value) => value.error),
+      ((previous, next) {
+        if (next != null) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return RefugeeDialog(
+                title: next.title,
+                message: next.message,
+                singleBtnTitle: 'Try again',
+                singleBtnCallback: () {
+                  context.pop();
+                },
+              );
+            },
+          );
+        }
+      }),
+    );
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -51,8 +75,8 @@ class _SaveCardScreenState extends ConsumerState<SaveCardScreen> {
                   color: AppColors.primary,
                   iconSize: 32, // Customize your icon here
                   onPressed: () {
-                    if (provider.state.currentScreen == 2) {
-                      provider.updateCurrentScreen(1);
+                    if (state.currentScreen == 2) {
+                      viewModel.updateCurrentScreen(1);
                       return;
                     }
                     Navigator.pop(context);
@@ -67,25 +91,20 @@ class _SaveCardScreenState extends ConsumerState<SaveCardScreen> {
                 fontSize: 18),
           ),
         ),
-        body: Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: AppColors.bgLight,
-            child: Stack(children: [
-              if (provider.state.currentScreen == 1)
-                const SaveCardStep1Screen()
-              else if (provider.state.currentScreen == 2)
-                const SaveCardStep2Screen()
-            ])));
+        body: state.currentScreen == 1
+            ? SaveCardStep1Screen()
+            : SaveCardStep2Screen());
   }
 }
 
-class SaveCardStep1Screen extends ConsumerWidget {
-  const SaveCardStep1Screen({super.key});
+class SaveCardStep1Screen extends HookConsumerWidget {
+  SaveCardStep1Screen({super.key});
+  final formKey = useMemoized(() => GlobalKey<FormState>());
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(saveCardProvider);
+    final state = ref.watch(saveCardViewModelProvider);
+    final viewModel = ref.watch(saveCardViewModelProvider.notifier);
     return ListView(
         shrinkWrap: false,
         padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
@@ -103,23 +122,22 @@ class SaveCardStep1Screen extends ConsumerWidget {
           SizedBox(
               height: 60,
               child: ListView.builder(
-                itemCount: provider.state.communities.length,
+                itemCount: state.communities.length,
                 shrinkWrap: false,
                 scrollDirection: Axis.horizontal,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                 itemBuilder: (context, index) {
-                  final data = provider.state.communities[index];
+                  final data = state.communities[index];
                   return Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: RefugeeTextButton(
                         title: data.shortName,
                         onTap: () {
-                          provider.updateCommunity(data);
+                          viewModel.updateCommunity(data);
                         },
-                        isSelected:
-                            provider.state.selectedCommunity.shortName ==
-                                data.shortName,
+                        isSelected: state.selectedCommunity?.shortName ==
+                            data.shortName,
                       ));
                 },
               )),
@@ -127,7 +145,7 @@ class SaveCardStep1Screen extends ConsumerWidget {
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
-                key: provider.state.formKey,
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -141,14 +159,9 @@ class SaveCardStep1Screen extends ConsumerWidget {
                         }
                         return null;
                       },
-                      value: provider.state.card.name,
+                      value: state.card.name,
                       onChanged: (value) {
-                        provider.updateFullName(value);
-                        // provider.name = value;
-                      },
-                      onSaved: (value) {
-                        provider.updateFullName(value!);
-                        // provider.name = value!;
+                        viewModel.updateFullName(value);
                       },
                     ),
                     RefugeeFormFeild(
@@ -165,19 +178,16 @@ class SaveCardStep1Screen extends ConsumerWidget {
                         // }
                         return null;
                       },
+                      value: state.card.cardNumber,
                       onChanged: (value) {
-                        provider.updateCardNumber(value);
-                      },
-                      value: provider.state.card.cardNumber,
-                      onSaved: (value) {
-                        provider.updateCardNumber(value!);
+                        viewModel.updateCardNumber(value);
                       },
                     ),
                     RefugeeFormFeild(
                       title: "Date of Birth",
                       decoration: const InputDecoration(
                           hintText: 'Enter your date of birth'),
-                      value: provider.state.card.dateOfBirth,
+                      value: state.card.dateOfBirth,
                       validator: (value) {
                         return validateDate(value ?? '');
                       },
@@ -189,10 +199,10 @@ class SaveCardStep1Screen extends ConsumerWidget {
                         DateInputFormatter(),
                       ],
                       onChanged: (value) {
-                        provider.updateDob(value);
+                        viewModel.updateDob(value);
                       },
                       onSaved: (value) {
-                        provider.updateDob(value!);
+                        viewModel.updateDob(value!);
                       },
                     ),
                     gapH16,
@@ -208,23 +218,22 @@ class SaveCardStep1Screen extends ConsumerWidget {
                         RefugeeTextButton(
                             title: 'Male',
                             onTap: () {
-                              provider.updateGender("Male");
+                              viewModel.updateGender("Male");
                             },
-                            isSelected: provider.state.card.gender == 'Male'),
+                            isSelected: state.card?.gender == 'Male'),
                         gapW16,
                         RefugeeTextButton(
                             title: 'Female',
                             onTap: () {
-                              provider.updateGender("Female");
+                              viewModel.updateGender("Female");
                             },
-                            isSelected: provider.state.card.gender == 'Female')
+                            isSelected: state.card?.gender == 'Female')
                       ],
                     ),
                     gapH16,
                     RefugeeTextDropdownField(
                       controller: TextEditingController.fromValue(
-                          TextEditingValue(
-                              text: provider.state.card.nationality)),
+                          TextEditingValue(text: state.card.nationality)),
                       title: "Nationality",
                       enabled: true,
                       onTap: () {
@@ -232,9 +241,9 @@ class SaveCardStep1Screen extends ConsumerWidget {
                           context: context,
                           builder: (context) {
                             return CountryBottomsheetScreen(
-                              selectedCountry: provider.state.card.nationality,
+                              selectedCountry: state.card?.nationality ?? '',
                               onSelect: (country) {
-                                provider.updateNationality(country);
+                                viewModel.updateNationality(country);
                               },
                             );
                           },
@@ -262,15 +271,15 @@ class SaveCardStep1Screen extends ConsumerWidget {
                         return null;
                       },
                       onChanged: (value) {
-                        provider.updateNationality(value);
+                        viewModel.updateNationality(value);
                       },
                       onSaved: (value) {
-                        provider.updateNationality(value!);
+                        viewModel.updateNationality(value!);
                       },
                     ),
                     RefugeeFormFeild(
                       title: "Date of issue",
-                      value: provider.state.card.dateOfIssue,
+                      value: state.card?.dateOfIssue ?? '',
                       decoration: const InputDecoration(
                           hintText: 'Enter your date of issue'),
                       validator: (value) {
@@ -288,28 +297,36 @@ class SaveCardStep1Screen extends ConsumerWidget {
                         DateInputFormatter(),
                       ],
                       onChanged: (value) {
-                        provider.updateDateOfIssue(value);
+                        viewModel.updateDateOfIssue(value);
                       },
                       onSaved: (value) {
-                        provider.updateDateOfIssue(value!);
+                        viewModel.updateDateOfIssue(value!);
                       },
                     ),
                     gapH20,
-                    Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: provider.state.enabledNextButton
-                              ? () {
-                                  provider.save();
-                                  if (provider.validateSetp1()) {}
-                                }
-                              : null,
-                          child: const Text('Next'),
-                        ),
-                      ),
-                    ),
+                    state.loading
+                        ? const Align(
+                            alignment: Alignment.center,
+                            child: RefugeeLoading(),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: state.enabledNextButton
+                                    ? () {
+                                        formKey.currentState?.save();
+                                        if (formKey.currentState?.validate() ==
+                                            true) {
+                                          viewModel.updateCurrentScreen(2);
+                                        }
+                                      }
+                                    : null,
+                                child: const Text('Next'),
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               )),
@@ -318,11 +335,13 @@ class SaveCardStep1Screen extends ConsumerWidget {
 }
 
 class SaveCardStep2Screen extends ConsumerWidget {
-  const SaveCardStep2Screen({super.key});
+  SaveCardStep2Screen({super.key});
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(saveCardProvider);
+    final state = ref.watch(saveCardViewModelProvider);
+    final viewModel = ref.watch(saveCardViewModelProvider.notifier);
     Future<void> pickImage(Function(XFile) onDone) async {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -352,10 +371,10 @@ class SaveCardStep2Screen extends ConsumerWidget {
                       gapH16,
                       RefugeeUploadBtn(
                         title: "Upload Photo",
-                        imageURL: provider.state.card.passportPhoto,
+                        imageURL: state.card.passportPhoto,
                         onTap: () {
                           pickImage((file) {
-                            provider.updatePasspord(file.path);
+                            viewModel.updatePassport(file.path);
                           });
                         },
                       ),
@@ -376,19 +395,19 @@ class SaveCardStep2Screen extends ConsumerWidget {
                             children: [
                               RefugeeUploadBtn(
                                   title: "Upload Photo\n(Back)",
-                                  imageURL: provider.state.card.frontSidePhoto,
+                                  imageURL: state.card.frontSidePhoto,
                                   onTap: () {
                                     pickImage((file) {
-                                      provider.updateFontCard(file.path);
+                                      viewModel.updateFrontCard(file.path);
                                     });
                                   }),
                               gapW16,
                               RefugeeUploadBtn(
                                 title: "Upload Photo\n(Back)",
-                                imageURL: provider.state.card.backSidePhoto,
+                                imageURL: state.card.backSidePhoto,
                                 onTap: () {
                                   pickImage((file) {
-                                    provider.updateBackCard(file.path);
+                                    viewModel.updateBackCard(file.path);
                                   });
                                 },
                               ),
@@ -438,89 +457,29 @@ class SaveCardStep2Screen extends ConsumerWidget {
                   ),
                   gapH24,
                   gapH24,
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: provider.validateSetp2()
-                          ? () async {
-                              await provider.sumbit(() {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Submitted')),
-                                );
-                                context.pop();
-                              });
-                            }
-                          : null,
-                      child: const Text('Next'),
-                    ),
-                  )
+                  state.loading
+                      ? const Align(
+                          alignment: Alignment.center,
+                          child: RefugeeLoading(),
+                        )
+                      : SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: viewModel.validateStep2()
+                                ? () async {
+                                    await viewModel.submit(() {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            content: Text('Submitted')),
+                                      );
+                                      context.pop();
+                                    });
+                                  }
+                                : null,
+                            child: const Text('Next'),
+                          ),
+                        )
                 ])));
   }
 }
-
-// Text(
-//   'Full name (as per your card)',
-//   style: Theme.of(context)
-//       .textTheme
-//       .titleSmall
-//       ?.copyWith(fontWeight: FontWeight.bold),
-// ),
-// gapH16,
-
-// /// EMAIL FIELD
-// TextFormField(
-//   keyboardType: TextInputType.emailAddress,
-//   decoration: const InputDecoration(
-//     // suffixIcon: SvgPicture.asset(
-//     //   'assets/icons/check_filled.svg',
-//     //   width: 17,
-//     //   height: 11,
-//     //   fit: BoxFit.none,
-//     //   colorFilter: AppColors.success.toColorFilter,
-//     // ),
-//     hintText: 'Enter your full name',
-//   ),
-// ),
-// RefugeeFormFeild(
-//   title: "Card's reference no/id (as per your card)",
-//   error: 'dd',
-//   value: '',
-//   validator: (value) {
-//     return 'error';
-//   },
-//   decoration: InputDecoration(hintText: 'Enter card number'),
-//   onChanged: (value) {},
-
-// RefugeeFormFeild(
-//                             title: 'Full name (as per your card)',
-//                             decoration: const InputDecoration(
-//                                 hintText: 'Enter your full name'),
-//                             validator: (value) {
-//                               if (value == null || value.isEmpty) {
-//                                 return 'Please enter your email';
-//                               }
-//                               if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-//                                   .hasMatch(value)) {
-//                                 return 'Please enter a valid email';
-//                               }
-//                               return null;
-//                             },
-//                             onSaved: (value) {
-//                               provider.email = value!;
-//                             },
-//                           ),
-//                           TextFormField(
-//                             decoration: const InputDecoration(labelText: 'Password'),
-//                             obscureText: true,
-//                             validator: (value) {
-//                               if (value == null || value.isEmpty) {
-//                                 return 'Please enter your password';
-//                               }
-//                               if (value.length < 6) {
-//                                 return 'Password must be at least 6 characters long';
-//                               }
-//                               return null;
-//                             },
-//                             onSaved: (value) {
-//                               provider.password = value!;
-//                             },

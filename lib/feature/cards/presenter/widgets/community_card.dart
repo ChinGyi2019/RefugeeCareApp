@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:refugee_care_mobile/data/services/app_write_client_provider.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
+import 'package:refugee_care_mobile/main/appConfig/app_env.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
+import 'package:refugee_care_mobile/shared/widgets/refugee_loading.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
-class CommunityCardItem extends StatelessWidget {
+class CommunityCardItem extends HookConsumerWidget {
   CommunityCard card;
 
   CommunityCardItem({super.key, required this.card, required this.onTap});
   final Function(CommunityCard) onTap;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final storage = ref.watch(storageProvider);
     return GestureDetector(
         onTap: () {
           onTap(card);
@@ -21,7 +26,6 @@ class CommunityCardItem extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
               child: Stack(alignment: AlignmentDirectional.center, children: [
                 Expanded(
-                    flex: 1,
                     child: Transform.rotate(
                         angle: -0.785398, // -45 degrees in radians
                         child: Text(card.community.shortName,
@@ -42,10 +46,24 @@ class CommunityCardItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          CircleAvatar(
-                            radius: 28,
-                            backgroundImage: AssetImage(card.community.logo),
-                          ),
+                          FutureBuilder(
+                              future: storage.getFilePreview(
+                                bucketId: EnvInfo.buckedId,
+                                fileId: card.community.logo,
+
+                                // optional
+                              ), // Works for both public file and private file, for private files you need to be logged in
+                              builder: (context, snapshot) {
+                                return snapshot.hasData && snapshot.data != null
+                                    ? CircleAvatar(
+                                        radius: 28,
+                                        backgroundImage:
+                                            MemoryImage(snapshot.data!),
+                                      )
+                                    : RefugeeLoading(
+                                        strokeWidth: 1,
+                                      );
+                              }),
                           gapW8,
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +74,7 @@ class CommunityCardItem extends StatelessWidget {
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(
-                                        fontSize: 18,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w700),
                               ),
                               Text(
@@ -75,20 +93,29 @@ class CommunityCardItem extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: 80,
-                          height: 90,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: AppColors.bgLight,
-                            borderRadius: BorderRadius.circular(
-                                8), // Optional: for rounded corners
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(card.passportPhoto),
-                            ),
-                          ),
-                        ),
+                        FutureBuilder(
+                            future: storage.getFilePreview(
+                              bucketId: EnvInfo.buckedId,
+                              fileId: card.passportPhoto,
+                            ), // Works for both public file and private file, for private files you need to be logged in
+                            builder: (context, snapshot) {
+                              return snapshot.hasData && snapshot.data != null
+                                  ? Container(
+                                      width: 80,
+                                      height: 90,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        color: AppColors.bgLight,
+                                        borderRadius: BorderRadius.circular(
+                                            8), // Optional: for rounded corners
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: MemoryImage(snapshot.data!),
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox();
+                            }),
                         gapW8,
                         Expanded(
                           flex: 1,
@@ -104,10 +131,9 @@ class CommunityCardItem extends StatelessWidget {
                                         'ID',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!
+                                            .bodySmall!
                                             .copyWith(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w700,
                                             ),
                                       )),
                                   Text(
@@ -144,10 +170,9 @@ class CommunityCardItem extends StatelessWidget {
                                         'Name',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!
+                                            .bodySmall!
                                             .copyWith(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w700,
                                             ),
                                       )),
                                   Text(
@@ -185,10 +210,9 @@ class CommunityCardItem extends StatelessWidget {
                                         'Gender',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!
+                                            .bodySmall!
                                             .copyWith(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w700,
                                             ),
                                       )),
                                   Text(
@@ -225,11 +249,8 @@ class CommunityCardItem extends StatelessWidget {
                                         'Birth date',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                                            .bodySmall!
+                                            .copyWith(fontSize: 14),
                                       )),
                                   Text(
                                     ':',
@@ -265,11 +286,8 @@ class CommunityCardItem extends StatelessWidget {
                                         'Nationality',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                                            .bodySmall!
+                                            .copyWith(fontSize: 14),
                                       )),
                                   Text(
                                     ':',
@@ -302,14 +320,11 @@ class CommunityCardItem extends StatelessWidget {
                                   Expanded(
                                       flex: 2,
                                       child: Text(
-                                        'Date of Issue',
+                                        'Issued date',
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                                            .bodySmall!
+                                            .copyWith(fontSize: 14),
                                       )),
                                   Text(
                                     ':',
@@ -330,7 +345,7 @@ class CommunityCardItem extends StatelessWidget {
                                             .textTheme
                                             .bodyMedium!
                                             .copyWith(
-                                              fontSize: 12,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.w700,
                                             ),
                                       )),
@@ -343,13 +358,12 @@ class CommunityCardItem extends StatelessWidget {
                                     Expanded(
                                         flex: 2,
                                         child: Text(
-                                          'Date of Expiry',
+                                          'Expiry date',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium!
                                               .copyWith(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w700,
+                                                fontSize: 14,
                                               ),
                                         )),
                                     Text(
@@ -371,7 +385,7 @@ class CommunityCardItem extends StatelessWidget {
                                               .textTheme
                                               .bodyMedium!
                                               .copyWith(
-                                                fontSize: 12,
+                                                fontSize: 14,
                                                 fontWeight: FontWeight.w700,
                                               ),
                                         )),

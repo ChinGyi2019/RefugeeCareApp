@@ -6,22 +6,26 @@ part of 'community.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Community _$CommunityFromJson(Map<String, dynamic> json) => Community(
-      name: json['name'] as String,
-      id: json['id'] as String,
-      shortName: json['shortName'] as String,
-      logo: json['logo'] as String,
-      description: json['description'] as String,
+_$CommunityImpl _$$CommunityImplFromJson(Map<String, dynamic> json) =>
+    _$CommunityImpl(
+      name: json['name'] as String? ?? '',
+      shortName: json['shortName'] as String? ?? '',
+      id: json['id'] as String? ?? '',
+      logo: json['logo'] as String? ?? '',
+      email:
+          (json['email'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+              const [],
+      phoneNumber: (json['phoneNumber'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
+      description: json['description'] as String? ?? '',
       description2: json['description2'] as String?,
       description3: json['description3'] as String?,
-      email:
-          (json['email'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      phoneNumber: (json['phoneNumber'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
     );
 
-Map<String, dynamic> _$CommunityToJson(Community instance) => <String, dynamic>{
+Map<String, dynamic> _$$CommunityImplToJson(_$CommunityImpl instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'shortName': instance.shortName,
       'id': instance.id,

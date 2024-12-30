@@ -184,37 +184,38 @@ class LoginScreen extends HookConsumerWidget {
                       keyboardType: TextInputType.visiblePassword,
                     ),
                     gapH16,
-                    Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState?.validate() == true) {
-                              ref.read(loginProvider.notifier).login(
-                                  phoneController.text,
-                                  passwordController.text);
-                            }
-                          },
-                          child: Text('Login',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16,
-                                      color: AppColors.white)),
-                        ),
-                      ),
-                    ),
+                    loginState.isLoading
+                        ? const Align(
+                            alignment: Alignment.center,
+                            child: RefugeeLoading(),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  if (formKey.currentState?.validate() ==
+                                      true) {
+                                    ref.read(loginProvider.notifier).login(
+                                        phoneController.text,
+                                        passwordController.text);
+                                  }
+                                },
+                                child: Text('Login',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall!
+                                        .copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            color: AppColors.white)),
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ),
-              if (loginState.isLoading)
-                const Align(
-                  alignment: Alignment.center,
-                  child: RefugeeLoading(),
-                ),
             ])));
   }
 }

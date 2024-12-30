@@ -8,7 +8,7 @@ part of 'community_data.dart';
 
 CommunityData _$CommunityDataFromJson(Map<String, dynamic> json) =>
     CommunityData(
-      id: json['id'] as String?,
+      id: json[r'$id'] as String?,
       name: json['name'] as String?,
       email:
           (json['email'] as List<dynamic>?)?.map((e) => e as String).toList(),
@@ -31,7 +31,7 @@ CommunityData _$CommunityDataFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$CommunityDataToJson(CommunityData instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      r'$id': instance.id,
       'name': instance.name,
       'email': instance.email,
       'shortName': instance.shortName,

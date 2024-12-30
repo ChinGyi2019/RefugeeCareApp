@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
-import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/save_card_provider.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
@@ -20,7 +20,8 @@ class CardDetailsScreen extends ConsumerStatefulWidget {
 class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    final provider = ref.watch(saveCardProvider);
+    final provider = ref.watch(saveCardViewModelProvider);
+    final viewModel = ref.watch(saveCardViewModelProvider.notifier);
     final email = widget.card.community.email?.firstOrNull ?? '';
     final phone = widget.card.community.phoneNumber?.firstOrNull ?? '';
     return Scaffold(
@@ -36,8 +37,8 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                   color: AppColors.primary,
                   iconSize: 32, // Customize your icon here
                   onPressed: () {
-                    if (provider.state.currentScreen == 2) {
-                      provider.updateCurrentScreen(1);
+                    if (provider.currentScreen == 2) {
+                      viewModel.updateCurrentScreen(1);
                       return;
                     }
                     Navigator.pop(context);
