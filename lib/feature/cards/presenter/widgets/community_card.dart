@@ -4,6 +4,7 @@ import 'package:refugee_care_mobile/data/services/app_write_client_provider.dart
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
 import 'package:refugee_care_mobile/main/appConfig/app_env.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
+import 'package:refugee_care_mobile/shared/extensions/image_url_extensions.dart';
 import 'package:refugee_care_mobile/shared/widgets/refugee_loading.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
@@ -46,24 +47,28 @@ class CommunityCardItem extends HookConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          FutureBuilder(
-                              future: storage.getFilePreview(
-                                bucketId: EnvInfo.buckedId,
-                                fileId: card.community.logo,
+                          CircleAvatar(
+                              radius: 28,
+                              backgroundImage: NetworkImage(
+                                  getImageUrl(card.community.logo))),
+                          // FutureBuilder(
+                          //     future: storage.getFilePreview(
+                          //       bucketId: EnvInfo.buckedId,
+                          //       fileId: card.community.logo,
 
-                                // optional
-                              ), // Works for both public file and private file, for private files you need to be logged in
-                              builder: (context, snapshot) {
-                                return snapshot.hasData && snapshot.data != null
-                                    ? CircleAvatar(
-                                        radius: 28,
-                                        backgroundImage:
-                                            MemoryImage(snapshot.data!),
-                                      )
-                                    : RefugeeLoading(
-                                        strokeWidth: 1,
-                                      );
-                              }),
+                          //       // optional
+                          //     ), // Works for both public file and private file, for private files you need to be logged in
+                          //     builder: (context, snapshot) {
+                          //       return snapshot.hasData && snapshot.data != null
+                          //           ? CircleAvatar(
+                          //               radius: 28,
+                          //               backgroundImage:
+                          //                   MemoryImage(snapshot.data!),
+                          //             )
+                          //           : RefugeeLoading(
+                          //               strokeWidth: 1,
+                          //             );
+                          //     }),
                           gapW8,
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,29 +98,21 @@ class CommunityCardItem extends HookConsumerWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FutureBuilder(
-                            future: storage.getFilePreview(
-                              bucketId: EnvInfo.buckedId,
-                              fileId: card.passportPhoto,
-                            ), // Works for both public file and private file, for private files you need to be logged in
-                            builder: (context, snapshot) {
-                              return snapshot.hasData && snapshot.data != null
-                                  ? Container(
-                                      width: 80,
-                                      height: 90,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: AppColors.bgLight,
-                                        borderRadius: BorderRadius.circular(
-                                            8), // Optional: for rounded corners
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: MemoryImage(snapshot.data!),
-                                        ),
-                                      ),
-                                    )
-                                  : SizedBox();
-                            }),
+                        Container(
+                          width: 80,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: AppColors.bgLight,
+                            borderRadius: BorderRadius.circular(
+                                8), // Optional: for rounded corners
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image:
+                                  NetworkImage(getImageUrl(card.passportPhoto)),
+                            ),
+                          ),
+                        ),
                         gapW8,
                         Expanded(
                           flex: 1,

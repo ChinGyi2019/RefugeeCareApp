@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
 import 'package:refugee_care_mobile/domain/model/community/community.dart';

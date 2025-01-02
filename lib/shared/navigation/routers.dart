@@ -1,8 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
-import 'package:refugee_care_mobile/feature/advertisement/advertisement_screen.dart';
-import 'package:refugee_care_mobile/feature/advertisement/detail/advertisement_detail_screen.dart';
+import 'package:refugee_care_mobile/feature/advertisement/presenter/advertisement_screen.dart';
+import 'package:refugee_care_mobile/feature/advertisement/presenter/detail/advertisement_detail_screen.dart';
 import 'package:refugee_care_mobile/feature/auth/presenter/login/login_screen.dart';
 import 'package:refugee_care_mobile/feature/auth/presenter/otp/otp_screen.dart';
 import 'package:refugee_care_mobile/feature/auth/presenter/register/register_screen.dart';

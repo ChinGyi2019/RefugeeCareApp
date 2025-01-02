@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:refugee_care_mobile/feature/advertisement/advertisement_list_content.dart';
+import 'package:refugee_care_mobile/feature/advertisement/presenter/advertisement_list_content.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
 class AdvertisementScreen extends StatefulWidget {

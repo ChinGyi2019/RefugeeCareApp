@@ -60,7 +60,7 @@ class AppTheme {
         selectedItemColor: AppColors.primary,
         unselectedItemColor: AppColors.iconBlack,
         selectedLabelStyle: TextStyle(
-            fontSize: 12,
+            fontSize: 10,
             color: AppColors.primary,
             fontWeight: FontWeight.w700),
         unselectedLabelStyle: TextStyle(

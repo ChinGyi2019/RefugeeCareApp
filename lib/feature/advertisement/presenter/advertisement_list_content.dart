@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dart';
-import 'package:refugee_care_mobile/feature/advertisement/advertisement_item.dart';
-import 'package:refugee_care_mobile/feature/advertisement/detail/advertisement_detail_screen.dart';
+import 'package:refugee_care_mobile/feature/advertisement/presenter/advertisement_item.dart';
+import 'package:refugee_care_mobile/feature/advertisement/presenter/detail/advertisement_detail_screen.dart';
 
 List<Advertisement> getDummyAdvertisements() {
   return [

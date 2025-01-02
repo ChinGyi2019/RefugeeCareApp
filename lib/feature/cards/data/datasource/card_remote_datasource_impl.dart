@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
-import 'package:refugee_care_mobile/data/services/network_services.dart';
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
 import 'package:refugee_care_mobile/feature/cards/data/response/card/community_card_data.dart';
@@ -18,8 +17,10 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
   final Storage storage;
   final HiveHelper hiveHelper;
   final Databases databases;
+  final Account account;
 
-  CardRemoteDatasourceImpl(this.storage, this.hiveHelper, this.databases);
+  CardRemoteDatasourceImpl(
+      this.storage, this.hiveHelper, this.databases, this.account);
   @override
   Future<void> deleteCard(CommunityCard card) {
     // TODO: implement deleteCard
@@ -41,11 +42,11 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
   @override
   Future<Either<AppException, List<CommunityCard>>> getCards() async {
     try {
-      return databases
-          .listDocuments(
-              databaseId: EnvInfo.databaseId,
-              collectionId: EnvInfo.cardCollectionId)
-          .then((value) {
+      final user = await account.get();
+      return databases.listDocuments(
+          databaseId: EnvInfo.databaseId,
+          collectionId: EnvInfo.cardCollectionId,
+          queries: [Query.equal('userId', user.$id)]).then((value) {
         final list =
             value.documents.map((e) => CommunityCardData.fromJson(e.data));
 
@@ -82,6 +83,7 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
   }) async {
     try {
       final cardID = ID.unique();
+      final user = await account.get();
       // Check file sizes (under 2 MB for each file)
 
       //frontPhoto
@@ -141,6 +143,7 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
         'studentNumber': card.studentNumber ?? '',
         'status': card.isVerified.toString(),
         'community': card.communityId,
+        'userId': user.$id,
         'passportPhoto': uploadedPassportFile.$id,
         'frontPhoto': uploadedFrontFile.$id,
         'backPhoto': uploadedBackFile.$id
@@ -156,11 +159,10 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
             Permission.delete(Role.users()),
           ]).then((value) async {
         debugPrint(value.toMap().toString());
-        return await databases
-            .listDocuments(
-                databaseId: EnvInfo.databaseId,
-                collectionId: EnvInfo.cardCollectionId)
-            .then((value) {
+        return await databases.listDocuments(
+            databaseId: EnvInfo.databaseId,
+            collectionId: EnvInfo.cardCollectionId,
+            queries: [Query.equal('userId', user.$id)]).then((value) {
           final list =
               value.documents.map((e) => CommunityCardData.fromJson(e.data));
           final cards = list.map((data) => mapToCommunityCard(data)).toList();
@@ -228,11 +230,13 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
   @override
   Future<Either<AppException, List<Community>>> getCommunities() async {
     try {
-      return databases
-          .listDocuments(
-              databaseId: EnvInfo.databaseId,
-              collectionId: EnvInfo.communityCollectionId)
-          .then((value) {
+      return databases.listDocuments(
+        databaseId: EnvInfo.databaseId,
+        collectionId: EnvInfo.communityCollectionId,
+        queries: [
+          // Query.select(['name', '\$id', 'shortName']),
+        ],
+      ).then((value) {
         final list = value.documents.map((e) => CommunityData.fromJson(e.data));
         debugPrint(value.toMap().toString());
 

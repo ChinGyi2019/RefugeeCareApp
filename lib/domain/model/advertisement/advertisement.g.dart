@@ -6,8 +6,8 @@ part of 'advertisement.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Advertisement _$AdvertisementFromJson(Map<String, dynamic> json) =>
-    Advertisement(
+_$AdvertisementImpl _$$AdvertisementImplFromJson(Map<String, dynamic> json) =>
+    _$AdvertisementImpl(
       title: json['title'] as String,
       id: json['id'] as String,
       tag: json['tag'] as String,
@@ -18,11 +18,11 @@ Advertisement _$AdvertisementFromJson(Map<String, dynamic> json) =>
       description: json['description'] as String,
     );
 
-Map<String, dynamic> _$AdvertisementToJson(Advertisement instance) =>
+Map<String, dynamic> _$$AdvertisementImplToJson(_$AdvertisementImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
-      'tag': instance.tag,
       'id': instance.id,
+      'tag': instance.tag,
       'backDrop': instance.backDrop,
       'date': instance.date,
       'dateOfExpiry': instance.dateOfExpiry,

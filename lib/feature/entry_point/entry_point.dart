@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refugee_care_mobile/feature/advertisement/presenter/advertisement_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/list/my_cards_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/save/save_card_screen.dart';
 import 'package:refugee_care_mobile/feature/directory/directory_screen.dart';
@@ -41,6 +42,8 @@ class _EntryPointState extends State<EntryPoint> {
           const MyCardsPage(title: '')
         else if (_selectedIndex == 1)
           const EmergencyScreen(title: '')
+        else if (_selectedIndex == 3)
+          const AdvertisementScreen(title: '')
         else
           const DirectoryScreen(title: '')
         // else
@@ -64,7 +67,11 @@ class _EntryPointState extends State<EntryPoint> {
             label: 'Cards',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions),
+            icon: Icon(Icons.ad_units),
+            label: 'Promotions',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.contact_emergency),
             label: 'Directory',
           ),
         ],

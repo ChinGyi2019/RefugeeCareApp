@@ -14,8 +14,8 @@ extension RefugeeNotificationDataMapper on RefugeeNotificationData {
           expiredDate ?? '', "yyyy-MM-ddTHH:mm", "dd MMM yyyy"),
       createdAt:
           changeFormatDate(createdAt ?? '', "yyyy-MM-ddTHH:mm", "dd MMM yyyy"),
-      communityName: communityName ?? '',
-      communityShortName: communityShortName ?? '',
+      communityName: communityData?.name ?? '',
+      communityShortName: communityData?.shortName ?? '',
     );
   }
 }

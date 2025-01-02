@@ -1,12 +1,13 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:refugee_care_mobile/main/appConfig/app_env.dart';
 import 'package:riverpod/riverpod.dart';
 
 // Define a provider for the Appwrite Client
 final clientProvider = Provider<Client>((ref) {
   final client = Client();
   client
-      .setEndpoint('https://cloud.appwrite.io/v1') // Set the Appwrite endpoint
-      .setProject('6768e2a2002cc414437a'); // Set the project ID
+      .setEndpoint(EnvInfo.baseURL) // Set the Appwrite endpoint
+      .setProject(EnvInfo.projectId); // Set the project ID
   return client;
 });
 

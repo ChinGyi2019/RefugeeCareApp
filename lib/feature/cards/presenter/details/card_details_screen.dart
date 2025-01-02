@@ -6,6 +6,7 @@ import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/save_c
 import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CardDetailsScreen extends ConsumerStatefulWidget {
   const CardDetailsScreen({super.key, required this.title, required this.card});
@@ -176,7 +177,23 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                           Row(
                             children: [
                               ElevatedButton(
-                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(32.0),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    if (phone.isNotEmpty) {
+                                      launchUrl(Uri.parse('tel:$phone'));
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Phone number not available')),
+                                      );
+                                    }
+                                  },
                                   child: Row(
                                     children: [
                                       const Icon(Icons.phone),
@@ -187,14 +204,30 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                                               .textTheme
                                               .bodyMedium
                                               ?.copyWith(
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w400,
                                                   color: AppColors.white,
                                                   fontSize: 16))
                                     ],
                                   )),
                               gapW16,
                               ElevatedButton(
-                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(32.0),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    if (email.isNotEmpty) {
+                                      launchUrl(Uri.parse('mailto:$email'));
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Email address not available')),
+                                      );
+                                    }
+                                  },
                                   child: Row(
                                     children: [
                                       const Icon(Icons.email_outlined),
@@ -205,7 +238,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                                               .textTheme
                                               .bodyMedium
                                               ?.copyWith(
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.w400,
                                                   color: AppColors.white,
                                                   fontSize: 16))
                                     ],

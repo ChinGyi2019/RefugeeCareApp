@@ -39,27 +39,25 @@ class NotificationItem extends StatelessWidget {
                               ?.copyWith(
                                   fontWeight: FontWeight.w700, fontSize: 16)),
                       gapH8,
-                      Row(
-                        children: [
-                          Text(notification.createdAt,
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12)),
-                          gapW8,
-                          Text("posed by ${notification.communityShortName}",
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12))
-                        ],
-                      ),
+                      Text(notification.createdAt,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w400, fontSize: 12)),
+                      Text(notification.communityShortName,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12,
+                                  color: AppColors.primary)),
+                      // Column(
+                      //   children: [
+
+                      //   ],
+                      // ),
                       gapH8,
                       Text(notification.description,
                           textAlign: TextAlign.start,

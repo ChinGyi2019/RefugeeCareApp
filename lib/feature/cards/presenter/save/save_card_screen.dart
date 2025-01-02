@@ -220,14 +220,14 @@ class SaveCardStep1Screen extends HookConsumerWidget {
                             onTap: () {
                               viewModel.updateGender("Male");
                             },
-                            isSelected: state.card?.gender == 'Male'),
+                            isSelected: state.card.gender == 'Male'),
                         gapW16,
                         RefugeeTextButton(
                             title: 'Female',
                             onTap: () {
                               viewModel.updateGender("Female");
                             },
-                            isSelected: state.card?.gender == 'Female')
+                            isSelected: state.card.gender == 'Female')
                       ],
                     ),
                     gapH16,
@@ -241,7 +241,7 @@ class SaveCardStep1Screen extends HookConsumerWidget {
                           context: context,
                           builder: (context) {
                             return CountryBottomsheetScreen(
-                              selectedCountry: state.card?.nationality ?? '',
+                              selectedCountry: state.card.nationality ?? '',
                               onSelect: (country) {
                                 viewModel.updateNationality(country);
                               },
@@ -279,7 +279,7 @@ class SaveCardStep1Screen extends HookConsumerWidget {
                     ),
                     RefugeeFormFeild(
                       title: "Date of issue",
-                      value: state.card?.dateOfIssue ?? '',
+                      value: state.card.dateOfIssue ?? '',
                       decoration: const InputDecoration(
                           hintText: 'Enter your date of issue'),
                       validator: (value) {

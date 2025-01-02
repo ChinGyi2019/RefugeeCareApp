@@ -99,16 +99,17 @@ List<RefugeeNotification> getDummyRefugeeNotifications() {
 }
 
 class NotificationListContent extends StatelessWidget {
-  const NotificationListContent({super.key});
+  const NotificationListContent({super.key, required this.notifications});
+  final List<RefugeeNotification> notifications;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: getDummyRefugeeNotifications().length,
+      itemCount: notifications.length,
       shrinkWrap: false,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       itemBuilder: (context, index) {
-        final data = getDummyRefugeeNotifications()[index];
+        final data = notifications[index];
         return NotificationItem(
           notification: data,
           onTap: (notification) {
