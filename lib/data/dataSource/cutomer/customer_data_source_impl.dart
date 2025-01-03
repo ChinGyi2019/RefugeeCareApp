@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
 import 'package:refugee_care_mobile/data/dataSource/cutomer/customer_data_soucre.dart';
+import 'package:refugee_care_mobile/data/dataSource/model/customer/advertisement_data.dart';
+import 'package:refugee_care_mobile/data/mapper/advertisement_mapper.dart';
 import 'package:refugee_care_mobile/data/mapper/notification_mapper.dart';
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
@@ -47,38 +49,24 @@ class CustomerDataSourceImpl extends CustomerDataSource {
         identifier: '${error.toString()}\ncardCreate',
       ));
     }
-
-    // final eitherResponse = await networkService.get(RefugeeURL.COMMUNITY_API);
-    // return eitherResponse.fold((exception) => Left(exception),
-    //     (response) async {
-    //   final data = response.data as List<dynamic>;
-    //   final list = data.map((json) {
-    //     return RefugeeNotificationData.fromJson(json);
-    //   }).toList();
-
-    //   final notifications = list.map((data) => data.toDomain()).toList();
-
-    //   return Either.right(notifications);
-    // });
   }
 
   @override
-  Future<Either<Exception, List<Advertisement>>> fetchAdvertisements() {
+  Future<Either<Exception, List<Advertisement>>> fetchAdvertisements() async {
     try {
       return databases.listDocuments(
         databaseId: EnvInfo.databaseId,
-        collectionId: EnvInfo.notificationCollectionId,
+        collectionId: EnvInfo.advertisementCollectionId,
         queries: [
           // Query.select(['name', '\$id', 'shortName']),
         ],
       ).then((value) {
-        final list = value.documents
-            .map((e) => RefugeeNotificationData.fromJson(e.data));
+        final list =
+            value.documents.map((e) => AdvertisementData.fromJson(e.data));
         debugPrint(value.toMap().toString());
 
-        final notifications =
-            list.map((communityData) => communityData.toDomain()).toList();
-        return Either.right(notifications);
+        final advertisements = list.map((data) => data.toDomain()).toList();
+        return Either.right(advertisements);
       });
     } catch (error) {
       return Left(AppException(

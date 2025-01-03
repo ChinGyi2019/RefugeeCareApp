@@ -45,7 +45,7 @@ class SaveCardViewModel extends _$SaveCardViewModel {
   void updateCommunity(Community value) {
     state = state.copyWith(
       selectedCommunity: value,
-      card: state.card.copyWith(communityId: value.id),
+      card: state.card.copyWith(communityId: value.id, community: value),
     );
   }
 

@@ -13,8 +13,10 @@ final cardRemoteDatasourceProvider = Provider<CardRemoteDatasource>((ref) {
   final databases = ref.watch(databaseProvider);
   final storage = ref.watch(storageProvider);
   final account = ref.watch(accountProvider);
+  final team = ref.watch(teamProvider);
   //  ref.watch(hiveHelperProvider.future);
-  return CardRemoteDatasourceImpl(storage, hiveHelper, databases, account);
+  return CardRemoteDatasourceImpl(
+      storage, hiveHelper, databases, account, team);
 });
 
 final cardRepositoryProvider = Provider<CardRepository>(

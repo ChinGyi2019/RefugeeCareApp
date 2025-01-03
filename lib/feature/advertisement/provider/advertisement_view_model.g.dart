@@ -7,7 +7,7 @@ part of 'advertisement_view_model.dart';
 // **************************************************************************
 
 String _$advertisementViewModelHash() =>
-    r'd3959c9f4123a057752b7268ecf5c8b1a8122de8';
+    r'8020368ce367b4678d71cd5c86df63e719b1315a';
 
 /// See also [AdvertisementViewModel].
 @ProviderFor(AdvertisementViewModel)

@@ -38,22 +38,13 @@ class _AdvertisementDetailScreenState extends State<AdvertisementDetailScreen> {
                 color: AppColors.primary,
                 iconSize: 32, // Customize your icon here
                 onPressed: () {
-                  Navigator.pop(context);
+                  context.pop();
                 },
               )
             : null,
       ),
       body: ListView(children: [
-        // Expanded(
-        //     child: Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         mainAxisAlignment: MainAxisAlignment.start,
-        //         children: [
         ClipRRect(
-          // borderRadius: const BorderRadius.only(
-          //   topLeft: Radius.circular(16.0),
-          //   topRight: Radius.circular(16.0),
-          // ),
           child: Image.asset(
             'assets/bg/bg_for_promotion.png',
             height: 200.0,
@@ -72,26 +63,18 @@ class _AdvertisementDetailScreenState extends State<AdvertisementDetailScreen> {
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.w700, fontSize: 16)),
                   gapH8,
-                  Row(
-                    children: [
-                      Text(widget.advertisement.date,
-                          textAlign: TextAlign.start,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(
-                                  fontWeight: FontWeight.w400, fontSize: 12)),
-                      gapW8,
-                      Text("posed by ${widget.advertisement.owner}",
-                          textAlign: TextAlign.start,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(
-                                  fontWeight: FontWeight.w400, fontSize: 12))
-                    ],
-                  ),
+                  Text(widget.advertisement.date,
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w400, fontSize: 12)),
                   gapH8,
+                  Text(widget.advertisement.communityShortName,
+                      textAlign: TextAlign.start,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          color: AppColors.primary)),
+                  gapH16,
                   Text(widget.advertisement.description,
                       textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(

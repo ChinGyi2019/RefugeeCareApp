@@ -115,16 +115,17 @@ List<Advertisement> getDummyAdvertisements() {
 }
 
 class AdvertisementListContent extends StatelessWidget {
-  const AdvertisementListContent({super.key});
+  const AdvertisementListContent({super.key, required this.advertisements});
+  final List<Advertisement> advertisements;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: getDummyAdvertisements().length,
+      itemCount: advertisements.length,
       shrinkWrap: false,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       itemBuilder: (context, index) {
-        final data = getDummyAdvertisements()[index];
+        final data = advertisements[index];
         return AdvertisementItem(
           advertisement: data,
           onTap: (card) {

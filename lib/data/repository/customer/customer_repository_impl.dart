@@ -19,8 +19,7 @@ class CustomerRepositoryImpl implements CustomerRepository {
 
   @override
   Future<Either<Exception, List<Advertisement>>> fetchAdvertisements() {
-    // TODO: implement fetchAdvertisements
-    throw UnimplementedError();
+    return dataSource.fetchAdvertisements();
   }
 
   @override

@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/data/services/app_write_client_provider.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
-import 'package:refugee_care_mobile/main/appConfig/app_env.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/shared/extensions/image_url_extensions.dart';
-import 'package:refugee_care_mobile/shared/widgets/refugee_loading.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
 class CommunityCardItem extends HookConsumerWidget {

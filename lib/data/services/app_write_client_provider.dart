@@ -29,3 +29,9 @@ final storageProvider = Provider<Storage>((ref) {
   final storage = Storage(client);
   return storage;
 });
+
+final teamProvider = Provider<Teams>((ref) {
+  final client = ref.watch(clientProvider);
+  final team = Teams(client);
+  return team;
+});

@@ -18,6 +18,8 @@ abstract class EnvInfo {
       _environment._communityCollectionID;
   static String get notificationCollectionId =>
       _environment._notificationCollectionId;
+  static String get advertisementCollectionId =>
+      _environment._advertisementCollectionId;
 
   static AppEnvironment get environment => _environment;
   static bool get isProduction => _environment == AppEnvironment.PROD;
@@ -65,6 +67,12 @@ extension _EnvProperties on AppEnvironment {
     AppEnvironment.PROD: '676a8b03003277c52791',
   };
 
+  static const _advertisementCollectionIDs = {
+    AppEnvironment.DEV: '676a8c1b000cb3287c09',
+    AppEnvironment.STAGING: '676a8c1b000cb3287c09',
+    AppEnvironment.PROD: '676a8c1b000cb3287c09',
+  };
+
   static const _bucketIDs = {
     AppEnvironment.DEV: '676adf7a00058a4f41c3',
     AppEnvironment.STAGING: '676adf7a00058a4f41c3',
@@ -86,4 +94,5 @@ extension _EnvProperties on AppEnvironment {
   String get _bucketID => _bucketIDs[this]!;
   String get _projectID => _projectIDs[this]!;
   String get _notificationCollectionId => _notificationCollectionIDs[this]!;
+  String get _advertisementCollectionId => _advertisementCollectionIDs[this]!;
 }

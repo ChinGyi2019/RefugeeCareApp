@@ -61,27 +61,24 @@ class AdvertisementItem extends StatelessWidget {
                                             fontWeight: FontWeight.w700,
                                             fontSize: 16)),
                                 gapH8,
-                                Row(
-                                  children: [
-                                    Text(advertisement.date,
-                                        textAlign: TextAlign.start,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 12)),
-                                    gapW8,
-                                    Text("posed by ${advertisement.owner}",
-                                        textAlign: TextAlign.start,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 12))
-                                  ],
-                                ),
+                                Text(advertisement.date,
+                                    textAlign: TextAlign.start,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12)),
+                                gapH8,
+                                Text(advertisement.communityShortName,
+                                    textAlign: TextAlign.start,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.primary,
+                                            fontSize: 12)),
                                 gapH8,
                                 Text(advertisement.description,
                                     textAlign: TextAlign.start,

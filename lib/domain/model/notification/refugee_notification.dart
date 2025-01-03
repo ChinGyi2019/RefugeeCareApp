@@ -9,10 +9,10 @@ class RefugeeNotification with _$RefugeeNotification {
     required String id,
     required String title,
     required String description,
-    required String communityId,
     required bool active,
     required String expiredDate,
     required String createdAt,
+    required String communityId,
     required String communityName,
     required String communityShortName,
   }) = _RefugeeNotification;

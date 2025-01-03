@@ -28,6 +28,9 @@ mixin _$Advertisement {
   String get dateOfExpiry => throw _privateConstructorUsedError;
   String get owner => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  String get communityId => throw _privateConstructorUsedError;
+  String get communityName => throw _privateConstructorUsedError;
+  String get communityShortName => throw _privateConstructorUsedError;
 
   /// Serializes this Advertisement to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +56,10 @@ abstract class $AdvertisementCopyWith<$Res> {
       String date,
       String dateOfExpiry,
       String owner,
-      String description});
+      String description,
+      String communityId,
+      String communityName,
+      String communityShortName});
 }
 
 /// @nodoc
@@ -79,6 +85,9 @@ class _$AdvertisementCopyWithImpl<$Res, $Val extends Advertisement>
     Object? dateOfExpiry = null,
     Object? owner = null,
     Object? description = null,
+    Object? communityId = null,
+    Object? communityName = null,
+    Object? communityShortName = null,
   }) {
     return _then(_value.copyWith(
       title: null == title
@@ -113,6 +122,18 @@ class _$AdvertisementCopyWithImpl<$Res, $Val extends Advertisement>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      communityId: null == communityId
+          ? _value.communityId
+          : communityId // ignore: cast_nullable_to_non_nullable
+              as String,
+      communityName: null == communityName
+          ? _value.communityName
+          : communityName // ignore: cast_nullable_to_non_nullable
+              as String,
+      communityShortName: null == communityShortName
+          ? _value.communityShortName
+          : communityShortName // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -133,7 +154,10 @@ abstract class _$$AdvertisementImplCopyWith<$Res>
       String date,
       String dateOfExpiry,
       String owner,
-      String description});
+      String description,
+      String communityId,
+      String communityName,
+      String communityShortName});
 }
 
 /// @nodoc
@@ -157,6 +181,9 @@ class __$$AdvertisementImplCopyWithImpl<$Res>
     Object? dateOfExpiry = null,
     Object? owner = null,
     Object? description = null,
+    Object? communityId = null,
+    Object? communityName = null,
+    Object? communityShortName = null,
   }) {
     return _then(_$AdvertisementImpl(
       title: null == title
@@ -191,6 +218,18 @@ class __$$AdvertisementImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      communityId: null == communityId
+          ? _value.communityId
+          : communityId // ignore: cast_nullable_to_non_nullable
+              as String,
+      communityName: null == communityName
+          ? _value.communityName
+          : communityName // ignore: cast_nullable_to_non_nullable
+              as String,
+      communityShortName: null == communityShortName
+          ? _value.communityShortName
+          : communityShortName // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -199,38 +238,58 @@ class __$$AdvertisementImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AdvertisementImpl implements _Advertisement {
   const _$AdvertisementImpl(
-      {required this.title,
-      required this.id,
-      required this.tag,
-      required this.backDrop,
-      required this.date,
-      required this.dateOfExpiry,
-      required this.owner,
-      required this.description});
+      {this.title = '',
+      this.id = '',
+      this.tag = '',
+      this.backDrop = '',
+      this.date = '',
+      this.dateOfExpiry = '',
+      this.owner = '',
+      this.description = '',
+      this.communityId = '',
+      this.communityName = '',
+      this.communityShortName = ''});
 
   factory _$AdvertisementImpl.fromJson(Map<String, dynamic> json) =>
       _$$AdvertisementImplFromJson(json);
 
   @override
+  @JsonKey()
   final String title;
   @override
+  @JsonKey()
   final String id;
   @override
+  @JsonKey()
   final String tag;
   @override
+  @JsonKey()
   final String backDrop;
   @override
+  @JsonKey()
   final String date;
   @override
+  @JsonKey()
   final String dateOfExpiry;
   @override
+  @JsonKey()
   final String owner;
   @override
+  @JsonKey()
   final String description;
+  @override
+  @JsonKey()
+  final String communityId;
+  @override
+  @JsonKey()
+  final String communityName;
+  @override
+  @JsonKey()
+  final String communityShortName;
 
   @override
   String toString() {
-    return 'Advertisement(title: $title, id: $id, tag: $tag, backDrop: $backDrop, date: $date, dateOfExpiry: $dateOfExpiry, owner: $owner, description: $description)';
+    return 'Advertisement(title: $title, id: $id, tag: $tag, backDrop: $backDrop, date: $date, dateOfExpiry: $dateOfExpiry, owner: $owner, description: $description, communityId: $communityId, communityName: $communityName, communityShortName: $communityShortName)';
   }
 
   @override
@@ -248,13 +307,30 @@ class _$AdvertisementImpl implements _Advertisement {
                 other.dateOfExpiry == dateOfExpiry) &&
             (identical(other.owner, owner) || other.owner == owner) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.communityId, communityId) ||
+                other.communityId == communityId) &&
+            (identical(other.communityName, communityName) ||
+                other.communityName == communityName) &&
+            (identical(other.communityShortName, communityShortName) ||
+                other.communityShortName == communityShortName));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, id, tag, backDrop, date,
-      dateOfExpiry, owner, description);
+  int get hashCode => Object.hash(
+      runtimeType,
+      title,
+      id,
+      tag,
+      backDrop,
+      date,
+      dateOfExpiry,
+      owner,
+      description,
+      communityId,
+      communityName,
+      communityShortName);
 
   /// Create a copy of Advertisement
   /// with the given fields replaced by the non-null parameter values.
@@ -274,14 +350,17 @@ class _$AdvertisementImpl implements _Advertisement {
 
 abstract class _Advertisement implements Advertisement {
   const factory _Advertisement(
-      {required final String title,
-      required final String id,
-      required final String tag,
-      required final String backDrop,
-      required final String date,
-      required final String dateOfExpiry,
-      required final String owner,
-      required final String description}) = _$AdvertisementImpl;
+      {final String title,
+      final String id,
+      final String tag,
+      final String backDrop,
+      final String date,
+      final String dateOfExpiry,
+      final String owner,
+      final String description,
+      final String communityId,
+      final String communityName,
+      final String communityShortName}) = _$AdvertisementImpl;
 
   factory _Advertisement.fromJson(Map<String, dynamic> json) =
       _$AdvertisementImpl.fromJson;
@@ -302,6 +381,12 @@ abstract class _Advertisement implements Advertisement {
   String get owner;
   @override
   String get description;
+  @override
+  String get communityId;
+  @override
+  String get communityName;
+  @override
+  String get communityShortName;
 
   /// Create a copy of Advertisement
   /// with the given fields replaced by the non-null parameter values.

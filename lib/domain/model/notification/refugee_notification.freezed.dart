@@ -23,10 +23,10 @@ mixin _$RefugeeNotification {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  String get communityId => throw _privateConstructorUsedError;
   bool get active => throw _privateConstructorUsedError;
   String get expiredDate => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
+  String get communityId => throw _privateConstructorUsedError;
   String get communityName => throw _privateConstructorUsedError;
   String get communityShortName => throw _privateConstructorUsedError;
 
@@ -50,10 +50,10 @@ abstract class $RefugeeNotificationCopyWith<$Res> {
       {String id,
       String title,
       String description,
-      String communityId,
       bool active,
       String expiredDate,
       String createdAt,
+      String communityId,
       String communityName,
       String communityShortName});
 }
@@ -76,10 +76,10 @@ class _$RefugeeNotificationCopyWithImpl<$Res, $Val extends RefugeeNotification>
     Object? id = null,
     Object? title = null,
     Object? description = null,
-    Object? communityId = null,
     Object? active = null,
     Object? expiredDate = null,
     Object? createdAt = null,
+    Object? communityId = null,
     Object? communityName = null,
     Object? communityShortName = null,
   }) {
@@ -96,10 +96,6 @@ class _$RefugeeNotificationCopyWithImpl<$Res, $Val extends RefugeeNotification>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      communityId: null == communityId
-          ? _value.communityId
-          : communityId // ignore: cast_nullable_to_non_nullable
-              as String,
       active: null == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
@@ -111,6 +107,10 @@ class _$RefugeeNotificationCopyWithImpl<$Res, $Val extends RefugeeNotification>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      communityId: null == communityId
+          ? _value.communityId
+          : communityId // ignore: cast_nullable_to_non_nullable
               as String,
       communityName: null == communityName
           ? _value.communityName
@@ -136,10 +136,10 @@ abstract class _$$RefugeeNotificationImplCopyWith<$Res>
       {String id,
       String title,
       String description,
-      String communityId,
       bool active,
       String expiredDate,
       String createdAt,
+      String communityId,
       String communityName,
       String communityShortName});
 }
@@ -160,10 +160,10 @@ class __$$RefugeeNotificationImplCopyWithImpl<$Res>
     Object? id = null,
     Object? title = null,
     Object? description = null,
-    Object? communityId = null,
     Object? active = null,
     Object? expiredDate = null,
     Object? createdAt = null,
+    Object? communityId = null,
     Object? communityName = null,
     Object? communityShortName = null,
   }) {
@@ -180,10 +180,6 @@ class __$$RefugeeNotificationImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      communityId: null == communityId
-          ? _value.communityId
-          : communityId // ignore: cast_nullable_to_non_nullable
-              as String,
       active: null == active
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
@@ -195,6 +191,10 @@ class __$$RefugeeNotificationImplCopyWithImpl<$Res>
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      communityId: null == communityId
+          ? _value.communityId
+          : communityId // ignore: cast_nullable_to_non_nullable
               as String,
       communityName: null == communityName
           ? _value.communityName
@@ -215,10 +215,10 @@ class _$RefugeeNotificationImpl implements _RefugeeNotification {
       {required this.id,
       required this.title,
       required this.description,
-      required this.communityId,
       required this.active,
       required this.expiredDate,
       required this.createdAt,
+      required this.communityId,
       required this.communityName,
       required this.communityShortName});
 
@@ -232,13 +232,13 @@ class _$RefugeeNotificationImpl implements _RefugeeNotification {
   @override
   final String description;
   @override
-  final String communityId;
-  @override
   final bool active;
   @override
   final String expiredDate;
   @override
   final String createdAt;
+  @override
+  final String communityId;
   @override
   final String communityName;
   @override
@@ -246,7 +246,7 @@ class _$RefugeeNotificationImpl implements _RefugeeNotification {
 
   @override
   String toString() {
-    return 'RefugeeNotification(id: $id, title: $title, description: $description, communityId: $communityId, active: $active, expiredDate: $expiredDate, createdAt: $createdAt, communityName: $communityName, communityShortName: $communityShortName)';
+    return 'RefugeeNotification(id: $id, title: $title, description: $description, active: $active, expiredDate: $expiredDate, createdAt: $createdAt, communityId: $communityId, communityName: $communityName, communityShortName: $communityShortName)';
   }
 
   @override
@@ -258,13 +258,13 @@ class _$RefugeeNotificationImpl implements _RefugeeNotification {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
-            (identical(other.communityId, communityId) ||
-                other.communityId == communityId) &&
             (identical(other.active, active) || other.active == active) &&
             (identical(other.expiredDate, expiredDate) ||
                 other.expiredDate == expiredDate) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.communityId, communityId) ||
+                other.communityId == communityId) &&
             (identical(other.communityName, communityName) ||
                 other.communityName == communityName) &&
             (identical(other.communityShortName, communityShortName) ||
@@ -273,17 +273,8 @@ class _$RefugeeNotificationImpl implements _RefugeeNotification {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      title,
-      description,
-      communityId,
-      active,
-      expiredDate,
-      createdAt,
-      communityName,
-      communityShortName);
+  int get hashCode => Object.hash(runtimeType, id, title, description, active,
+      expiredDate, createdAt, communityId, communityName, communityShortName);
 
   /// Create a copy of RefugeeNotification
   /// with the given fields replaced by the non-null parameter values.
@@ -307,10 +298,10 @@ abstract class _RefugeeNotification implements RefugeeNotification {
       {required final String id,
       required final String title,
       required final String description,
-      required final String communityId,
       required final bool active,
       required final String expiredDate,
       required final String createdAt,
+      required final String communityId,
       required final String communityName,
       required final String communityShortName}) = _$RefugeeNotificationImpl;
 
@@ -324,13 +315,13 @@ abstract class _RefugeeNotification implements RefugeeNotification {
   @override
   String get description;
   @override
-  String get communityId;
-  @override
   bool get active;
   @override
   String get expiredDate;
   @override
   String get createdAt;
+  @override
+  String get communityId;
   @override
   String get communityName;
   @override

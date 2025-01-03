@@ -18,9 +18,10 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
   final HiveHelper hiveHelper;
   final Databases databases;
   final Account account;
+  final Teams team;
 
   CardRemoteDatasourceImpl(
-      this.storage, this.hiveHelper, this.databases, this.account);
+      this.storage, this.hiveHelper, this.databases, this.account, this.team);
   @override
   Future<void> deleteCard(CommunityCard card) {
     // TODO: implement deleteCard

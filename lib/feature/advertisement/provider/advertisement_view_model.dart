@@ -20,7 +20,6 @@ class AdvertisementViewModel extends _$AdvertisementViewModel {
     }, (data) {
       return data;
     });
-    return [];
   }
 
   Future<void> setAsViewed(Advertisement advertisement) async {
