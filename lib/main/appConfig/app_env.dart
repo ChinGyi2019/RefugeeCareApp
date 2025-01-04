@@ -21,6 +21,9 @@ abstract class EnvInfo {
   static String get advertisementCollectionId =>
       _environment._advertisementCollectionId;
 
+  static String get directoryCollectionId =>
+      _environment._directoryCollectionId;
+
   static AppEnvironment get environment => _environment;
   static bool get isProduction => _environment == AppEnvironment.PROD;
 }
@@ -73,6 +76,12 @@ extension _EnvProperties on AppEnvironment {
     AppEnvironment.PROD: '676a8c1b000cb3287c09',
   };
 
+  static const _directoryIDs = {
+    AppEnvironment.DEV: 'directory',
+    AppEnvironment.STAGING: 'directory',
+    AppEnvironment.PROD: 'directory',
+  };
+
   static const _bucketIDs = {
     AppEnvironment.DEV: '676adf7a00058a4f41c3',
     AppEnvironment.STAGING: '676adf7a00058a4f41c3',
@@ -95,4 +104,5 @@ extension _EnvProperties on AppEnvironment {
   String get _projectID => _projectIDs[this]!;
   String get _notificationCollectionId => _notificationCollectionIDs[this]!;
   String get _advertisementCollectionId => _advertisementCollectionIDs[this]!;
+  String get _directoryCollectionId => _directoryIDs[this]!;
 }

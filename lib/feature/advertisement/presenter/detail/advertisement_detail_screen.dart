@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
+import 'package:refugee_care_mobile/shared/extensions/image_url_extensions.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
 class AdvertisementDetailScreen extends StatefulWidget {
@@ -45,12 +46,10 @@ class _AdvertisementDetailScreenState extends State<AdvertisementDetailScreen> {
       ),
       body: ListView(children: [
         ClipRRect(
-          child: Image.asset(
-            'assets/bg/bg_for_promotion.png',
-            height: 200.0,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          ),
+          child: AspectRatio(
+              aspectRatio: 2 / 1,
+              child: Image.network(getImageUrl(widget.advertisement.backDrop),
+                  fit: BoxFit.cover)),
         ),
         Padding(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),

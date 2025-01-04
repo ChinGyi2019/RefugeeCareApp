@@ -88,7 +88,7 @@ class _EmergencyScreenState extends ConsumerState<EmergencyScreen> {
                     ),
                   ),
                   elevation: 4,
-                  color: AppColors.bgLight,
+                  color: AppColors.white,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12, vertical: 16),

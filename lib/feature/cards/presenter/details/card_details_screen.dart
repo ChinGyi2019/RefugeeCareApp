@@ -71,7 +71,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                       ),
                     ),
                     elevation: 0,
-                    color: AppColors.bgLight,
+                    color: AppColors.white,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 16),
@@ -110,7 +110,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                       ),
                     ),
                     elevation: 0,
-                    color: AppColors.bgLight,
+                    color: AppColors.white,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 16),
@@ -149,7 +149,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                       ),
                     ),
                     elevation: 0,
-                    color: AppColors.bgLight,
+                    color: AppColors.white,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 16),
@@ -176,7 +176,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                           gapH16,
                           Row(
                             children: [
-                              ElevatedButton(
+                              OutlinedButton(
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(32.0),
@@ -205,12 +205,12 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                                               .bodyMedium
                                               ?.copyWith(
                                                   fontWeight: FontWeight.w400,
-                                                  color: AppColors.white,
+                                                  color: AppColors.primary,
                                                   fontSize: 16))
                                     ],
                                   )),
                               gapW16,
-                              ElevatedButton(
+                              OutlinedButton(
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(32.0),
@@ -239,7 +239,7 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                                               .bodyMedium
                                               ?.copyWith(
                                                   fontWeight: FontWeight.w400,
-                                                  color: AppColors.white,
+                                                  color: AppColors.primary,
                                                   fontSize: 16))
                                     ],
                                   ))

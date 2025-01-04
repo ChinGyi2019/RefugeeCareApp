@@ -7,7 +7,7 @@ import 'package:refugee_care_mobile/theme/widget/app_text_form_field_theme.dart'
 class AppTheme {
   static ThemeData light(BuildContext context) {
     return ThemeData(
-      scaffoldBackgroundColor: AppColors.bgLight,
+      scaffoldBackgroundColor: AppColors.white,
       drawerTheme: const DrawerThemeData(
         backgroundColor: AppColors.bgSecondayLight,
         surfaceTintColor: AppColors.bgSecondayLight,
@@ -70,7 +70,8 @@ class AppTheme {
         // selectedIconTheme: IconThemeData(color: AppColors.primary)
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: AppColors.primary, foregroundColor: AppColors.white),
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.bgLight),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primary,
@@ -80,7 +81,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppDefaults.borderRadius),
           ),
-          side: const BorderSide(color: AppColors.primary, width: 2),
+          side: const BorderSide(color: AppColors.primary, width: 1),
         ),
       ),
       inputDecorationTheme: AppTextFormFieldTheme.lightInputDecorationTheme,

@@ -1,3 +1,5 @@
+import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,6 +22,7 @@ class ProfileScreen extends StatefulHookConsumerWidget {
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(accountProvider);
     return Scaffold(
         appBar: AppBar(
             elevation: 0,
@@ -58,24 +61,28 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8),
-                                    child: Text(
-                                      "Hi, Van Za",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall!
-                                          .copyWith(
-                                              fontWeight: FontWeight.w700,
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 24),
-                                    )),
+                                FutureBuilder<User>(
+                                    future: user.get(),
+                                    builder: (context, snapshot) {
+                                      return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text(
+                                            "Hi, ${snapshot.data?.name ?? ""}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall!
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    fontSize: 22),
+                                          ));
+                                    }),
                                 gapH16,
                                 Card(
                                   elevation: 4,
-                                  color: AppColors.bgLight,
+                                  color: AppColors.white,
                                   child: Column(
                                     children: [
                                       PofileCardItem(
@@ -168,7 +175,7 @@ class PofileCardItem extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     icon: Icon(
                       icon,
-                      size: 32.0,
+                      size: 28.0,
                     )),
                 gapW8,
                 Text(

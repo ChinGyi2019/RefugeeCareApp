@@ -19,6 +19,7 @@ class AdvertisementData {
   final String? title;
   final String? id;
   final String? tag;
+  @JsonKey(name: 'backImage')
   final String? backDrop;
   @JsonKey(name: '\$createdAt')
   final String? date;

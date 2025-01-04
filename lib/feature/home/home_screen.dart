@@ -4,6 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/feature/advertisement/presenter/advertisement_item.dart';
 import 'package:refugee_care_mobile/feature/advertisement/presenter/advertisement_list_content.dart';
 import 'package:refugee_care_mobile/feature/advertisement/presenter/detail/advertisement_detail_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/details/card_details_screen.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
+import 'package:refugee_care_mobile/feature/home/provider/home_view_model.dart';
+import 'package:refugee_care_mobile/feature/notification/presenter/notification_item.dart';
 import 'package:refugee_care_mobile/feature/notification/presenter/notification_screen.dart';
 import 'package:refugee_care_mobile/feature/profile/profile_screen.dart';
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
@@ -21,7 +25,16 @@ class MyHomePage extends StatefulHookConsumerWidget {
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref.read(homeScreenViewModelProvider.notifier).loadData();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final state = ref.watch(homeScreenViewModelProvider);
     return Center(
         // Center is a layout widget. It takes a single child and positions it
         child: Stack(
@@ -50,19 +63,14 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                 context.push(ProfileScreen.routeName);
                               },
                               color: Theme.of(context).primaryColor,
-                              icon: const Icon(
-                                Icons.person,
-                                size: 32.0,
-                              )),
+                              icon: const Icon(Icons.person, size: 32.0)),
                           IconButton(
                               onPressed: () {
                                 context.push(NotificationPage.routeName);
                               },
                               color: Theme.of(context).primaryColor,
-                              icon: const Icon(
-                                Icons.notifications,
-                                size: 32.0,
-                              )),
+                              icon:
+                                  const Icon(Icons.notifications, size: 28.0)),
                         ])
                   ],
                 )),
@@ -82,44 +90,73 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                 .copyWith(
                                     fontWeight: FontWeight.w700,
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 24),
+                                    fontSize: 22),
                           )),
                       gapH16,
-                      AdvertisementItem(
-                        advertisement: getDummyAdvertisements().first,
-                        onTap: (advertisement) {
-                          context.push(AdvertisementDetailScreen.routeName,
-                              extra: advertisement);
-                        },
-                        showSeeMore: true,
-                      ),
+                      if (state.advertisements.isNotEmpty)
+                        AdvertisementItem(
+                          advertisement: state.advertisements.first,
+                          onTap: (advertisement) {
+                            context.push(AdvertisementDetailScreen.routeName,
+                                extra: advertisement);
+                          },
+                          showSeeMore: true,
+                        ),
                       gapH24,
-                      Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Text(
-                            "My cards",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                    fontSize: 18, fontWeight: FontWeight.w700),
-                          )),
-                      gapH16,
-                      // Todo call api
-                      // CommunityCardItem(
-                      //   card: communityCards.first,
-                      //   onTap: (card) {
-                      //     context.push(CardDetailsScreen.routeName,
-                      //         extra: card);
-                      //   },
-                      // ),
-                      gapH16,
-                      // NotificationItem(
-                      //   notification: getDummyRefugeeNotifications().first,
-                      //   onTap: (notification) {},
-                      //   showSeeMore: true,
-                      // ),
-                      gapH16,
+                      if (state.cards.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  "My cards",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.primary),
+                                )),
+                            gapH16,
+                            CommunityCardItem(
+                              card: state.cards.first,
+                              onTap: (card) {
+                                context.push(CardDetailsScreen.routeName,
+                                    extra: card);
+                              },
+                            ),
+                            gapH16,
+                          ],
+                        ),
+                      if (state.notifications.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: Text(
+                                  "Latest news",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.primary),
+                                )),
+                            gapH16,
+                            NotificationItem(
+                              notification: state.notifications.first,
+                              onTap: (notification) {},
+                              showSeeMore: true,
+                            ),
+                            gapH16,
+                          ],
+                        ),
                     ]))
           ],
         ),

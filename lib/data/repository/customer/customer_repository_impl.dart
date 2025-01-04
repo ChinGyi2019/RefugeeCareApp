@@ -1,4 +1,3 @@
-// Implement the CustomerRepository class using the Repository pattern
 import 'package:refugee_care_mobile/data/dataSource/cutomer/customer_data_soucre.dart';
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dart';
@@ -23,8 +22,8 @@ class CustomerRepositoryImpl implements CustomerRepository {
   }
 
   @override
-  Future<Either<Exception, List<Directory>>> fetchDirectories() {
-    // TODO: implement fetchDirectories
-    throw UnimplementedError();
+  Future<Either<Exception, List<Directory>>> fetchDirectories(
+      List<String> tags) {
+    return dataSource.fetchDirectories(tags);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:refugee_care_mobile/data/dataSource/model/customer/advertisement_data.dart';
+import 'package:refugee_care_mobile/data/model/customer/advertisement_data.dart';
 import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dart';
 import 'package:refugee_care_mobile/shared/extensions/data_formatter.dart';
 

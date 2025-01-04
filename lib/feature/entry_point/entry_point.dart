@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/feature/advertisement/presenter/advertisement_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/list/my_cards_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/save/save_card_screen.dart';
-import 'package:refugee_care_mobile/feature/directory/directory_screen.dart';
+import 'package:refugee_care_mobile/feature/directory/presenter/directory_screen.dart';
 import 'package:refugee_care_mobile/feature/emergency/presenter/emergency_screen.dart';
 import 'package:refugee_care_mobile/feature/home/home_screen.dart';
 import 'package:refugee_care_mobile/main.dart';
@@ -67,11 +67,11 @@ class _EntryPointState extends State<EntryPoint> {
             label: 'Cards',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.ad_units),
-            label: 'Promotions',
+            icon: Icon(Icons.newspaper_outlined),
+            label: 'Advertisement',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.contact_emergency),
+            icon: Icon(Icons.screen_search_desktop_outlined),
             label: 'Directory',
           ),
         ],

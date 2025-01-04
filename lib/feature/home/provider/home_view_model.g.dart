@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'save_card_provider.dart';
+part of 'home_view_model.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$saveCardViewModelHash() => r'353f89afe6f15da7b1e7160a2e8641521c8943e6';
+String _$homeScreenViewModelHash() =>
+    r'564c59f5ee14285329e4a44190bf6dc871d50d3e';
 
-/// See also [SaveCardViewModel].
-@ProviderFor(SaveCardViewModel)
-final saveCardViewModelProvider = AutoDisposeNotifierProvider<SaveCardViewModel,
-    SaveCardScreenState>.internal(
-  SaveCardViewModel.new,
-  name: r'saveCardViewModelProvider',
+/// See also [HomeScreenViewModel].
+@ProviderFor(HomeScreenViewModel)
+final homeScreenViewModelProvider =
+    NotifierProvider<HomeScreenViewModel, HomeScreenState>.internal(
+  HomeScreenViewModel.new,
+  name: r'homeScreenViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$saveCardViewModelHash,
+      : _$homeScreenViewModelHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SaveCardViewModel = AutoDisposeNotifier<SaveCardScreenState>;
+typedef _$HomeScreenViewModel = Notifier<HomeScreenState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
