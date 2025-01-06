@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/domain/model/advertisement/advertisement.dart';
-import 'package:refugee_care_mobile/feature/advertisement/presenter/advertisement_screen.dart';
-import 'package:refugee_care_mobile/feature/advertisement/presenter/detail/advertisement_detail_screen.dart';
 import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
 import 'package:refugee_care_mobile/shared/extensions/image_url_extensions.dart';
@@ -89,7 +86,7 @@ class AdvertisementItem extends StatelessWidget {
                                 gapH8,
                                 Text(
                                     (advertisement.description.length > 100
-                                        ? '${advertisement.description.substring(0, 150)}...'
+                                        ? '${advertisement.description.substring(0, 100)}...'
                                         : advertisement.description),
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context)

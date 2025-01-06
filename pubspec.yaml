@@ -61,6 +61,7 @@ dependencies:
   #appwrite: ^13.1.0
   appwrite:
     path: ./app-write-sdk
+  smooth_page_indicator: ^1.2.0+3
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +82,7 @@ flutter:
     - assets/lang/
     - assets/bg/bg_for_promotion.png
     - assets/bg/start_bg.png
+    - assets/icon/ic_logo.svg
 #   - images/a_dot_ham.jpeg
 
 # To add custom fonts to your application, add a fonts section here,

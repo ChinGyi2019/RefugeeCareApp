@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/domain/model/auth/auth_state.dart';
 import 'package:refugee_care_mobile/feature/entry_point/entry_point.dart';
 import 'package:refugee_care_mobile/feature/splash/provider/splah_screen_provider.dart';
 import 'package:refugee_care_mobile/feature/start/start_screen.dart';
+import 'package:refugee_care_mobile/shared/extensions/color_extensions.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -41,18 +43,25 @@ class SplashScreenState extends ConsumerState<SplashScreen> {
       }),
     );
     return Scaffold(
-        backgroundColor: AppColors.primaryExtraLight,
+        backgroundColor: AppColors.white,
         body: Center(
-            child: Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.primaryLight,
-                  image: DecorationImage(
-                    image: AssetImage(
-                        'assets/bg/start_bg.png'), // Replace with your image asset path
-                    fit: BoxFit
-                        .cover, // Ensures the image fills the entire screen
-                  ),
-                ),
-                child: const Text("Refugee Care "))));
+            child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(
+              'assets/icon/ic_logo.svg',
+              height: 72,
+              width: 72,
+              colorFilter: AppColors.primary.toColorFilter,
+            ),
+            Text(
+              "Refugee Care",
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  fontSize: 28,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w700),
+            )
+          ],
+        )));
   }
 }
