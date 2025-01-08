@@ -42,4 +42,10 @@ class CardRepositoryImpl implements CardRepository {
   Future<Either<AppException, List<Community>>> getCommunities() {
     return remote.getCommunities();
   }
+
+  @override
+  Future<Either<AppException, String>> report(String offficerType, String city,
+      {required CommunityCard card}) {
+    return remote.report(offficerType, city, card: card);
+  }
 }

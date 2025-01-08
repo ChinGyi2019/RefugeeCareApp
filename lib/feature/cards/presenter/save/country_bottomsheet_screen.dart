@@ -12,9 +12,32 @@ const List<String> dummyCountry = [
   "Indonesia"
 ];
 
+const List<String> malaysiaStateNCity = [
+  "Johor Bahru",
+  "Kuala Lumpur",
+  "George Town",
+  "Ipoh",
+  "Shah Alam",
+  "Petaling Jaya",
+  "Kota Kinabalu",
+  "Kuching",
+  "Malacca City",
+  "Alor Setar",
+  "Miri",
+  "Iskandar Puteri",
+  "Seberang Perai",
+  "Seremban",
+  "Subang Jaya"
+];
+
 class CountryBottomsheetScreen extends StatelessWidget {
-  CountryBottomsheetScreen(
-      {super.key, required this.onSelect, this.selectedCountry = ''});
+  CountryBottomsheetScreen({
+    super.key,
+    required this.onSelect,
+    required this.countries,
+    this.selectedCountry = '',
+  });
+  final List<String> countries;
   final Function(String) onSelect;
   String selectedCountry;
   @override
@@ -55,9 +78,9 @@ class CountryBottomsheetScreen extends StatelessWidget {
             Expanded(
                 flex: 1,
                 child: ListView.builder(
-                  itemCount: dummyCountry.length,
+                  itemCount: countries.length,
                   itemBuilder: (context, index) {
-                    final data = dummyCountry[index];
+                    final data = countries[index];
                     return CountryItem(
                       name: data,
                       isSelected: selectedCountry == data,

@@ -1,5 +1,6 @@
 {
     "@@locale": "en",
     "title": "Hello",
-    "message": "Welcome to Flutter Localization"
+    "message": "Welcome to Flutter Localization",
+    "report_desc": "If you are arrested or face any issues, please click the “Report” button immediately. This will help us know your location and provide the necessary support to ensure your safety and well-being. Your cooperation is greatly appreciated."
 }

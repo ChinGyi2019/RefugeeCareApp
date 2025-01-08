@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
+import 'package:refugee_care_mobile/feature/cards/presenter/report/report_bottom_sheet_screen.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/save/provider/save_card_provider.dart';
 import 'package:refugee_care_mobile/feature/cards/presenter/widgets/community_card.dart';
+import 'package:refugee_care_mobile/l10n/app_localizations.dart';
 import 'package:refugee_care_mobile/shared/constants/ghaps.dart';
+import 'package:refugee_care_mobile/shared/widgets/refugee_dialog.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,6 +23,31 @@ class CardDetailsScreen extends ConsumerStatefulWidget {
 }
 
 class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
+  Future<Position?> getCurrentLocation() async {
+    LocationPermission permission;
+    try {
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied ||
+            permission == LocationPermission.deniedForever) {
+          debugPrint("Location permissions are denied");
+          return null;
+        }
+      }
+
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      // state.lat = position.latitude;
+      // state.long = position.longitude;
+
+      return position;
+    } catch (e) {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider = ref.watch(saveCardViewModelProvider);
@@ -242,11 +271,112 @@ class _CardDetailsScreenState extends ConsumerState<CardDetailsScreen> {
                                                   color: AppColors.primary,
                                                   fontSize: 16))
                                     ],
-                                  ))
+                                  )),
                             ],
-                          )
+                          ),
                         ],
                       ),
+                    ),
+                  )),
+              gapH16,
+              SizedBox(
+                  width: double.infinity,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: const BorderSide(
+                        color: AppColors.textGrey, // Border color
+                        width: 1.0, // Border width
+                      ),
+                    ),
+                    elevation: 0,
+                    color: AppColors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 16),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Report to Community",
+                                textAlign: TextAlign.start,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16)),
+                            gapH8,
+                            Text(
+                                AppLocalizations.of(context)!
+                                    .translate('report_desc'),
+                                textAlign: TextAlign.start,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.titleLight)),
+                            gapH16,
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.error,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    backgroundColor: AppColors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10),
+                                            topRight: Radius.circular(10))),
+                                    builder: (context) {
+                                      return ReportBottomSheetScreen(
+                                        onSubmit: (officerType, city) async {
+                                          // todo api call here
+                                          final position =
+                                              await getCurrentLocation();
+                                          viewModel.report(
+                                              officerType, city, position, () {
+                                            context.pop();
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return RefugeeDialog(
+                                                  singleBtnTitle: "Okay",
+                                                  title: ' Report Submitted',
+                                                  message:
+                                                      'Your report has been successfully submitted.',
+                                                  singleBtnCallback: () {},
+                                                );
+                                              },
+                                            );
+                                          });
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    const Icon(Icons.report),
+                                    gapW8,
+                                    Text("Report",
+                                        textAlign: TextAlign.start,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.white,
+                                                fontSize: 16))
+                                  ],
+                                ))
+                          ]),
                     ),
                   )),
             ])));

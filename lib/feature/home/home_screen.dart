@@ -34,7 +34,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final PageController _pageController = PageController();
+    final PageController pageController = PageController();
     final state = ref.watch(homeScreenViewModelProvider);
     return Scaffold(
         appBar: AppBar(
@@ -96,7 +96,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           height: MediaQuery.of(context).size.height *
                               0.5, // Example height
                           child: ListView.builder(
-                            controller: _pageController,
+                            controller: pageController,
                             scrollDirection: Axis.horizontal,
                             itemCount: state.advertisements.length,
                             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -122,7 +122,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SmoothPageIndicator(
-                            controller: _pageController,
+                            controller: pageController,
                             count: state.advertisements
                                 .length, // Match this with the itemCount
                             effect: WormEffect(

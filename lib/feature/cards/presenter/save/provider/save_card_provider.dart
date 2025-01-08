@@ -1,3 +1,4 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:refugee_care_mobile/domain/model/community/community.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/provider/card_repository_provider.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/repository/card_repository.dart';
@@ -109,6 +110,20 @@ class SaveCardViewModel extends _$SaveCardViewModel {
       state = state.copyWith(cards: data);
       updateLoading(false);
     });
+  }
+
+  Future<void> report(String officerType, String city, Position? position,
+      Function() onSuccess) async {
+    debugPrint(position?.latitude.toString());
+    updateLoading(true);
+    // final result = await repository.report(officerType, city, card: state.card);
+    // result.fold((failure) {
+    //   debugPrint(failure.identifier.toString());
+    //   state = state.copyWith(error: failure, loading: false);
+    // }, (data) {
+    //   state = state.copyWith(loading: false);
+    //   onSuccess();
+    // });
   }
 
   Future<void> submit(Function() onSuccess) async {

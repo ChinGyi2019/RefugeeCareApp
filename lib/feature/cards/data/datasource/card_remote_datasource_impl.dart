@@ -268,6 +268,13 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
     // });
   }
 
+  @override
+  Future<Either<AppException, String>> report(String offficerType, String city,
+      {required CommunityCard card}) {
+    // TODO: implement report
+    throw UnimplementedError();
+  }
+
   // @override
   // Future<Either<AppException, List<CommunityCard>>> submitCard({
   //   required CommunityCard card,

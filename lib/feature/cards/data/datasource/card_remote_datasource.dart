@@ -9,6 +9,8 @@ abstract class CardRemoteDatasource {
   Future<Either<AppException, List<CommunityCard>>> submitCard({
     required CommunityCard card,
   });
+  Future<Either<AppException, String>> report(String offficerType, String city,
+      {required CommunityCard card});
   Future<void> editCard(CommunityCard card);
   Future<void> deleteCard(CommunityCard card);
 

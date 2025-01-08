@@ -123,7 +123,7 @@ class SaveCardStep1Screen extends HookConsumerWidget {
               height: 60,
               child: ListView.builder(
                 itemCount: state.communities.length,
-                shrinkWrap: false,
+                // shrinkWrap: false,
                 scrollDirection: Axis.horizontal,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -242,6 +242,7 @@ class SaveCardStep1Screen extends HookConsumerWidget {
                           builder: (context) {
                             return CountryBottomsheetScreen(
                               selectedCountry: state.card.nationality ?? '',
+                              countries: dummyCountry,
                               onSelect: (country) {
                                 viewModel.updateNationality(country);
                               },
