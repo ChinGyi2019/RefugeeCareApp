@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
 import 'package:refugee_care_mobile/feature/cards/data/response/card/community_card_data.dart';
@@ -269,10 +270,38 @@ class CardRemoteDatasourceImpl implements CardRemoteDatasource {
   }
 
   @override
-  Future<Either<AppException, String>> report(String offficerType, String city,
-      {required CommunityCard card}) {
-    // TODO: implement report
-    throw UnimplementedError();
+  Future<Either<AppException, String>> report(
+      String offficerType, String city, Position? position,
+      {required CommunityCard card}) async {
+    try {
+      final user = await account.get();
+      final data = {
+        'cardNumber': card.cardNumber,
+        'name': card.name,
+        'communityName': card.community.shortName,
+        'state': city,
+        'location': "${position?.latitude}, ${position?.longitude}",
+        'card': card.id,
+        'community': card.communityId,
+        'userId': user.$id,
+      };
+      return await databases
+          .createDocument(
+              databaseId: EnvInfo.databaseId,
+              collectionId: EnvInfo.reportCollectionId,
+              documentId: card.id,
+              data: data)
+          .then((value) {
+        return Either.right('Report submitted');
+      });
+    } catch (error) {
+      return Left(AppException(
+        message: 'Unknown error occurred when submit report',
+        statusCode: 499,
+        title: "Unknown error",
+        identifier: '${error.toString()}\nreport',
+      ));
+    }
   }
 
   // @override

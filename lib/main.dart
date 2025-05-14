@@ -3,10 +3,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:refugee_care_mobile/di/locator.dart';
-import 'package:refugee_care_mobile/feature/notification/presenter/notification_screen.dart';
 import 'package:refugee_care_mobile/envs/firebase_dev_configurations.dart'
     as dev;
 import 'package:refugee_care_mobile/envs/firebase_prod_configurations.dart'
@@ -17,6 +15,12 @@ import 'package:refugee_care_mobile/main/appConfig/app_env.dart';
 import 'package:refugee_care_mobile/shared/navigation/routers.dart';
 import 'package:refugee_care_mobile/theme/app_color.dart';
 import 'package:refugee_care_mobile/theme/app_theme.dart';
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // Handle background messages
+  debugPrint('Background message received: ${message.messageId}');
+}
 
 void main() async => commonMain(AppEnvironment.PROD);
 
@@ -31,26 +35,31 @@ Future<void> commonMain(AppEnvironment environment) async {
         Brightness.light, // For light icons on dark status bar
     statusBarBrightness: Brightness.dark, // For dark icons on light status bar
   ));
-  // FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-  // NotificationSettings settings = await messaging.requestPermission(
-  //   alert: true,
-  //   announcement: false,
-  //   badge: true,
-  //   carPlay: false,
-  //   criticalAlert: false,
-  //   provisional: false,
-  //   sound: true,
-  // );
-
-  // String? token = await FirebaseMessaging.instance.getToken();
-  // debugPrint("FCM token :$token");
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  try {
+    String? token = await FirebaseMessaging.instance.getToken();
+    debugPrint("FCM token :$token");
+    FirebaseMessaging.instance.subscribeToTopic('ACRAdminTopic').then((_) {
+      debugPrint('Subscribed to topic: ACRAdminTopic');
+    });
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    // print('User granted permission: ${settings.authorizationStatus}');
+    await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  } catch (error) {
+    debugPrint(error.toString());
+  }
   // String? apnsToken = await FirebaseMessaging.instance.getAPNSToken();
   // debugPrint("APNs token: $apnsToken");
-
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  // print('User granted permission: ${settings.authorizationStatus}');
-  // await FirebaseMessaging.instance.setAutoInitEnabled(true);
 
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -85,36 +94,12 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future<void> setupInteractedMessage() async {
-    // Get any messages which caused the application to open from
-    // a terminated state.
-    // RemoteMessage? initialMessage =
-    //     await FirebaseMessaging.instance.getInitialMessage();
-
-    // If the message also contains a data property with a "type" of "chat",
-    // navigate to a chat screen
-    // if (initialMessage != null) {
-    //   _handleMessage(initialMessage);
-    // }
-
-    // Also handle any interaction when the app is in the background via a
-    // Stream listener
-    //  FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    if (message.data['type'] == 'message') {
-      context.go(NotificationPage.routeName);
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-
     // Run code required to handle interacted messages in an async function
     // as initState() must not be async
-    // 1 setupInteractedMessage();
+    // setupInteractedMessage();
   }
 
   @override

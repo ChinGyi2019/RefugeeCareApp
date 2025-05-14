@@ -116,14 +116,15 @@ class SaveCardViewModel extends _$SaveCardViewModel {
       Function() onSuccess) async {
     debugPrint(position?.latitude.toString());
     updateLoading(true);
-    // final result = await repository.report(officerType, city, card: state.card);
-    // result.fold((failure) {
-    //   debugPrint(failure.identifier.toString());
-    //   state = state.copyWith(error: failure, loading: false);
-    // }, (data) {
-    //   state = state.copyWith(loading: false);
-    //   onSuccess();
-    // });
+    final result =
+        await repository.report(officerType, city, position, card: state.card);
+    result.fold((failure) {
+      debugPrint(failure.identifier.toString());
+      state = state.copyWith(error: failure, loading: false);
+    }, (data) {
+      state = state.copyWith(loading: false);
+      onSuccess();
+    });
   }
 
   Future<void> submit(Function() onSuccess) async {

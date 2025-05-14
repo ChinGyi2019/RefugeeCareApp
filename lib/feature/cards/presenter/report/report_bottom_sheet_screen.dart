@@ -22,7 +22,7 @@ class ReportBottomSheetScreen extends HookConsumerWidget {
     final errorOfficer = useState('');
     final errorCity = useState('');
 
-    void _validateAndSubmit() {
+    void validateAndSubmit() {
       var isValid = true;
       if (selectedCity.value.isEmpty) {
         errorCity.value = "Please select city or state";
@@ -161,7 +161,7 @@ class ReportBottomSheetScreen extends HookConsumerWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 32.0),
+            padding: const EdgeInsets.only(bottom: 16.0),
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.error,
@@ -170,7 +170,8 @@ class ReportBottomSheetScreen extends HookConsumerWidget {
                   ),
                 ),
                 onPressed: () {
-                  _validateAndSubmit();
+                  validateAndSubmit();
+                  context.pop();
                 },
                 child: Text("Submit",
                     textAlign: TextAlign.start,

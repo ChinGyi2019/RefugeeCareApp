@@ -6,7 +6,7 @@ part of 'save_card_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$saveCardViewModelHash() => r'353f89afe6f15da7b1e7160a2e8641521c8943e6';
+String _$saveCardViewModelHash() => r'31754d399c259cdfcf806776ed5057ccfa7e77c7';
 
 /// See also [SaveCardViewModel].
 @ProviderFor(SaveCardViewModel)

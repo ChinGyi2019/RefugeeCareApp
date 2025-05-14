@@ -1,3 +1,4 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:refugee_care_mobile/data/uitls/either.dart';
 import 'package:refugee_care_mobile/data/uitls/exception.dart';
 import 'package:refugee_care_mobile/feature/cards/domain/cards/community_card.dart';
@@ -44,8 +45,9 @@ class CardRepositoryImpl implements CardRepository {
   }
 
   @override
-  Future<Either<AppException, String>> report(String offficerType, String city,
+  Future<Either<AppException, String>> report(
+      String offficerType, String city, Position? position,
       {required CommunityCard card}) {
-    return remote.report(offficerType, city, card: card);
+    return remote.report(offficerType, city, position, card: card);
   }
 }

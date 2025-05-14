@@ -395,7 +395,7 @@ class SaveCardStep2Screen extends ConsumerWidget {
                             scrollDirection: Axis.horizontal,
                             children: [
                               RefugeeUploadBtn(
-                                  title: "Upload Photo\n(Back)",
+                                  title: "Upload Photo\n(Front)",
                                   imageURL: state.card.frontSidePhoto,
                                   onTap: () {
                                     pickImage((file) {

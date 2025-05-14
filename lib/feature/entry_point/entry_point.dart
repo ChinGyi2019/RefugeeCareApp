@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refugee_care_mobile/feature/advertisement/presenter/advertisement_screen.dart';
@@ -6,6 +7,7 @@ import 'package:refugee_care_mobile/feature/cards/presenter/save/save_card_scree
 import 'package:refugee_care_mobile/feature/directory/presenter/directory_screen.dart';
 import 'package:refugee_care_mobile/feature/emergency/presenter/emergency_screen.dart';
 import 'package:refugee_care_mobile/feature/home/home_screen.dart';
+import 'package:refugee_care_mobile/feature/notification/presenter/notification_screen.dart';
 import 'package:refugee_care_mobile/main.dart';
 
 class EntryPoint extends StatefulWidget {
@@ -30,6 +32,35 @@ class _EntryPointState extends State<EntryPoint> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Future<void> setupInteractedMessage() async {
+    // Get any messages which caused the application to open from
+    // a terminated state.
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    // If the message also contains a data property with a "type" of "chat",
+    // navigate to a chat screen
+    if (initialMessage != null) {
+      _handleMessage(initialMessage);
+    }
+
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
+    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+  }
+
+  void _handleMessage(RemoteMessage message) {
+    if (message.data['type'] == 'message') {
+      context.push(NotificationPage.routeName);
+    }
+  }
+
+  @override
+  void initState() {
+    setupInteractedMessage();
+    super.initState();
   }
 
   @override

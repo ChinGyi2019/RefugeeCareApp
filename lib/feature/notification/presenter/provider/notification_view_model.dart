@@ -17,7 +17,7 @@ class NotificationViewModel extends _$NotificationViewModel {
     return result.fold((error) {
       throw error;
     }, (data) {
-      return data;
+      return data.reversed.toList();
     });
   }
 
